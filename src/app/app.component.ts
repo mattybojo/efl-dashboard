@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authService.decryptUserData();
     this.menu = EFL_MENU_ITEMS;
     this.authService.getUserDataObservable().subscribe(user => {
       let temp: NbMenuItem[] = new Array<NbMenuItem>();

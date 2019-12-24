@@ -80,6 +80,7 @@
     "roboto-fontface": "0.8.0",
     "rxjs": "6.5.2",
     "rxjs-compat": "6.3.0",
+    "secure-ls": "^1.2.6",
     "tinymce": "4.5.7",
     "tslib": "^1.10.0",
     "typeface-exo": "0.0.22",

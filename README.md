@@ -15,9 +15,15 @@ export const config = {
     messagingSenderId: <YOUR_DATA_HERE>,
     appId: <YOUR_DATA_HERE>,
     measurementId: <YOUR_DATA_HERE>
-  }
+  },
+  encryptionSecret: <ALPHANUMERIC_SEQUENCE_HERE>
 };
 ```
+Explanation of config properties:
+
+`firebaseConfig` - The data that firebase provides when you create an application.
+
+`encryptionSecret` - A PBKDF2 encryption key to be used by secure-ls.
 
 ## Notes
 

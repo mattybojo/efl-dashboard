@@ -1,3 +1,4 @@
+import { config } from './../../config/config';
 import { UserData } from './../models/user-data.model';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -5,6 +6,7 @@ import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { from, Observable, of, BehaviorSubject } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { convertSnap } from './db-utils';
+import * as SecureLS from 'secure-ls';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +15,11 @@ export class AuthService {
 
   private userData$: BehaviorSubject<UserData> = new BehaviorSubject(null);
   private user$: BehaviorSubject<firebase.User> = new BehaviorSubject(null);
+  private secureLS: SecureLS;
 
   constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) {
     const self = this;
+    this.secureLS = new SecureLS({encodingType: 'aes', encryptionSecret: config.encryptionSecret});
     this.afAuth.authState.pipe(
       switchMap((user: firebase.User) => {
         if (user) {
@@ -28,6 +32,14 @@ export class AuthService {
     ).subscribe((userData: UserData) => {
       self.userData$.next(userData);
     });
+  }
+
+  encryptUserData(userData: UserData) {
+    this.secureLS.set('u', userData);
+  }
+
+  decryptUserData() {
+    this.userData$.next(this.secureLS.get('u'));
   }
 
   getUserDataObservable(): BehaviorSubject<UserData> {
@@ -72,7 +84,7 @@ export class AuthService {
         tap((userData: UserData) => {
           const user: firebase.User = self.user$.value;
           const newData: UserData = self.setUserData(userData, user);
-          //self.userData$.next(newData);
+          self.encryptUserData(newData);
           if (user) {
             self.db.doc(`userData/${newData.id}`).update(newData);
           }
