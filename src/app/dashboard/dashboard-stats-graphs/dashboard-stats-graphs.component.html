@@ -1,0 +1,45 @@
+<div class="select-container">
+  <nb-select size="small" [(selected)]="selectedSeason" (selectedChange)="getPlayerStatsBySeason()">
+    <nb-option *ngFor="let seasonOption of seasonOptions" [value]="seasonOption.value">
+      {{seasonOption.key}}
+    </nb-option>
+  </nb-select>
+</div>
+
+<div class="row">
+  <div class="col graph">
+
+  </div>
+  <div class="col graph">
+
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="col col-12 col-md-6">
+    <nb-card>
+      <nb-card-header>
+        <h5>Goals</h5>
+      </nb-card-header>
+      <nb-card-body>
+        <ngx-chartjs-pie [data]="goalGraphData" *ngIf="goalGraphData && goalGraphData.labels"></ngx-chartjs-pie>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <div class="col col-12 col-md-6">
+    <nb-card>
+      <nb-card-header>
+        <h5>Assists</h5>
+      </nb-card-header>
+      <nb-card-body>
+        <ngx-chartjs-pie [data]="assistGraphData" *ngIf="assistGraphData && assistGraphData.labels; else noAssists"></ngx-chartjs-pie>
+        <ng-template #noAssists>
+          <p class="no-assists-msg">No assist data for season 1</p>
+        </ng-template>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+</div>

@@ -1,15 +1,15 @@
-import { PlayerStats } from './../../shared/models/player.model';
-import { PlayerService } from './../../shared/services/player.service';
 import { Component, OnInit } from '@angular/core';
+import { PlayerStats } from '../../shared/models/player.model';
 import { KeyValue } from '@angular/common';
+import { PlayerService } from '../../shared/services/player.service';
 import { cloneDeep } from 'lodash';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'ngx-dashboard-stats-table',
+  templateUrl: './dashboard-stats-table.component.html',
+  styleUrls: ['./dashboard-stats-table.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardStatsTableComponent implements OnInit {
 
   data: PlayerStats[];
 

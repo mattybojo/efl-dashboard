@@ -8,9 +8,15 @@ export class PlayerStats {
   gamesPlayed: number;
   cleanSheets: number;
   winPct?: number;
+  assists?: number;
 }
 
 export class Player {
   id?: string;
   name: string;
+}
+
+export class GraphData {
+  labels: string[];
+  data: number[];
 }

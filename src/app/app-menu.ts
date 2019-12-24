@@ -1,7 +1,10 @@
 import { NbMenuItem } from '@nebular/theme';
 
 export const EFL_MENU_ITEMS: NbMenuItem[] = [
-  { title: 'Dashboard', link: '/dashboard', icon: { icon: 'table', pack: 'solid' } },
+  { title: 'Dashboard', icon: { icon: 'grip-horizontal', pack: 'solid' }, children: [
+    { title: 'Stats', link: '/dashboard', icon: { icon: 'table', pack: 'solid' }},
+    { title: 'Graphs', link: '/dashboard/graphs', icon: { icon: 'chart-pie', pack: 'solid' }},
+  ] },
   { title: 'Matches', link: '/matches', icon: { icon: 'futbol', pack: 'solid' }, queryParams: {date: 'latest'} },
   { title: 'Team Picker', link: '/team-picker', icon: { icon: 'users', pack: 'solid' } },
   { title: 'MOTM Vote', link: '/motm-voting', icon: { icon: 'star', pack: 'solid' } },
