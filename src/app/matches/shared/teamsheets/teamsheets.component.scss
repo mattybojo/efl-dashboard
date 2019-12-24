@@ -1,0 +1,60 @@
+.teamsheets-container {
+  text-align: center;
+}
+
+ng2-smart-table {
+  display: inline-block;
+  width: 50%;
+}
+
+.own-goal {
+  color: red;
+}
+
+.white-team-icon {
+  margin-right: 5px;
+}
+
+.dark-team-icon {
+  margin-left: 5px;
+}
+
+.motm-icon {
+  color: goldenrod;
+}
+
+.missed-penalty {
+  color: red;
+}
+
+ng2-smart-table ::ng-deep .ng2-smart-filters {
+  display: none;
+}
+
+ng2-smart-table ::ng-deep th {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+ng2-smart-table ::ng-deep td {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  font-size: 14px !important;
+}
+
+div.team-score-header {
+  display: inline-block;
+  width: 50%;
+  background-color: white;
+  border: 1px solid #edf1f7;
+  padding: 10px 0;
+}
+
+div.team-score-header > h4 {
+  margin: 0px;
+}
+
+.penalty-label {
+  margin-top: 10px;
+  text-align: center;
+}

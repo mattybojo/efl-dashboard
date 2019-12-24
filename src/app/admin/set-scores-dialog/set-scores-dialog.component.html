@@ -1,0 +1,47 @@
+<nb-card>
+  <nb-card-body>
+    <form #setScoresDialog="ngForm" name="setScoresDialog" (ngSubmit)="onSubmit()">
+      <h1 mat-dialog-title class="dialog-title">Update Match Scores</h1>
+
+      <div class="dialog-body">
+        <div class="score-header-container">
+          <div class="score-header">
+            <span class="team-score">Dark Team: {{darkTeamScore}}</span>
+          </div>
+          <div class="score-header">
+            <span class="team-score">{{whiteTeamScore}}: White Team</span>
+          </div>
+        </div>
+        <table class="player-data-table">
+          <tr>
+            <th>Name</th>
+            <th>Goals</th>
+            <th>Assists</th>
+          </tr>
+          <tr *ngFor="let player of darkTeamData; let i = index">
+            <td class="player-name">{{player.name}}</td>
+            <td><input nbInput [(ngModel)]="player.goals" #darkGoal="ngModel" [name]="'darkgoal'+i" type="number" class="input-goals" (change)="calculateDarkTeamScore()" required></td>
+            <td><input nbInput [(ngModel)]="player.assists" #darkAssist="ngModel" [name]="'darkassist'+i" type="number" class="input-assists" required></td>
+          </tr>
+        </table>
+        <table class="player-data-table">
+          <tr>
+            <th>Assists</th>
+            <th>Goals</th>
+            <th>Name</th>
+          </tr>
+          <tr *ngFor="let player of whiteTeamData; let i = index">
+            <td><input nbInput [(ngModel)]="player.assists" #whiteAssist="ngModel" [name]="'whiteassist'+i" type="number" class="input-assists" required></td>
+            <td><input nbInput [(ngModel)]="player.goals" #whiteGoal="ngModel" [name]="'whitegoal'+i" type="number" class="input-goals" (change)="calculateWhiteTeamScore()" required></td>
+            <td class="player-name">{{player.name}}</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="btn-container">
+        <button nbButton status="primary" shape="semi-round" size="small" type="submit" [disabled]="!setScoresDialog.valid || isSaving">Save</button>
+        <button nbButton shape="semi-round" status="basic" size="small" (click)="dialogRef.close()">Cancel</button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,33 @@
+<div class="admin-btn-container">
+  <button nbButton shape="semi-round" size="small" status="primary" (click)="onViewVotes()">
+    <nb-icon icon="search"></nb-icon>
+    <span class="btn-text">View Votes</span>
+  </button>
+</div>
+
+<div class="team-picker-container">
+  <!-- Dark team -->
+  <div class="player-container" *ngIf="darkTeamPlayers">
+    <h3 class="dark-team-label">Dark Team</h3>
+
+    <nb-card class="player-card" [class.selected]="player===selectedPlayer" *ngFor="let player of darkTeamPlayers" (click)="selectPlayer(player)">
+      <nb-card-body class="player-card-content">
+        <span class="player-name">{{ player }}</span>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <!-- White team -->
+  <div class="player-container" *ngIf="whiteTeamPlayers">
+    <h3 class="white-team-label">White Team</h3>
+
+    <nb-card class="player-card" [class.selected]="player===selectedPlayer" *ngFor="let player of whiteTeamPlayers" (click)="selectPlayer(player)">
+      <nb-card-body class="player-card-content">
+        <span class="player-name">{{ player }}</span>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div>
+    <button nbButton shape="semi-round" size="small" status="primary" (click)="submitVote()" [disabled]="!selectedPlayer || isSaving">Submit Vote</button>
+  </div>
+</div>

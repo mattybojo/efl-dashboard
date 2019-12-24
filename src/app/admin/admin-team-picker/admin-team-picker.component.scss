@@ -1,0 +1,93 @@
+@import '~include-media/dist/_include-media';
+
+.team-picker-container {
+  text-align: center;
+}
+
+.admin-btn-container {
+  margin-top: 5px;
+}
+
+.admin-btn-container > button {
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.btn-text {
+  margin-left: 5px;
+}
+
+.team-label {
+  height: 80px;
+}
+
+.player-container {
+  @include media(">=phone", "<tablet") {
+    width: 150px;
+  }
+  width: 200px;
+  max-width: 100%;
+  margin: 0 0 25px 0;
+  display: inline-block;
+  vertical-align: top;
+  cursor: pointer;
+}
+
+.player-container:first {
+  margin: 0 25px 25px 0;
+}
+
+.player-card {
+  @include media(">=phone", "<tablet") {
+    width: 90px;
+    margin: auto;
+  }
+  max-width: 400px;
+  border: 1px solid #cccccc;
+  padding: 5px;
+  width: 180px;
+  overflow: hidden;
+  font-size: 14px;
+  margin: 0 auto;
+}
+
+.player-card-content {
+  padding: 0;
+}
+
+.player-name {
+  @include media(">=phone", "<tablet") {
+    float: none;
+  }
+  float: left;
+  vertical-align: middle;
+  line-height: 34px;
+}
+
+.player-select-btn {
+  height: 34px;
+  float: right;
+}
+
+.icon-container {
+  float: right;
+  line-height: 34px;
+  vertical-align: middle;
+}
+
+.icon-container > fa-icon:not(:last-of-type) {
+  margin-right: 10px;
+}
+
+.menu-icon {
+  cursor: pointer;
+}
+
+.white-team-icon {
+  color: #ffffff;
+  background-color: #000000;
+}
+
+.dark-team-icon {
+  border: 1px solid #000000;
+}

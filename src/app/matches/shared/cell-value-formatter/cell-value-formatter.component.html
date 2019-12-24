@@ -1,0 +1,39 @@
+
+<!--Dark team-->
+<div *ngIf="team==='dark'">
+  <div *ngIf="type==='name'">
+    <span>{{ value }}</span>
+    <fa-icon [icon]="faCuttlefish" class="dark-team-icon" *ngIf="rowData.isCaptain"></fa-icon>
+    <fa-icon [icon]="faCrown" class="dark-team-icon motm-icon" *ngIf="rowData.isMotm"></fa-icon>
+  </div>
+  <div *ngIf="type==='goals'">
+    <fa-icon [icon]="faFutbol" *ngFor="let item of [].constructor(rowData.goals)"></fa-icon>
+    <fa-icon [icon]="faFutbol" *ngFor="let item of [].constructor(rowData.ownGoals)" class="own-goal"></fa-icon>
+  </div>
+  <div *ngIf="type==='assists'">
+    <fa-icon [icon]="faAdn" *ngFor="let item of [].constructor(rowData.assists)"></fa-icon>
+  </div>
+  <div *ngIf="type==='value'">
+    <span>{{ value }}</span>
+  </div>
+  <div *ngIf="type==='penalty'">
+    <fa-icon [icon]="faFutbol" *ngIf="rowData.scored"></fa-icon>
+    <fa-icon [icon]="faTimes" class="missed-penalty" *ngIf="!rowData.scored"></fa-icon>
+  </div>
+</div>
+
+<!--White team-->
+<div *ngIf="team==='white'">
+  <div *ngIf="type==='name'">
+    <fa-icon [icon]="faCrown" class="white-team-icon motm-icon" *ngIf="rowData.isMotm"></fa-icon>
+    <fa-icon [icon]="faCuttlefish" class="white-team-icon" *ngIf="rowData.isCaptain"></fa-icon>
+    <span>{{ value }}</span>
+  </div>
+  <div *ngIf="type==='goals'">
+    <fa-icon [icon]="faFutbol" *ngFor="let item of [].constructor(rowData.goals)"></fa-icon>
+    <fa-icon [icon]="faFutbol" *ngFor="let item of [].constructor(rowData.ownGoals)" class="own-goal"></fa-icon>
+  </div>
+  <div *ngIf="type==='assists'">
+    <fa-icon [icon]="faAdn" *ngFor="let item of [].constructor(rowData.assists)"></fa-icon>
+  </div>
+</div>

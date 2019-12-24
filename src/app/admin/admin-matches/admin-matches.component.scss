@@ -1,0 +1,16 @@
+.select-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.admin-btn-container {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.admin-btn-container > button {
+  margin-right: 5px;
+}

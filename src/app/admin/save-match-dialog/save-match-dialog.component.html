@@ -1,0 +1,17 @@
+<nb-card>
+  <nb-card-body>
+    <form #saveMatchDialog="ngForm" name="saveMatchDialog">
+      <h3 mat-dialog-title>Save Lineups</h3>
+
+      <div class="dialog-body">
+        <span>Enter the match date (MM-DD-YYYY):&nbsp;</span>
+        <input nbInput [(ngModel)]="match.date" ngModel name="date" required pattern="\d{2}-\d{2}-\d{4}">
+      </div>
+
+      <div class="btn-container">
+        <button nbButton status="primary" shape="semi-round" size="small" [disabled]="!saveMatchDialog.valid || isSaving" (click)="saveMatch()">Save</button>
+        <button nbButton shape="semi-round" status="basic" size="small" (click)="dialogRef.close()">Cancel</button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

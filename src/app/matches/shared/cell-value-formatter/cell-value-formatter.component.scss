@@ -1,0 +1,124 @@
+.teamsheets-container {
+  text-align: center;
+}
+
+table {
+  display: inline-block;
+}
+
+.white-team, .white-team-penalties {
+  border-left: 1px solid rgba(0,0,0,0.12);
+}
+
+.white-team ::ng-deep .mat-column-white-name, .mat-column-white-goals {
+  text-align: left;
+  justify-content: flex-start;
+}
+
+.dark-team ::ng-deep .mat-column-dark-name, .mat-column-dark-goals {
+  text-align: right;
+  justify-content: flex-end;
+}
+
+.white-team ::ng-deep .mat-column-header-white-team-score {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.dark-team ::ng-deep .mat-column-header-dark-team-score {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.own-goal {
+  color: red;
+}
+
+.white-team-icon {
+  margin-right: 5px;
+}
+
+.dark-team-icon {
+  margin-left: 5px;
+}
+
+.motm-icon {
+  color: goldenrod;
+}
+
+.missed-penalty {
+  color: red;
+}
+
+.white-team-penalties ::ng-deep .mat-column-white-name-penalty, .mat-column-white-scored-penalty {
+  text-align: left;
+  justify-content: flex-start;
+}
+
+.dark-team-penalties ::ng-deep .mat-column-dark-name-penalty, .mat-column-dark-scored-penalty {
+  text-align: right;
+  justify-content: flex-end;
+}
+
+.white-team-penalties ::ng-deep .mat-column-header-white-team-penalty {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.dark-team-penalties ::ng-deep .mat-column-header-dark-team-penalty {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.penalty-container {
+  margin-top: 5px;
+}
+
+.penalty-label {
+  margin-bottom: 5px;
+}
+
+// Align tables
+.mat-column-goals {
+  width: 50px;
+}
+
+.mat-column-assists {
+  width: 50px;
+}
+
+.mat-column-name {
+  width: 100px;
+}
+
+.mat-column-header-white-team-score {
+  width: 150px;
+}
+
+.mat-column-header-dark-team-score {
+  width: 150px;
+}
+
+.mat-column-scored {
+  width: 100px;
+}
+
+th.mat-header-cell {
+  border: 1px solid rgba(0,0,0,.12);
+  text-align: center;
+}
+
+td.mat-cell {
+  border: 1px solid rgba(0,0,0,.12);
+  text-align: center;
+}
+
+th.mat-header-cell, td.mat-cell {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+:host ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}

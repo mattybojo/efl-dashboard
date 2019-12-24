@@ -1,0 +1,22 @@
+<div class="teamsheets-container">
+  <div class="team-score-header">
+    <h4>Dark Team: {{ darkTeamGoals }}<span *ngIf="whiteTeamPenalties || darkTeamPenalties">&nbsp;({{ darkTeamPenalties }}) </span></h4>
+  </div>
+  <div class="team-score-header">
+    <h4><span *ngIf="whiteTeamPenalties || darkTeamPenalties">({{ whiteTeamPenalties }})&nbsp;</span>{{ whiteTeamGoals }} :White Team</h4>
+  </div>
+  <ng2-smart-table [settings]="darkSettings" [source]="darkTeamData"></ng2-smart-table>
+  <ng2-smart-table [settings]="whiteSettings" [source]="whiteTeamData"></ng2-smart-table>
+  <ng-container *ngIf="whiteTeamPenalties || darkTeamPenalties">
+    <h4 class="penalty-label">Penalties</h4>
+
+    <div class="team-score-header">
+      <h4>Dark Team: {{darkTeamPenalties}}</h4>
+    </div>
+    <div class="team-score-header">
+      <h4>{{whiteTeamPenalties}} :White Team</h4>
+    </div>
+    <ng2-smart-table [settings]="darkPenaltySettings" [source]="darkTeamPenaltyData"></ng2-smart-table>
+    <ng2-smart-table [settings]="whitePenaltySettings" [source]="whiteTeamPenaltyData"></ng2-smart-table>
+  </ng-container>
+</div>

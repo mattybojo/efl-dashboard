@@ -1,0 +1,33 @@
+<nb-card >
+  <nb-card-body>
+    <div class="dialog-header">
+      <h3>MOTM Votes</h3>
+    </div>
+
+    <div class="dialog-body">
+      <table>
+        <tr>
+          <th>Player</th>
+          <th>Votes</th>
+          <th>Voters</th>
+        </tr>
+        <ng-container *ngIf="data; else noDataTemplate">
+          <tr *ngFor="let voteEntry of sortedVoteData">
+            <td>{{ voteEntry.vote }}</td>
+            <td>{{ voteEntry.count }}</td>
+            <td>{{ voteEntry.voters }}</td>
+          </tr>
+        </ng-container>
+        <ng-template #noDataTemplate>
+          <tr>
+            <td colspan=3>No votes yet</td>
+          </tr>
+        </ng-template>
+      </table>
+    </div>
+
+    <div class="btn-container">
+      <button nbButton shape="semi-round" status="basic" size="small" (click)="dialogRef.close()">Close</button>
+    </div>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,16 @@
+<div class="select-container">
+  <div class="admin-btn-container">
+    <button nbButton status="primary" shape="semi-round" size="small" (click)="setScores()" >
+      <fa-icon [fixedWidth]="true" [icon]="faSave"></fa-icon>
+      <span class="btn-text">Update Scores</span>
+    </button>
+  </div>
+  <nb-select #select size="small" [(selected)]="selectedMatch" (selectedChange)="onSelectionChange($event)">
+    <nb-option *ngFor="let dateOption of dateOptions" [value]="dateOption">
+      {{ dateOption }}
+    </nb-option>
+  </nb-select>
+</div>
+
+<efl-teamsheets [matchData]="match"></efl-teamsheets>
+

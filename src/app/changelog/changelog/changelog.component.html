@@ -1,0 +1,17 @@
+<div class="changelog-container" *ngIf="logs$ | async as logs">
+  <h3>Site Updates</h3>
+  <nb-accordion *ngIf="formattedLogs">
+    <nb-accordion-item *ngFor="let key of objectKeys(formattedLogs)">
+      <nb-accordion-item-header>
+        {{ key }}
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <ul>
+          <ng-container *ngFor="let log of formattedLogs[key]">
+            <li>{{log.msg}}</li>
+          </ng-container>
+        </ul>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+</div>

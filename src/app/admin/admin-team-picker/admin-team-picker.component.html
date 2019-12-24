@@ -1,0 +1,99 @@
+<div class="team-picker-container">
+
+  <div class="admin-btn-container">
+    <button nbButton status="info" shape="semi-round" size="small" (click)="onSaveMatch()">
+      <fa-icon [fixedWidth]="true" [icon]="faSave"></fa-icon>
+      <span class="btn-text">Save Lineups</span>
+    </button>
+    <button nbButton status="warning" shape="semi-round" size="small" (click)="onResetTeamPicker()">
+      <fa-icon [fixedWidth]="true" [icon]="faExclamationTriangle"></fa-icon>
+      <span class="btn-text">Reset Team Picker</span>
+    </button>
+    <button nbButton status="primary" shape="semi-round" size="small" (click)="onPickCaptains()" [disabled]="disableCaptainPicker">
+      <fa-icon [fixedWidth]="true" [icon]="faUserFriends"></fa-icon>
+      <span class="btn-text">Select Captains</span>
+    </button>
+    <button nbButton status="info" shape="semi-round" size="small" (click)="onAddPlayer()">
+      <fa-icon [fixedWidth]="true" [icon]="faPlus"></fa-icon>
+      <span class="btn-text">Add Player</span>
+    </button>
+  </div>
+
+  <!-- Available players -->
+  <div class="player-container" *ngIf="teamsData && teamsData[0].players">
+    <h3 class="team-label">{{teamsData[0].label}} ({{playerCounts[0]}})</h3>
+
+    <nb-card class="player-card" *ngFor="let player of teamsData[0].players">
+      <nb-card-body class="player-card-content">
+        <span class="player-name">{{ player }}</span>
+        <span class="icon-container">
+          <fa-icon [fixedWidth]="true" [icon]="faUserMinus" class="menu-icon"
+            matTooltip="Move to out" (click)="onClick(player, 0, 3)"></fa-icon>
+          <fa-icon [fixedWidth]="true" [icon]="faUser" class="menu-icon dark-team-icon"
+            matTooltip="Move to dark team" (click)="onClick(player, 0, 1)"></fa-icon>
+          <fa-icon [fixedWidth]="true" [icon]="faUser" class="menu-icon white-team-icon"
+            matTooltip="Move to white team" (click)="onClick(player, 0, 2)"></fa-icon>
+        </span>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <!-- Dark team -->
+  <div class="player-container" *ngIf="teamsData && teamsData[1].players">
+    <h3 class="team-label">{{teamsData[1].label}} ({{playerCounts[1]}})</h3>
+
+    <nb-card class="player-card" *ngFor="let player of teamsData[1].players">
+      <nb-card-body class="player-card-content">
+        <span class="player-name">{{ player }}</span>
+        <span class="icon-container">
+          <fa-icon [fixedWidth]="true" [icon]="faUserCheck" class="menu-icon"
+            matTooltip="Move to available" (click)="onClick(player, 1, 0)"></fa-icon>
+          <fa-icon [fixedWidth]="true" [icon]="faUserMinus" class="menu-icon"
+            matTooltip="Move to out" (click)="onClick(player, 1, 3)"></fa-icon>
+          <fa-icon [fixedWidth]="true" [icon]="faUser" class=" menu-icon white-team-icon"
+            matTooltip="Move to white team" (click)="onClick(player, 1, 2)"></fa-icon>
+        </span>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <!-- White team -->
+  <div class="player-container" *ngIf="teamsData && teamsData[2].players">
+    <h3 class="team-label">{{teamsData[2].label}} ({{playerCounts[2]}})</h3>
+
+    <nb-card class="player-card" *ngFor="let player of teamsData[2].players">
+      <nb-card-body class="player-card-content">
+        <span class="player-name">{{ player }}</span>
+        <span class="icon-container">
+          <fa-icon [fixedWidth]="true" [icon]="faUserCheck" class="menu-icon"
+            matTooltip="Move to available" (click)="onClick(player, 2, 0)"></fa-icon>
+          <fa-icon [fixedWidth]="true" [icon]="faUserMinus" class="menu-icon"
+            matTooltip="Move to out" (click)="onClick(player, 2, 3)"></fa-icon>
+          <fa-icon [fixedWidth]="true" [icon]="faUser" class="menu-icon dark-team-icon"
+            matTooltip="Move to dark team" (click)="onClick(player, 2, 1)"></fa-icon>
+        </span>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <!-- Remaining players (out) -->
+  <div class="player-container" *ngIf="teamsData && teamsData[3].players">
+    <h3 class="team-label">{{teamsData[3].label}} ({{playerCounts[3]}})</h3>
+
+    <nb-card class="player-card" *ngFor="let player of teamsData[3].players">
+      <nb-card-body class="player-card-content">
+        <span class="player-name">{{ player }}</span>
+        <span class="icon-container">
+          <fa-icon [fixedWidth]="true" [icon]="faUserCheck" class="menu-icon"
+            matTooltip="Move to available" (click)="onClick(player, 3, 0)"></fa-icon>
+          <fa-icon [fixedWidth]="true" [icon]="faUser" class="menu-icon dark-team-icon"
+            matTooltip="Move to dark team" (click)="onClick(player, 3, 1)"></fa-icon>
+          <fa-icon [fixedWidth]="true" [icon]="faUser" class="menu-icon white-team-icon"
+            matTooltip="Move to white team" (click)="onClick(player, 3, 2)"></fa-icon>
+        </span>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<efl-chat #chat [team]="'admin'"></efl-chat>

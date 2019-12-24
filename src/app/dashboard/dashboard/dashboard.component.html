@@ -1,0 +1,9 @@
+<div class="select-container">
+  <nb-select size="small" [(selected)]="selectedSeason" (selectedChange)="getPlayerStatsBySeason()">
+    <nb-option *ngFor="let seasonOption of seasonOptions" [value]="seasonOption.value">
+      {{seasonOption.key}}
+    </nb-option>
+  </nb-select>
+</div>
+
+<ng2-smart-table [settings]="settings" [source]="data"></ng2-smart-table>

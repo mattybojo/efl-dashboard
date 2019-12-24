@@ -1,0 +1,39 @@
+<div class="team-picker-container" *ngIf="teamData$ | async as teamData">
+  <!-- Available players -->
+  <div class="player-container" *ngIf="teamsData[0].players">
+    <h3>{{teamsData[0].label}}</h3>
+
+    <nb-card class="player-card" *ngFor="let player of teamsData[0].players">
+      <nb-card-body class="player-card-content">
+        <span class="player-name">{{ player }}</span>
+        <button nbButton size="tiny" class="player-select-btn" shape="semi-round"
+        status="primary" (click)="onSubmit(player)" [disabled]="isConfirmDisabled"
+        *ngIf="showConfirmBtn">Select</button>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <!-- My team -->
+  <div class="player-container">
+    <h3>{{teamsData[1].label}}</h3>
+
+    <nb-card class="player-card" *ngFor="let player of teamsData[1].players">
+      <nb-card-body class="player-card-content">
+        <span class="player-name">{{ player }}</span>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <!-- Opposing team -->
+  <div class="player-container">
+    <h3>{{teamsData[2].label}}</h3>
+
+    <nb-card class="player-card" *ngFor="let player of teamsData[2].players">
+      <nb-card-body class="player-card-content">
+        <span class="player-name">{{ player }}</span>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<efl-chat #chat [team]="team" *ngIf="this.team === 'white' || this.team === 'dark'"></efl-chat>

@@ -1,0 +1,17 @@
+<nb-card >
+  <nb-card-body>
+    <form #savePlayerNameDialog="ngForm" name="savePlayerNameDialog">
+      <h3 class="dialog-title">{{dialogTitle}}</h3>
+
+      <div class="dialog-body">
+        <span class="input-label">{{dialogInputLabel}}&nbsp;</span>
+        <input nbInput [(ngModel)]="playerName" fieldSize="small" type="text" ngModel name="playerName" pattern="[A-Za-z ]*" required>
+      </div>
+
+      <div class="btn-container">
+        <button nbButton shape="semi-round" status="primary" size="small" [disabled]="!savePlayerNameDialog.valid" (click)="setPlayerName()">Save</button>
+        <button nbButton shape="semi-round" status="basic" size="small" (click)="dialogRef.close()">Cancel</button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>
