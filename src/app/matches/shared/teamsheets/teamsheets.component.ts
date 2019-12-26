@@ -138,6 +138,10 @@ export class TeamsheetsComponent implements OnInit {
     pager: {
       display: false,
     },
+    defaultStyle: false,
+    attr: {
+      class: 'table table-bordered table-striped',
+    },
   };
 
   whiteTeamData: MatchPlayer[] = [];
