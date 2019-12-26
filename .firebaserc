@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "estadio-fallon-liga"
+    "default": "estadio-fallon-liga",
+    "staging": "staging-efl-dashboard"
   }
 }
