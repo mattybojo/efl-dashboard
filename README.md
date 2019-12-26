@@ -25,6 +25,19 @@ Explanation of config properties:
 
 `encryptionSecret` - A PBKDF2 encryption key to be used by secure-ls.
 
+## Deploying to Firebase Hosting
+
+### There are 2 ways to control which environment you deploy to:
+
+#### 1. Set the environment alias
+
+`firebase use default # sets environment to the default alias`
+`firebase use staging # sets environment to the staging alias`
+
+#### 2. Use the -P command line option
+
+`firebase deploy -P staging # deploy to staging alias`
+
 ## Notes
 
 This project replaces [soccer-dashboard](https://github.com/mattybojo/soccer-dashboard).
