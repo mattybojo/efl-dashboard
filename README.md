@@ -25,6 +25,14 @@ Explanation of config properties:
 
 `encryptionSecret` - A PBKDF2 encryption key to be used by secure-ls.
 
+## Analyzing bundle size
+
+Run the following commands to open a window that will show a visual representation of your build output:
+```
+ng build --stats-json
+webpack-bundle-analyzer dist/stats-es5.json
+```
+
 ## Deploying to Firebase Hosting
 
 ### There are 2 ways to control which environment you deploy to:
