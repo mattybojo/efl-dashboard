@@ -32,3 +32,10 @@ export class AdminPlayerData {
   goals: number;
   assists: number;
 }
+
+export class MatchSummary {
+  date: string;
+  darkTeam: string;
+  whiteTeam: string;
+  motm: string;
+}

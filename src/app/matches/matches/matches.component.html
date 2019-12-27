@@ -1,9 +1,0 @@
-<div class="select-container">
-  <nb-select #select size="small" [(selected)]="selectedMatch" (selectedChange)="onSelectionChange($event)">
-    <nb-option *ngFor="let dateOption of dateOptions" [value]="dateOption">
-      {{ dateOption }}
-    </nb-option>
-  </nb-select>
-</div>
-
-<efl-teamsheets [matchData]="match"></efl-teamsheets>
