@@ -1,6 +1,9 @@
-// TODO: USE ::ng-deep to access these icons
 nb-menu ::ng-deep .menu-icon {
   margin-right: 10px !important;
   text-align: center !important;
   width: 1.25em !important;
+}
+
+nb-menu ::ng-deep > .menu-items {
+  margin-bottom: 70px !important;
 }
