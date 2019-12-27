@@ -12,9 +12,13 @@ export class SavePlayerNameDialogComponent {
   dialogInputLabel: string;
   playerName: string;
 
-  constructor(protected dialogRef: NbDialogRef<SavePlayerNameDialogComponent>) {}
+  constructor(private dialogRef: NbDialogRef<SavePlayerNameDialogComponent>) {}
 
   setPlayerName() {
     this.dialogRef.close(this.playerName);
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 }

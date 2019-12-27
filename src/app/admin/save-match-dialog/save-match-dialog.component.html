@@ -10,7 +10,7 @@
 
       <div class="btn-container">
         <button nbButton status="primary" shape="semi-round" size="small" [disabled]="!saveMatchDialog.valid || isSaving" (click)="saveMatch()">Save</button>
-        <button nbButton shape="semi-round" status="basic" size="small" (click)="dialogRef.close()">Cancel</button>
+        <button nbButton shape="semi-round" status="basic" size="small" (click)="closeDialog()">Cancel</button>
       </div>
     </form>
   </nb-card-body>

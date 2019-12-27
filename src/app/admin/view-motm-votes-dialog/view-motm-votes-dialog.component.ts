@@ -12,7 +12,7 @@ export class ViewMotmVotesDialogComponent implements OnInit {
   data: any;
   sortedVoteData: any;
 
-  constructor(protected dialogRef: NbDialogRef<ViewMotmVotesDialogComponent>) { }
+  constructor(private dialogRef: NbDialogRef<ViewMotmVotesDialogComponent>) { }
 
   ngOnInit() {
     this.sortedVoteData = _(this.data)
@@ -22,4 +22,7 @@ export class ViewMotmVotesDialogComponent implements OnInit {
       .value();
   }
 
+  closeDialog() {
+    this.dialogRef.close();
+  }
 }

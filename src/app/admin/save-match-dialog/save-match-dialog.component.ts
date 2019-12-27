@@ -40,4 +40,8 @@ export class SaveMatchDialogComponent implements OnInit {
       this.dialogRef.close();
     });
   }
+
+  closeDialog() {
+    this.dialogRef.close();
+  }
 }

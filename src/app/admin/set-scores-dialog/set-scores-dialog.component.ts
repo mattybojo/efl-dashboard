@@ -118,4 +118,8 @@ export class SetScoresDialogComponent implements OnInit {
       });
     });
   }
+
+  closeDialog() {
+    this.dialogRef.close();
+  }
 }
