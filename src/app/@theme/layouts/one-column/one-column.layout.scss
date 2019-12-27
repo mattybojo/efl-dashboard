@@ -6,4 +6,8 @@
   .menu-sidebar ::ng-deep .scrollable {
     padding-top: nb-theme(layout-padding-top);
   }
+
+  nb-layout-footer {
+    margin-top: 30px !important;
+  }
 }
