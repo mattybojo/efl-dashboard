@@ -30,7 +30,7 @@ export class ChangelogComponent implements OnInit {
           if (!isAdmin) {
             // Filter logs based on whether user is admin or not
             filteredLogs = logs.filter((log: Changelog) => {
-              return log.type !== 'admin';
+              return log.type === 'all';
             });
           }
           const sortedLogs = orderBy(filteredLogs, (log: Changelog) => {
