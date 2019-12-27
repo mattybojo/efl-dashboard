@@ -1,6 +1,7 @@
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~@nebular/theme/styles/global/breakpoints';
 @import '../../styles/themes';
+@import '~include-media/dist/_include-media';
 
 @include nb-install-component() {
   display: flex;
@@ -56,6 +57,20 @@
       @include nb-rtl(border-right, 1px solid nb-theme(divider-color));
       white-space: nowrap;
       text-decoration: none;
+    }
+
+    .desktop {
+      @include media("<tablet") {
+        display: none;
+      }
+      display: block;
+    }
+
+    .mobile {
+      @include media("<tablet") {
+        display: block;
+      }
+      display: none;
     }
   }
 
