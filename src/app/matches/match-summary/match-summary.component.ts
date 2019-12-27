@@ -2,7 +2,6 @@ import { MatchSummaryLinkComponent } from './../match-summary-link/match-summary
 import { Component, OnInit } from '@angular/core';
 import { MatchService } from '../../shared/services/match.service';
 import { MatchSummary, Match } from '../../shared/models/match.model';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'ngx-match-summary',
@@ -44,7 +43,7 @@ export class MatchSummaryComponent implements OnInit {
     },
   };
 
-  constructor(private matchService: MatchService, private sanitizer: DomSanitizer) {}
+  constructor(private matchService: MatchService) {}
 
   ngOnInit() {
     this.matchService.getMatches().subscribe((matches: Match[]) => {
@@ -54,7 +53,7 @@ export class MatchSummaryComponent implements OnInit {
         const whiteCaptain: string = (match.whiteTeam && match.whiteTeam.players) ? match.whiteTeam.players.split(',')[0] : 'White';
         const darkGoals: number = (match.darkTeam && match.darkTeam.goals) ? match.darkTeam.goals.split(',').length : 0;
         const whiteGoals: number = (match.whiteTeam && match.whiteTeam.goals) ? match.whiteTeam.goals.split(',').length : 0;
-        tempData.push({date: match.date, darkTeam: `${darkCaptain} - ${darkGoals}`, whiteTeam: `${whiteCaptain} - ${whiteGoals}`, motm: match.motm});
+        tempData.push({date: match.date, darkTeam: `${darkGoals} (${darkCaptain})`, whiteTeam: `${whiteGoals} (${whiteCaptain})`, motm: match.motm});
       });
       this.data = tempData;
     });
