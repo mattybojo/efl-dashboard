@@ -5,7 +5,6 @@ import { NbMenuService, NbSidebarService } from '@nebular/theme';
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { MENU_ITEMS } from './pages/pages-menu';
 import { EFL_MENU_ITEMS, EFL_ADMIN_MENU_ITEMS } from './app-menu';
 import { AuthService } from './shared/services/auth.service';
 import { NbMenuItem, NbIconLibraries } from '@nebular/theme';
@@ -47,12 +46,8 @@ export class AppComponent implements OnInit {
     this.menu = EFL_MENU_ITEMS;
     this.authService.getUserDataObservable().subscribe(user => {
       const temp: NbMenuItem[] = new Array<NbMenuItem>();
-      if (user) {
-        if (user.id === 'RAWeDzKz6ABgEnWsONnI') {
-          this.menu = temp.concat(EFL_MENU_ITEMS, EFL_ADMIN_MENU_ITEMS, MENU_ITEMS);
-        } else if (user.isAdmin) {
-          this.menu = temp.concat(EFL_MENU_ITEMS, EFL_ADMIN_MENU_ITEMS);
-        }
+      if (user && user.isAdmin) {
+        this.menu = temp.concat(EFL_MENU_ITEMS, EFL_ADMIN_MENU_ITEMS);
       } else {
         this.menu = EFL_MENU_ITEMS;
       }
