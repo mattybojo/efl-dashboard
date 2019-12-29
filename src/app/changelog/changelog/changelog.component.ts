@@ -3,7 +3,6 @@ import { tap } from 'rxjs/operators';
 import { ChangelogService } from './../../shared/services/changelog.service';
 import { Component, OnInit } from '@angular/core';
 import { groupBy, orderBy } from 'lodash';
-import * as moment from 'moment'
 import { Observable } from 'rxjs';
 import { Changelog } from '../../shared/models/changelog.model';
 
@@ -33,11 +32,9 @@ export class ChangelogComponent implements OnInit {
               return log.type === 'all';
             });
           }
-          const sortedLogs = orderBy(filteredLogs, (log: Changelog) => {
-            return moment(log.date.toDate()).format();
-          }, 'desc');
+          const sortedLogs = orderBy(filteredLogs, ['date'], 'desc');
           self.formattedLogs = groupBy(sortedLogs, (log: Changelog) => {
-            return moment(log.date.toDate()).startOf('day').format('MM-DD-YYYY');
+            return log.date.toDate().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit'}).replace(/[/]/gi, '-');
           });
         });
       })
