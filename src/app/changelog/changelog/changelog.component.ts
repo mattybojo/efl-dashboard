@@ -1,9 +1,9 @@
 import { AuthService } from './../../shared/services/auth.service';
 import { tap } from 'rxjs/operators';
 import { ChangelogService } from './../../shared/services/changelog.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { groupBy, orderBy } from 'lodash';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Changelog } from '../../shared/models/changelog.model';
 
 @Component({
@@ -11,11 +11,13 @@ import { Changelog } from '../../shared/models/changelog.model';
   templateUrl: './changelog.component.html',
   styleUrls: ['./changelog.component.scss']
 })
-export class ChangelogComponent implements OnInit {
+export class ChangelogComponent implements OnInit, OnDestroy {
 
   formattedLogs: any[];
   logs$: Observable<Changelog[]>;
   objectKeys: any;
+
+  subscription$: Subscription;
 
   constructor(private changelogService: ChangelogService, private authService: AuthService) { }
 
@@ -24,7 +26,7 @@ export class ChangelogComponent implements OnInit {
     this.logs$ = this.changelogService.getLogs().pipe(
       tap((logs: Changelog[]) => {
         this.objectKeys = Object.keys;
-        this.authService.isAdmin().subscribe((isAdmin: boolean) => {
+        this.subscription$ = this.authService.isAdmin().subscribe((isAdmin: boolean) => {
           let filteredLogs = logs;
           if (!isAdmin) {
             // Filter logs based on whether user is admin or not
@@ -41,4 +43,7 @@ export class ChangelogComponent implements OnInit {
     );
   }
 
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
+  }
 }

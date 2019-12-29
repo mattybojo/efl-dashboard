@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PlayerStats } from '../../shared/models/player.model';
 import { KeyValue } from '@angular/common';
 import { PlayerService } from '../../shared/services/player.service';
 import { cloneDeep } from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ngx-dashboard-stats-table',
   templateUrl: './dashboard-stats-table.component.html',
   styleUrls: ['./dashboard-stats-table.component.scss']
 })
-export class DashboardStatsTableComponent implements OnInit {
+export class DashboardStatsTableComponent implements OnInit, OnDestroy {
 
   data: PlayerStats[];
 
@@ -67,6 +68,8 @@ export class DashboardStatsTableComponent implements OnInit {
   seasonOptions: KeyValue<string, string>[] = [{key: 'Season 2', value: 'season2'}, {key: 'Season 1', value: 'season1'}];
   selectedSeason: string;
 
+  subscription$: Subscription[] = [];
+
   constructor(private playerService: PlayerService) { }
 
   ngOnInit() {
@@ -75,18 +78,20 @@ export class DashboardStatsTableComponent implements OnInit {
   }
 
   getPlayerStatsBySeason() {
-    this.playerService.getPlayerStats(this.selectedSeason).subscribe((resp: PlayerStats[]) => {
-      let tempObj: Object = {};
-      Object.assign(tempObj, this.defaultSettings, this.allCols);
+    this.subscription$.push(
+      this.playerService.getPlayerStats(this.selectedSeason).subscribe((resp: PlayerStats[]) => {
+        let tempObj: Object = {};
+        Object.assign(tempObj, this.defaultSettings, this.allCols);
 
-      this.settings = cloneDeep(tempObj);
+        this.settings = cloneDeep(tempObj);
 
-      if (this.selectedSeason === 'season1') {
-        delete this.settings['columns']['assists'];
-      }
+        if (this.selectedSeason === 'season1') {
+          delete this.settings['columns']['assists'];
+        }
 
-      this.data = this.calculateWinPct(resp);
-    });
+        this.data = this.calculateWinPct(resp);
+      }),
+    );
   }
 
   calculateWinPct(stats: PlayerStats[]): PlayerStats[] {
@@ -94,5 +99,9 @@ export class DashboardStatsTableComponent implements OnInit {
       stat.winPct = (stat.wins / stat.gamesPlayed);
     });
     return stats;
+  }
+
+  ngOnDestroy() {
+    this.subscription$.forEach(sub => sub.unsubscribe());
   }
 }

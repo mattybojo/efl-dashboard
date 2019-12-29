@@ -1,6 +1,7 @@
 import { GraphData } from './../../shared/models/player.model';
 import { Component, OnDestroy, Input } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ngx-chartjs-pie',
@@ -11,9 +12,10 @@ import { NbThemeService } from '@nebular/theme';
 export class ChartjsPieComponent implements OnDestroy {
   _data: any;
   options: any;
-  themeSubscription: any;
   colors: any;
   chartjs: any;
+
+  subscription$: Subscription;
 
   @Input() set data(data: GraphData) {
     const colorArray: string[] = [];
@@ -77,13 +79,13 @@ export class ChartjsPieComponent implements OnDestroy {
   }
 
   constructor(private theme: NbThemeService) {
-    this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
+    this.subscription$ = this.theme.getJsTheme().subscribe(config => {
       this.colors = config.variables;
       this.chartjs = config.variables.chartjs;
     });
   }
 
   ngOnDestroy(): void {
-    this.themeSubscription.unsubscribe();
+    this.subscription$.unsubscribe();
   }
 }

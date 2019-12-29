@@ -1,26 +1,28 @@
 import { ViewMotmVotesDialogComponent } from './../view-motm-votes-dialog/view-motm-votes-dialog.component';
 import { AuthService } from './../../shared/services/auth.service';
-import { TeamPicker, MotmVotesList, MotmVote } from './../../shared/models/team-picker.model';
+import { MotmVotesList, MotmVote } from './../../shared/models/team-picker.model';
 import { TeamPickerService } from './../../shared/services/team-picker.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
 import { faSearchPlus } from '@fortawesome/free-solid-svg-icons';
 import { NbToastrService, NbDialogService, NbGlobalPhysicalPosition } from '@nebular/theme';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-admin-motm-voting',
   templateUrl: './admin-motm-voting.component.html',
   styleUrls: ['./admin-motm-voting.component.scss']
 })
-export class AdminMotmVotingComponent implements OnInit {
+export class AdminMotmVotingComponent implements OnInit, OnDestroy {
 
   darkTeamPlayers: string[];
   whiteTeamPlayers: string[];
   selectedPlayer: string;
   isSaving: boolean = false;
-  teamData$: Observable<TeamPicker[]>;
   motmVotesList: MotmVotesList;
   faSearchPlus = faSearchPlus;
+
+  subscription$: Subscription;
 
   constructor(private teamPickerService: TeamPickerService, private toastrService: NbToastrService,
               private authService: AuthService, private dialogService: NbDialogService) { }
@@ -29,12 +31,12 @@ export class AdminMotmVotingComponent implements OnInit {
     const obsArray: Observable<any>[] = [];
 
     const teamData$ = this.teamPickerService.getTeamData();
-    const MotmVotesList$ = this.teamPickerService.getMotmVotes();
+    const motmVotesList$ = this.teamPickerService.getMotmVotes();
 
     obsArray.push(teamData$);
-    obsArray.push(MotmVotesList$);
+    obsArray.push(motmVotesList$);
 
-    combineLatest(obsArray).subscribe(obs => {
+    this.subscription$ = combineLatest(obsArray).subscribe(obs => {
       const pickerData = obs[0][0];
       this.motmVotesList = obs[1];
 
@@ -90,5 +92,9 @@ export class AdminMotmVotingComponent implements OnInit {
         position: NbGlobalPhysicalPosition.TOP_RIGHT,
       });
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 }

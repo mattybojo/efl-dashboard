@@ -1,14 +1,15 @@
 import { MatchSummaryLinkComponent } from './../match-summary-link/match-summary-link.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatchService } from '../../shared/services/match.service';
 import { MatchSummary, Match } from '../../shared/models/match.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ngx-match-summary',
   templateUrl: './match-summary.component.html',
   styleUrls: ['./match-summary.component.scss']
 })
-export class MatchSummaryComponent implements OnInit {
+export class MatchSummaryComponent implements OnInit, OnDestroy {
 
   data: MatchSummary[];
 
@@ -43,10 +44,12 @@ export class MatchSummaryComponent implements OnInit {
     },
   };
 
+  subscription$: Subscription;
+
   constructor(private matchService: MatchService) {}
 
   ngOnInit() {
-    this.matchService.getMatches().subscribe((matches: Match[]) => {
+    this.subscription$ = this.matchService.getMatches().subscribe((matches: Match[]) => {
       let tempData: MatchSummary[] = [];
       matches.forEach((match: Match) => {
         const darkCaptain: string = (match.darkTeam && match.darkTeam.players) ? match.darkTeam.players.split(',')[0] : 'Dark';
@@ -57,5 +60,9 @@ export class MatchSummaryComponent implements OnInit {
       });
       this.data = tempData;
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 }

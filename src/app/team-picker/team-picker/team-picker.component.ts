@@ -1,9 +1,9 @@
 import { ChatComponent } from './../shared/chat/chat.component';
 import { TeamPickerService } from '../../shared/services/team-picker.service';
 import { TeamPicker, TeamData, TeamType } from './../../shared/models/team-picker.model';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 @Component({
@@ -11,7 +11,7 @@ import { tap } from 'rxjs/operators';
   templateUrl: './team-picker.component.html',
   styleUrls: ['./team-picker.component.scss']
 })
-export class TeamPickerComponent implements OnInit {
+export class TeamPickerComponent implements OnInit, OnDestroy {
 
   @ViewChild('chat', { static: false }) chat: ChatComponent;
 
@@ -23,6 +23,8 @@ export class TeamPickerComponent implements OnInit {
   teamData$: Observable<TeamPicker[]>;
   playerCounts: [number, number, number];
   showConfirmBtn: boolean = false;
+
+  subscription$: Subscription[] = [];
 
   constructor(private teamPickerService: TeamPickerService) {}
 
@@ -121,9 +123,15 @@ export class TeamPickerComponent implements OnInit {
 
     // Save to firebase
     if (!this.isPickDisabled()) {
-      this.teamPickerService.saveTeamData(this.pickerData).subscribe(() => {
-        self.chat.sendMessage('system', `${self.teamsData[TeamType.MY_TEAM].captain} selected ${player}`);
-      });
+      this.subscription$.push(
+        this.teamPickerService.saveTeamData(this.pickerData).subscribe(() => {
+          self.chat.sendMessage('system', `${self.teamsData[TeamType.MY_TEAM].captain} selected ${player}`);
+        }),
+      );
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription$.forEach(sub => sub.unsubscribe());
   }
 }

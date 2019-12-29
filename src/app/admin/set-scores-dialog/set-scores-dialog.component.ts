@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Match, AdminPlayerData, Team } from '../../shared/models/match.model';
 import { MatchService } from '../../shared/services/match.service';
 import { NbDialogRef } from '@nebular/theme';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-set-scores-dialog',
   templateUrl: './set-scores-dialog.component.html',
   styleUrls: ['./set-scores-dialog.component.scss']
 })
-export class SetScoresDialogComponent implements OnInit {
+export class SetScoresDialogComponent implements OnInit, OnDestroy {
 
   matchData: Match;
   isSaving: boolean;
@@ -16,6 +17,8 @@ export class SetScoresDialogComponent implements OnInit {
   whiteTeamData: AdminPlayerData[];
   darkTeamScore: number;
   whiteTeamScore: number;
+
+  subscription$: Subscription[] = [];
 
   constructor(private dialogRef: NbDialogRef<SetScoresDialogComponent>, private matchService: MatchService) { }
 
@@ -110,16 +113,24 @@ export class SetScoresDialogComponent implements OnInit {
     const self = this;
     this.matchData.darkTeam = this.formatTeamData(this.darkTeamData);
     this.matchData.whiteTeam = this.formatTeamData(this.whiteTeamData);
-    this.matchService.getMatchByDate(this.matchData.date).subscribe((match: Match) => {
-      self.matchData.id = match.id;
-      self.matchService.updateMatch(self.matchData).subscribe(() => {
-        self.isSaving = false;
-        self.dialogRef.close();
-      });
-    });
+    this.subscription$.push(
+        this.matchService.getMatchByDate(this.matchData.date).subscribe((match: Match) => {
+        self.matchData.id = match.id;
+        this.subscription$.push(
+          self.matchService.updateMatch(self.matchData).subscribe(() => {
+            self.isSaving = false;
+            self.dialogRef.close();
+          }),
+        );
+      }),
+    );
   }
 
   closeDialog() {
     this.dialogRef.close();
+  }
+
+  ngOnDestroy() {
+    this.subscription$.forEach(sub => sub.unsubscribe());
   }
 }

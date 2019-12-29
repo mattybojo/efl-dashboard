@@ -1,8 +1,8 @@
 import { SavePlayerNameDialogComponent } from './../save-player-name-dialog/save-player-name-dialog.component';
 import { PlayerService } from './../../shared/services/player.service';
 import { TeamPicker, TeamType, TeamData } from './../../shared/models/team-picker.model';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable, combineLatest } from 'rxjs';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Observable, combineLatest, Subscription } from 'rxjs';
 import { ChatComponent } from './../../team-picker/shared/chat/chat.component';
 import { Player } from './../../shared/models/player.model';
 import { TeamPickerService } from './../../shared/services/team-picker.service';
@@ -16,7 +16,7 @@ import { NbDialogService } from '@nebular/theme';
   templateUrl: './admin-team-picker.component.html',
   styleUrls: ['./admin-team-picker.component.scss']
 })
-export class AdminTeamPickerComponent implements OnInit {
+export class AdminTeamPickerComponent implements OnInit, OnDestroy {
 
   @ViewChild('chat', { static: false }) chat: ChatComponent;
 
@@ -32,6 +32,8 @@ export class AdminTeamPickerComponent implements OnInit {
   faSave = faSave;
   faUserFriends = faUserFriends;
   faPlus = faPlus;
+
+  subscription$: Subscription[] = [];
 
   disableCaptainPicker: boolean = true;
 
@@ -56,48 +58,50 @@ export class AdminTeamPickerComponent implements OnInit {
     obsArray.push(teamData$);
     obsArray.push(players$);
 
-    combineLatest(obsArray).subscribe(obs => {
-      self.pickerData = obs[0][0];
-      remainingPlayers = cloneDeep(obs[1]);
-      let teamCaptain: string;
+    this.subscription$.push(
+      combineLatest(obsArray).subscribe(obs => {
+        self.pickerData = obs[0][0];
+        remainingPlayers = cloneDeep(obs[1]);
+        let teamCaptain: string;
 
-      playerList = self.pickerData.availablePlayers.split(',');
-      playerList = (playerList && playerList.length > 0 && playerList[0].length > 0) ? playerList.sort() : null;
-      self.teamsData[TeamType.AVAILABLE] = { players: playerList, captain: null, label: 'Available'};
-      availableCount = (playerList) ? playerList.length : 0;
+        playerList = self.pickerData.availablePlayers.split(',');
+        playerList = (playerList && playerList.length > 0 && playerList[0].length > 0) ? playerList.sort() : null;
+        self.teamsData[TeamType.AVAILABLE] = { players: playerList, captain: null, label: 'Available'};
+        availableCount = (playerList) ? playerList.length : 0;
 
-      playerList = playerList == null ? [] : playerList;
-      playersInPool = playerList.concat(self.pickerData.darkTeam.split(',')).concat(self.pickerData.whiteTeam.split(','));
+        playerList = playerList == null ? [] : playerList;
+        playersInPool = playerList.concat(self.pickerData.darkTeam.split(',')).concat(self.pickerData.whiteTeam.split(','));
 
-      playersInPool.forEach((playerName: string) => {
-        playerIndex = remainingPlayers.findIndex(player => player.name === playerName);
-        if (playerIndex > -1) {
-          remainingPlayers.splice(playerIndex, 1);
+        playersInPool.forEach((playerName: string) => {
+          playerIndex = remainingPlayers.findIndex(player => player.name === playerName);
+          if (playerIndex > -1) {
+            remainingPlayers.splice(playerIndex, 1);
+          }
+        });
+
+        self.teamsData[TeamType.REMAINING] = { players: remainingPlayers.map(x => x.name).sort(), captain: null, label: 'Out'};
+
+        playerList = self.pickerData.darkTeam.split(',');
+        playerList = (playerList && playerList.length > 0 && playerList[0].length > 0) ? playerList : null;
+        teamCaptain = (playerList && playerList[0]) ? playerList[0] : null;
+        self.teamsData[TeamType.DARK_TEAM] = { players: playerList, captain: teamCaptain, label: 'Dark Team'};
+        darkTeamCount = (playerList) ? playerList.length : 0;
+
+        playerList = self.pickerData.whiteTeam.split(',');
+        playerList = (playerList && playerList.length > 0 && playerList[0].length > 0) ? playerList : null;
+        teamCaptain = (playerList && playerList[0]) ? playerList[0] : null;
+        self.teamsData[TeamType.WHITE_TEAM] = { players: playerList, captain: teamCaptain, label: 'White Team'};
+        whiteTeamCount = (playerList) ? playerList.length : 0;
+
+        self.playerCounts = [availableCount, darkTeamCount, whiteTeamCount, remainingPlayers.length];
+
+        if (availableCount >= 2 && (darkTeamCount === 0 && whiteTeamCount === 0)) {
+          self.disableCaptainPicker = false;
+        } else {
+          self.disableCaptainPicker = true;
         }
-      });
-
-      self.teamsData[TeamType.REMAINING] = { players: remainingPlayers.map(x => x.name).sort(), captain: null, label: 'Out'};
-
-      playerList = self.pickerData.darkTeam.split(',');
-      playerList = (playerList && playerList.length > 0 && playerList[0].length > 0) ? playerList : null;
-      teamCaptain = (playerList && playerList[0]) ? playerList[0] : null;
-      self.teamsData[TeamType.DARK_TEAM] = { players: playerList, captain: teamCaptain, label: 'Dark Team'};
-      darkTeamCount = (playerList) ? playerList.length : 0;
-
-      playerList = self.pickerData.whiteTeam.split(',');
-      playerList = (playerList && playerList.length > 0 && playerList[0].length > 0) ? playerList : null;
-      teamCaptain = (playerList && playerList[0]) ? playerList[0] : null;
-      self.teamsData[TeamType.WHITE_TEAM] = { players: playerList, captain: teamCaptain, label: 'White Team'};
-      whiteTeamCount = (playerList) ? playerList.length : 0;
-
-      self.playerCounts = [availableCount, darkTeamCount, whiteTeamCount, remainingPlayers.length];
-
-      if (availableCount >= 2 && (darkTeamCount === 0 && whiteTeamCount === 0)) {
-        self.disableCaptainPicker = false;
-      } else {
-        self.disableCaptainPicker = true;
-      }
-    });
+      }),
+    );
   }
 
   addPlayerToTeam(team: string, player: string): string {
@@ -129,12 +133,14 @@ export class AdminTeamPickerComponent implements OnInit {
   onAddPlayer() {
     const self = this;
 
-    this.dialogService.open(SavePlayerNameDialogComponent, {
-      context: {
-        dialogTitle: 'Create New Player',
-        dialogInputLabel: 'Enter the new player\'s name'
-      }
-    }).onClose.subscribe(name => name ? self.playerService.createPlayer(name) : null);
+    this.subscription$.push(
+      this.dialogService.open(SavePlayerNameDialogComponent, {
+        context: {
+          dialogTitle: 'Create New Player',
+          dialogInputLabel: 'Enter the new player\'s name'
+        }
+      }).onClose.subscribe(name => name ? self.playerService.createPlayer(name) : null),
+    );
   }
 
   onPickCaptains() {
@@ -204,4 +210,7 @@ export class AdminTeamPickerComponent implements OnInit {
     this.teamPickerService.saveTeamData(this.pickerData);
   }
 
+  ngOnDestroy() {
+    this.subscription$.forEach(sub => sub.unsubscribe());
+  }
 }

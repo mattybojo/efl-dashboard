@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MatchService } from '../../shared/services/match.service';
 import { NbDialogService } from '@nebular/theme';
@@ -6,14 +6,14 @@ import { switchMap } from 'rxjs/operators';
 import { Match } from '../../shared/models/match.model';
 import { SetScoresDialogComponent } from '../set-scores-dialog/set-scores-dialog.component';
 import { faSave, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'ngx-admin-match-detail',
   templateUrl: './admin-match-detail.component.html',
   styleUrls: ['./admin-match-detail.component.scss']
 })
-export class AdminMatchDetailComponent implements OnInit {
+export class AdminMatchDetailComponent implements OnInit, OnDestroy {
 
   match$: Observable<Match[]>;
   match: Match;
@@ -22,11 +22,13 @@ export class AdminMatchDetailComponent implements OnInit {
   faSave = faSave;
   faLongArrowAltLeft = faLongArrowAltLeft;
 
+  subscription$: Subscription;
+
   constructor(private route: ActivatedRoute, private matchService: MatchService,
-    private dialogService: NbDialogService) { }
+    private dialogService: NbDialogService) {}
 
   ngOnInit() {
-    this.route.queryParamMap.pipe(
+    this.subscription$ = this.route.queryParamMap.pipe(
       switchMap((params: ParamMap) => {
         this.params = params;
         return this.matchService.getMatches();
@@ -53,5 +55,9 @@ export class AdminMatchDetailComponent implements OnInit {
         matchData: this.match,
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
   }
 }

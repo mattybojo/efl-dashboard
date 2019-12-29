@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, combineLatest } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable, combineLatest, Subscription } from 'rxjs';
 import { TeamPicker, MotmVotesList } from '../../shared/models/team-picker.model';
 import { SavePlayerNameDialogComponent } from '../../admin/save-player-name-dialog/save-player-name-dialog.component';
 import { TeamPickerService } from '../../shared/services/team-picker.service';
@@ -12,7 +12,7 @@ import { NbToastrService, NbGlobalPhysicalPosition, NbDialogService } from '@neb
   templateUrl: './motm-voting.component.html',
   styleUrls: ['./motm-voting.component.scss']
 })
-export class MotmVotingComponent implements OnInit {
+export class MotmVotingComponent implements OnInit, OnDestroy {
 
   darkTeamPlayers: string[];
   whiteTeamPlayers: string[];
@@ -20,6 +20,8 @@ export class MotmVotingComponent implements OnInit {
   isSaving: boolean = false;
   teamData$: Observable<TeamPicker[]>;
   motmVotesList: MotmVotesList;
+
+  subscription$: Subscription[] = [];
 
   constructor(private teamPickerService: TeamPickerService, private toastrService: NbToastrService,
               private authService: AuthService, private dialogService: NbDialogService) { }
@@ -33,13 +35,15 @@ export class MotmVotingComponent implements OnInit {
     obsArray.push(teamData$);
     obsArray.push(MotmVotesList$);
 
-    combineLatest(obsArray).subscribe(obs => {
-      const pickerData = obs[0][0];
-      this.motmVotesList = obs[1];
+    this.subscription$.push(
+      combineLatest(obsArray).subscribe(obs => {
+        const pickerData = obs[0][0];
+        this.motmVotesList = obs[1];
 
-      this.darkTeamPlayers = pickerData.darkTeam.split(',');
-      this.whiteTeamPlayers = pickerData.whiteTeam.split(',');
-    });
+        this.darkTeamPlayers = pickerData.darkTeam.split(',');
+        this.whiteTeamPlayers = pickerData.whiteTeam.split(',');
+      }),
+    );
   }
 
   selectPlayer(player: string) {
@@ -59,12 +63,14 @@ export class MotmVotingComponent implements OnInit {
       userName = userData.name.split(' ')[0];
       this.saveVote(userName);
     } else {
-      this.dialogService.open(SavePlayerNameDialogComponent, {
-        context: {
-          dialogTitle: 'Verify Your Vote',
-          dialogInputLabel: 'Enter your name',
-        }
-      }).onClose.subscribe(name => name ? self.saveVote(name.trim()) : null);
+      this.subscription$.push(
+        this.dialogService.open(SavePlayerNameDialogComponent, {
+          context: {
+            dialogTitle: 'Verify Your Vote',
+            dialogInputLabel: 'Enter your name',
+          },
+        }).onClose.subscribe(name => name ? self.saveVote(name.trim()) : null),
+      );
     }
   }
 
@@ -76,12 +82,18 @@ export class MotmVotingComponent implements OnInit {
       this.motmVotesList.votes = this.motmVotesList.votes.concat(`,${userName}:${this.selectedPlayer}`);
     }
 
-    this.teamPickerService.submitMotmVote(this.motmVotesList).subscribe(() => {
-      self.selectedPlayer = null;
-      self.toastrService.success('Thanks for voting!', 'Success!', {
-        duration: 3000,
-        position: NbGlobalPhysicalPosition.TOP_RIGHT,
-      });
-    });
+    this.subscription$.push(
+      this.teamPickerService.submitMotmVote(this.motmVotesList).subscribe(() => {
+        self.selectedPlayer = null;
+        self.toastrService.success('Thanks for voting!', 'Success!', {
+          duration: 3000,
+          position: NbGlobalPhysicalPosition.TOP_RIGHT,
+        });
+      }),
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription$.forEach(sub => sub.unsubscribe());
   }
 }
