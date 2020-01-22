@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatchService } from '../../shared/services/match.service';
 import { MatchSummary, Match } from '../../shared/models/match.model';
 import { Subscription } from 'rxjs';
+import { orderBy } from 'lodash';
 
 @Component({
   selector: 'ngx-match-summary',
@@ -51,6 +52,11 @@ export class MatchSummaryComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription$ = this.matchService.getMatches().subscribe((matches: Match[]) => {
       let tempData: MatchSummary[] = [];
+
+      matches = orderBy(matches, (match: Match) => {
+        return new Date(match.date);
+      }, 'desc');
+
       matches.forEach((match: Match) => {
         const darkCaptain: string = (match.darkTeam && match.darkTeam.players) ? match.darkTeam.players.split(',')[0] : 'Dark';
         const whiteCaptain: string = (match.whiteTeam && match.whiteTeam.players) ? match.whiteTeam.players.split(',')[0] : 'White';
