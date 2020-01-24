@@ -1,13 +1,16 @@
 @import '../../styles/themes';
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~@nebular/theme/styles/global/breakpoints';
+@import '~include-media/dist/_include-media';
 
 @include nb-install-component() {
   .menu-sidebar ::ng-deep .scrollable {
     padding-top: nb-theme(layout-padding-top);
   }
 
-  nb-layout-footer {
-    margin-top: 30px !important;
+  nb-layout-column {
+    @include media(">=phone", "<tablet") {
+      margin-bottom: 60px;
+    }
   }
 }
