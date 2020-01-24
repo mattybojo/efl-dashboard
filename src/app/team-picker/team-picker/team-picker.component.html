@@ -1,7 +1,7 @@
 <div class="team-picker-container" *ngIf="teamData$ | async as teamData">
   <!-- Available players -->
   <div class="player-container" *ngIf="teamsData[0].players">
-    <h3>{{teamsData[0].label}}</h3>
+    <h6>{{teamsData[0].label}}</h6>
 
     <nb-card class="player-card" *ngFor="let player of teamsData[0].players">
       <nb-card-body class="player-card-content">
@@ -15,7 +15,7 @@
 
   <!-- My team -->
   <div class="player-container">
-    <h3>{{teamsData[1].label}}</h3>
+    <h6>{{teamsData[1].label}}</h6>
 
     <nb-card class="player-card" *ngFor="let player of teamsData[1].players">
       <nb-card-body class="player-card-content">
@@ -26,7 +26,7 @@
 
   <!-- Opposing team -->
   <div class="player-container">
-    <h3>{{teamsData[2].label}}</h3>
+    <h6>{{teamsData[2].label}}</h6>
 
     <nb-card class="player-card" *ngFor="let player of teamsData[2].players">
       <nb-card-body class="player-card-content">

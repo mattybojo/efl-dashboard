@@ -21,7 +21,7 @@
 
   <!-- Available players -->
   <div class="player-container" *ngIf="teamsData && teamsData[0].players">
-    <h3 class="team-label">{{teamsData[0].label}} ({{playerCounts[0]}})</h3>
+    <h6 class="team-label">{{teamsData[0].label}} ({{playerCounts[0]}})</h6>
 
     <nb-card class="player-card" *ngFor="let player of teamsData[0].players">
       <nb-card-body class="player-card-content">
@@ -40,7 +40,7 @@
 
   <!-- Dark team -->
   <div class="player-container" *ngIf="teamsData && teamsData[1].players">
-    <h3 class="team-label">{{teamsData[1].label}} ({{playerCounts[1]}})</h3>
+    <h6 class="team-label">{{teamsData[1].label}} ({{playerCounts[1]}})</h6>
 
     <nb-card class="player-card" *ngFor="let player of teamsData[1].players">
       <nb-card-body class="player-card-content">
@@ -59,7 +59,7 @@
 
   <!-- White team -->
   <div class="player-container" *ngIf="teamsData && teamsData[2].players">
-    <h3 class="team-label">{{teamsData[2].label}} ({{playerCounts[2]}})</h3>
+    <h6 class="team-label">{{teamsData[2].label}} ({{playerCounts[2]}})</h6>
 
     <nb-card class="player-card" *ngFor="let player of teamsData[2].players">
       <nb-card-body class="player-card-content">
@@ -78,7 +78,7 @@
 
   <!-- Remaining players (out) -->
   <div class="player-container" *ngIf="teamsData && teamsData[3].players">
-    <h3 class="team-label">{{teamsData[3].label}} ({{playerCounts[3]}})</h3>
+    <h6 class="team-label">{{teamsData[3].label}} ({{playerCounts[3]}})</h6>
 
     <nb-card class="player-card" *ngFor="let player of teamsData[3].players">
       <nb-card-body class="player-card-content">
