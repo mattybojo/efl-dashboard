@@ -63,3 +63,9 @@
 .selected {
   background-color: #80b3ff;
 }
+
+.submit-vote-container {
+  @include media(">=phone", "<tablet") {
+    margin-bottom: 30px;
+  }
+}
