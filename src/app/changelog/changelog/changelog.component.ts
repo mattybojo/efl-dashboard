@@ -16,6 +16,7 @@ export class ChangelogComponent implements OnInit, OnDestroy {
   formattedLogs: any[];
   logs$: Observable<Changelog[]>;
   objectKeys: any;
+  updatedStatsDate: string;
 
   subscription$: Subscription;
 
@@ -27,17 +28,14 @@ export class ChangelogComponent implements OnInit, OnDestroy {
       tap((logs: Changelog[]) => {
         this.objectKeys = Object.keys;
         this.subscription$ = this.authService.isAdmin().subscribe((isAdmin: boolean) => {
-          let filteredLogs = logs;
-          if (!isAdmin) {
-            // Filter logs based on whether user is admin or not
-            filteredLogs = logs.filter((log: Changelog) => {
-              return log.type === 'all';
-            });
-          }
+          const filteredLogs: Changelog[] = logs.filter((log: Changelog) => {
+            return log.type === 'all' || (isAdmin && log.type === 'admin');
+          });
           const sortedLogs = orderBy(filteredLogs, ['date'], 'desc');
           self.formattedLogs = groupBy(sortedLogs, (log: Changelog) => {
             return log.date.toDate().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit'}).replace(/[/]/gi, '-');
           });
+           this.updatedStatsDate = logs.find(x => x.type === 'statsUpdate').date.toDate().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit'}).replace(/[/]/gi, '-');
         });
       })
     );

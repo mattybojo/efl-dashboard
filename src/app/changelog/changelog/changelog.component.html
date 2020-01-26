@@ -1,5 +1,10 @@
 <div class="changelog-container" *ngIf="logs$ | async as logs">
   <h3>Site Updates</h3>
+  <nb-card class="stats-last-updated">
+    <nb-card-body>
+      Stats last updated: {{ updatedStatsDate }}
+    </nb-card-body>
+  </nb-card>
   <nb-accordion *ngIf="formattedLogs">
     <nb-accordion-item *ngFor="let key of objectKeys(formattedLogs)">
       <nb-accordion-item-header>

@@ -3,7 +3,7 @@ import { ChangelogRoutingModule } from './changelog-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChangelogComponent } from './changelog/changelog.component';
-import { NbAccordionModule } from '@nebular/theme';
+import { NbAccordionModule, NbCardModule } from '@nebular/theme';
 
 
 @NgModule({
@@ -13,6 +13,7 @@ import { NbAccordionModule } from '@nebular/theme';
     ChangelogRoutingModule,
     CommonModule,
     NbAccordionModule,
-  ]
+    NbCardModule,
+  ],
 })
 export class ChangelogModule { }
