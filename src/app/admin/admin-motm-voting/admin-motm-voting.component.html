@@ -8,7 +8,7 @@
 <div class="team-picker-container">
   <!-- Dark team -->
   <div class="player-container" *ngIf="darkTeamPlayers">
-    <h3 class="dark-team-label">Dark Team</h3>
+    <h6 class="dark-team-label">Dark Team</h6>
 
     <nb-card class="player-card" [class.selected]="player===selectedPlayer" *ngFor="let player of darkTeamPlayers" (click)="selectPlayer(player)">
       <nb-card-body class="player-card-content">
@@ -19,7 +19,7 @@
 
   <!-- White team -->
   <div class="player-container" *ngIf="whiteTeamPlayers">
-    <h3 class="white-team-label">White Team</h3>
+    <h6 class="white-team-label">White Team</h6>
 
     <nb-card class="player-card" [class.selected]="player===selectedPlayer" *ngFor="let player of whiteTeamPlayers" (click)="selectPlayer(player)">
       <nb-card-body class="player-card-content">
