@@ -1,11 +1,25 @@
+ngx-chartjs-pie {
+  display: block;
+  height: 225px;
+  width: 100%;
+
+  ::ng-deep chart {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+}
+
 .select-container {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .no-assists-msg {
+  height: 225px;
   text-align: center;
+  margin-bottom: 0;
 }
