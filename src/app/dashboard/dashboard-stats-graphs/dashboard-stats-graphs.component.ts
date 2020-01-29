@@ -28,7 +28,7 @@ export class DashboardStatsGraphsComponent implements OnInit, OnDestroy {
 
   getPlayerStatsBySeason() {
     this.subscription$.push(
-      this.playerService.getPlayerStats(this.selectedSeason).subscribe((resp: PlayerStats[]) => {
+      this.playerService.getAllPlayerStats(this.selectedSeason).subscribe((resp: PlayerStats[]) => {
         let temp: any[] = [];
         this.goalGraphData = new GraphData();
         this.assistGraphData = new GraphData();

@@ -1,9 +1,9 @@
-import { Player, PlayerStats } from './../models/player.model';
+import { Player, PlayerStats, Season } from './../models/player.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, from } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { convertSnaps } from './db-utils';
+import { convertSnaps, convertSnap } from './db-utils';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,28 @@ export class PlayerService {
       );
   }
 
-  getPlayerStats(season: string): Observable<PlayerStats[]> {
+  getSeasonsList(): Observable<Season> {
+    return this.db.
+      collection('seasonList')
+      .snapshotChanges()
+      .pipe(
+        map(snap => convertSnap<Season>(snap))
+      );
+  }
+
+  getPlayerStats(season: string, name: string): Observable<PlayerStats> {
+    if (!name) {
+      return of(null);
+    }
+    return this.db.
+      collection(season, ref => ref.where('name', '==', name))
+      .snapshotChanges()
+      .pipe(
+        map(snap => (snap && snap.length) ? convertSnap<PlayerStats>(snap) : null),
+      );
+  }
+
+  getAllPlayerStats(season: string): Observable<PlayerStats[]> {
     return this.db.
       collection(season)
       .snapshotChanges()

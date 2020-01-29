@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Log out' } ];
+  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
 
   faSignInAlt = faSignInAlt;
 
@@ -66,11 +66,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
         if (index > -1) {
           this.userMenu.splice(index, 1, { title: 'Log out'} );
         }
+        index = this.userMenu.findIndex(item => item.title === 'Profile');
+        if (index === -1) {
+          this.userMenu.splice(0, 0, { title: 'Profile'} );
+        }
       } else {
         this.user = null;
         index = this.userMenu.findIndex(item => item.title === 'Log out');
         if (index > -1) {
           this.userMenu.splice(index, 1, { title: 'Log in'} );
+        }
+        index = this.userMenu.findIndex(item => item.title === 'Profile');
+        if (index > -1) {
+          this.userMenu.splice(index, 1);
         }
       }
     });
@@ -78,9 +86,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.menuService.onItemClick().subscribe(menuItem => {
       if ('Log in' === menuItem.item.title) {
         this.router.navigate(['/auth/login']);
-      }
-      if ('Log out' === menuItem.item.title) {
-        this.authService.logout();
+      } else if ('Log out' === menuItem.item.title) {
+        this.authService.logout(this.router.url);
+      } else if ('Profile' === menuItem.item.title) {
+        this.router.navigate(['/auth/profile']);
       }
     });
 

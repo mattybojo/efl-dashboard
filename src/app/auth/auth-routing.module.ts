@@ -1,3 +1,5 @@
+import { AuthGuard } from './../shared/guards/auth.guard';
+import { ProfileComponent } from './profile/profile.component';
 import { AlreadyLoggedInGuard } from './../shared/guards/already-logged-in.guard';
 import { LoginComponent } from './login/login.component';
 import { Routes, RouterModule } from '@angular/router';
@@ -7,6 +9,10 @@ const routes: Routes = [{
   path: 'login',
   component: LoginComponent,
   canActivate: [AlreadyLoggedInGuard],
+}, {
+  path: 'profile',
+  component: ProfileComponent,
+  canActivate: [AuthGuard],
 }];
 
 @NgModule({

@@ -7,4 +7,5 @@ export class UserData {
   uid: string;
   phoneNumber: string;
   isAdmin: boolean;
+  displayName?: string; // the user's name in the DB (name as it appears in TeamPicker)
 }

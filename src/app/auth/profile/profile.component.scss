@@ -1,0 +1,42 @@
+@import '../../@theme/styles/themes';
+
+@include nb-install-component() {
+  ngx-chartjs-radar {
+    display: block;
+    height: nb-theme(card-height-medium);
+    width: 100%;
+
+    ::ng-deep chart {
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
+
+.profile-container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+img {
+  border-radius: 50%;
+  width: 120px;
+  height: auto;
+  margin-left: 1rem;
+}
+
+.user-data-container {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: middle;
+
+  .user-data {
+    display: block;
+    margin-bottom: 5px;
+  }
+}
+
+nb-card {
+  margin-bottom: 1rem;
+}

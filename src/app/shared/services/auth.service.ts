@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { config } from './../../config/config';
 import { UserData } from './../models/user-data.model';
 import { Injectable } from '@angular/core';
@@ -17,7 +18,8 @@ export class AuthService {
   private user$: BehaviorSubject<firebase.User> = new BehaviorSubject(null);
   private secureLS: SecureLS;
 
-  constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) {
+  constructor(private afAuth: AngularFireAuth, private db: AngularFirestore,
+    private router: Router) {
     const self = this;
     this.secureLS = new SecureLS({encodingType: 'aes', encryptionSecret: config.encryptionSecret});
     this.afAuth.authState.pipe(
@@ -58,7 +60,11 @@ export class AuthService {
     return this.userData$.value != null;
   }
 
-  logout(): void {
+  logout(url: string): void {
+    if (url.includes('auth')) {
+      this.router.navigate(['/dashboard']);
+    }
+
     this.afAuth.auth.signOut();
     this.userData$.next(null);
   }

@@ -18,5 +18,10 @@ export class Player {
 
 export class GraphData {
   labels: string[];
-  data: number[];
+  data?: number[];
+  datasets?: any[];
+}
+
+export class Season {
+  name: string;
 }

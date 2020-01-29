@@ -79,7 +79,7 @@ export class DashboardStatsTableComponent implements OnInit, OnDestroy {
 
   getPlayerStatsBySeason() {
     this.subscription$.push(
-      this.playerService.getPlayerStats(this.selectedSeason).subscribe((resp: PlayerStats[]) => {
+      this.playerService.getAllPlayerStats(this.selectedSeason).subscribe((resp: PlayerStats[]) => {
         let tempObj: Object = {};
         Object.assign(tempObj, this.defaultSettings, this.allCols);
 

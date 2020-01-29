@@ -1,0 +1,19 @@
+<div class="profile-container">
+  <nb-card>
+    <nb-card-body>
+      <img [src]="user.photoUrl">
+
+      <div class="user-data-container">
+        <span class="user-data">{{ user.name }}</span>
+        <span class="user-data">{{ user.isAdmin? 'Site Admin' : 'Player' }}</span>
+        <span class="user-data">{{ user.email }}</span>
+      </div>
+    </nb-card-body>
+  </nb-card>
+
+  <nb-card *ngIf="userGraphData && userGraphData.datasets && userGraphData.datasets.length > 0">
+    <nb-card-body>
+      <ngx-chartjs-radar [data]="userGraphData"></ngx-chartjs-radar>
+    </nb-card-body>
+  </nb-card>
+</div>
