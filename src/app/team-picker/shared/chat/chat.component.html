@@ -11,6 +11,6 @@
     </ng-container>
   </div>
   <textarea class="chat-input" nbInput [disabled]="isMessageSending" rows="2"
-    [(ngModel)]="chatInput" ngModel (keydown.enter)="onSubmit()"></textarea>
+    [(ngModel)]="chatInput" (keydown.enter)="onSubmit()"></textarea>
   <button nbButton status="primary" class="chat-submit" (click)="onSubmit()" [disabled]="isMessageSending">Send</button>
 </div>
