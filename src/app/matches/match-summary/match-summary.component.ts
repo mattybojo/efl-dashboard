@@ -51,10 +51,12 @@ export class MatchSummaryComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription$ = this.matchService.getMatches().subscribe((matches: Match[]) => {
-      let tempData: MatchSummary[] = [];
+      const tempData: MatchSummary[] = [];
 
       matches = orderBy(matches, (match: Match) => {
-        return new Date(match.date);
+        // Convert date to YYYY-MM-DD for Safari to sort correctly
+        const dateParts: string[] = match.date.split('-');
+        return new Date(`${dateParts[2]}-${dateParts[0]}-${dateParts[1]}`);
       }, 'desc');
 
       matches.forEach((match: Match) => {
