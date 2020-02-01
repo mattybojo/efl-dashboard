@@ -1,10 +1,12 @@
+import { Lookup } from './../../shared/models/lookup.model';
+import { LookupService } from './../../shared/services/lookup.service';
 import { PlayerService } from './../../shared/services/player.service';
 import { AuthService } from './../../shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { UserData } from '../../shared/models/user-data.model';
-import { GraphData, Season, PlayerStats } from '../../shared/models/player.model';
+import { GraphData, PlayerStats } from '../../shared/models/player.model';
 import { take } from 'rxjs/operators';
-import { Observable, forkJoin, combineLatest } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'ngx-profile',
@@ -17,17 +19,18 @@ export class ProfileComponent implements OnInit {
   userGraphData: GraphData = new GraphData();
   seasons: string[];
 
-  constructor(private authService: AuthService, private playerService: PlayerService) {}
+  constructor(private authService: AuthService, private playerService: PlayerService,
+    private lookupService: LookupService) {}
 
   ngOnInit() {
     const self = this;
     this.user = this.authService.getUser();
-    this.playerService.getSeasonsList().subscribe((seasonList: Season) => {
+    this.lookupService.getLookupValue('seasonList').subscribe((lookupResp: Lookup) => {
       let seasonArray: string[] = [];
       let seasonStatsObs: Observable<PlayerStats>[] = [];
       const graphLabels: string[] = ['Wins', 'Goals', 'Assists', 'Own Goals', 'Clean Sheets', 'Games Played'];
       let datasets: any[] = [];
-      self.seasons = seasonList.name.split(',');
+      self.seasons = lookupResp.value.split(',');
       self.seasons.forEach((season: string) => {
         seasonStatsObs.push(self.playerService.getPlayerStats(season, this.user.displayName).pipe(take(1)));
         seasonArray.push(`Season ${season.substr(6)}`);

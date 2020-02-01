@@ -21,7 +21,3 @@ export class GraphData {
   data?: number[];
   datasets?: any[];
 }
-
-export class Season {
-  name: string;
-}
