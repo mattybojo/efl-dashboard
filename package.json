@@ -65,6 +65,7 @@
     "include-media": "^1.4.9",
     "intl": "1.2.5",
     "lodash": "^4.17.15",
+    "ng-block-ui": "^2.1.8",
     "ng2-completer": "3.0.3",
     "ng2-smart-table": "1.5.0",
     "normalize.css": "6.0.0",

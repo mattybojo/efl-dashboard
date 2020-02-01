@@ -1,0 +1,39 @@
+<block-ui>
+  <nb-card>
+    <nb-card-body>
+      <h6>Reset Team Picker</h6>
+      <form #resetTeamPickerForm="ngForm" name="resetTeamPickerForm">
+        <fieldset>
+          <legend>Team Picker</legend>
+          <nb-checkbox [(ngModel)]="resetOptions.fieldsetTeamPicker" name="fieldsetTeamPicker">Clear Team Picker</nb-checkbox>
+          <div class="move-players-div" *ngIf="resetOptions.fieldsetTeamPicker">
+            <p>Move players to...</p>
+            <nb-radio-group [(ngModel)]="resetOptions.radioMovePlayers" name="radioMovePlayers" required>
+              <nb-radio value="available">Available</nb-radio>
+              <nb-radio value="out">Out</nb-radio>
+            </nb-radio-group>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Motm</legend>
+          <nb-checkbox [(ngModel)]="resetOptions.fieldsetMotm" name="fieldsetMotm">Clear Motm Votes</nb-checkbox>
+
+          <div class="motm-votes-div" *ngIf="motmWinners">
+            <p>Current winner(s): {{ motmWinners }} <span *ngIf="voteCount">({{ voteCount }})</span></p>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Chat</legend>
+          <nb-checkbox [(ngModel)]="resetOptions.fieldsetChat" name="fieldsetChat">Clear Chat</nb-checkbox>
+        </fieldset>
+
+        <div class="btn-container">
+          <button nbButton status="primary" shape="semi-round" size="small" [disabled]="!resetTeamPickerForm.valid" (click)="onClickReset()">Save</button>
+          <button nbButton shape="semi-round" status="basic" size="small" (click)="closeDialog()">Cancel</button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
+</block-ui>

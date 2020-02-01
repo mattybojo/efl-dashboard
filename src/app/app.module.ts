@@ -26,6 +26,7 @@ import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { FirebaseUIModule } from 'firebaseui-angular';
+import { BlockUIModule } from 'ng-block-ui';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = firebaseUiConfig;
 
@@ -53,6 +54,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = firebaseUiConfig;
     AngularFirestoreModule,
     AngularFireAuthModule,
     FirebaseUIModule.forRoot(firebaseUiAuthConfig),
+    BlockUIModule.forRoot(),
   ],
   bootstrap: [AppComponent],
 })

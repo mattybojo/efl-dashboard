@@ -1,3 +1,4 @@
+import { ResetTeamPickerDialogComponent } from './../reset-team-picker-dialog/reset-team-picker-dialog.component';
 import { SavePlayerNameDialogComponent } from './../save-player-name-dialog/save-player-name-dialog.component';
 import { PlayerService } from './../../shared/services/player.service';
 import { TeamPicker, TeamType, TeamData } from './../../shared/models/team-picker.model';
@@ -162,11 +163,11 @@ export class AdminTeamPickerComponent implements OnInit, OnDestroy {
   }
 
   onResetTeamPicker() {
-    this.pickerData.availablePlayers = '';
-    this.pickerData.darkTeam = '';
-    this.pickerData.whiteTeam = '';
-
-    this.teamPickerService.saveTeamData(this.pickerData);
+    this.dialogService.open(ResetTeamPickerDialogComponent, {
+      context: {
+        pickerData: this.pickerData,
+      }
+    });
   }
 
   onSaveMatch() {

@@ -30,3 +30,15 @@ export class MotmVote {
   user: string;
   vote: string;
 }
+
+export class ResetTeamPickerOptions {
+  fieldsetTeamPicker: boolean = true;
+  fieldsetChat: boolean = true;
+  fieldsetMotm: boolean = true;
+  radioMovePlayers: string = 'available';
+}
+
+export class MotmVoteTally {
+  user: string;
+  count: number;
+}

@@ -1,0 +1,42 @@
+fieldset {
+  border: 1px solid #000;
+}
+
+h6 {
+  text-align: center;
+}
+
+fieldset, h6 {
+  margin-bottom: 10px;
+}
+
+legend {
+  text-align: center;
+}
+
+p {
+  margin-bottom: 0;
+  margin-top: 5px;
+}
+
+.move-players-div {
+  margin-top: 5px;
+  margin-left: 18px;
+  padding-left: 11px;
+}
+
+.btn-container {
+  text-align: center;
+
+  button:not(:last-of-type) {
+    margin-right: 10px;
+  }
+}
+
+nb-radio {
+  margin-left: 20px;
+}
+
+nb-radio:first-of-type {
+  margin-top: 5px;
+}

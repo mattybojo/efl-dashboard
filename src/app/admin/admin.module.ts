@@ -11,9 +11,11 @@ import { SaveMatchDialogComponent } from './save-match-dialog/save-match-dialog.
 import { AdminMotmVotingComponent } from './admin-motm-voting/admin-motm-voting.component';
 import { SavePlayerNameDialogComponent } from './save-player-name-dialog/save-player-name-dialog.component';
 import { ViewMotmVotesDialogComponent } from './view-motm-votes-dialog/view-motm-votes-dialog.component';
-import { NbDialogModule, NbInputModule, NbCardModule, NbButtonModule, NbIconModule, NbSelectModule } from '@nebular/theme';
+import { NbDialogModule, NbInputModule, NbCardModule, NbButtonModule, NbIconModule, NbSelectModule, NbCheckboxModule, NbRadioModule } from '@nebular/theme';
 import { AdminMatchDetailComponent } from './admin-match-detail/admin-match-detail.component';
 import { RouterModule } from '@angular/router';
+import { ResetTeamPickerDialogComponent } from './reset-team-picker-dialog/reset-team-picker-dialog.component';
+import { BlockUIModule } from 'ng-block-ui';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { RouterModule } from '@angular/router';
     SavePlayerNameDialogComponent,
     ViewMotmVotesDialogComponent,
     AdminMatchDetailComponent,
+    ResetTeamPickerDialogComponent,
   ],
   imports: [
     AdminRoutingModule,
@@ -40,6 +43,9 @@ import { RouterModule } from '@angular/router';
     NbIconModule,
     NbSelectModule,
     RouterModule,
+    NbCheckboxModule,
+    NbRadioModule,
+    BlockUIModule,
   ],
   exports: [
     SavePlayerNameDialogComponent,
@@ -50,6 +56,7 @@ import { RouterModule } from '@angular/router';
     SaveMatchDialogComponent,
     SavePlayerNameDialogComponent,
     ViewMotmVotesDialogComponent,
+    ResetTeamPickerDialogComponent,
   ],
 })
 export class AdminModule { }

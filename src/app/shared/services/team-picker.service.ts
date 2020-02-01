@@ -2,9 +2,9 @@ import { MotmVotesList } from './../models/team-picker.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { TeamPicker } from '../models/team-picker.model';
-import { Observable, from } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 import { convertSnaps, convertSnap } from './db-utils';
-import { map } from 'rxjs/operators';
+import { map, take, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -41,5 +41,11 @@ export class TeamPickerService {
 
   submitMotmVote(vote: MotmVotesList): Observable<void> {
     return from(this.db.doc(`motmVotes/${vote.id}`).update(Object.assign({}, vote)));
+  }
+
+  deleteAllMotmVotes(): Observable<void> {
+    return this.getMotmVotes().pipe(take(1), switchMap((vote: MotmVotesList) => {
+      return from(this.db.doc(`motmVotes/${vote.id}`).update({ id: vote.id, votes: '' }));
+    }));
   }
 }
