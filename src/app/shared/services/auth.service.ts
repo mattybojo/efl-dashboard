@@ -66,6 +66,7 @@ export class AuthService {
     }
 
     this.afAuth.auth.signOut();
+    this.secureLS.remove('u');
     this.userData$.next(null);
   }
 
