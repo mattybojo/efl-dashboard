@@ -1,0 +1,17 @@
+<nb-card>
+  <nb-card-body>
+    <form #createGameSignUpForm="ngForm" name="createGameSignUpForm">
+      <h6 mat-dialog-title>New Game</h6>
+
+      <div class="dialog-body">
+        <span>Enter the match date (MM-DD-YYYY):&nbsp;</span>
+        <input nbInput [(ngModel)]="dateString" name="dateString" required pattern="\d{2}-\d{2}-\d{4}">
+      </div>
+
+      <div class="btn-container">
+        <button nbButton status="primary" shape="semi-round" size="small" [disabled]="!createGameSignUpForm.valid || isSaving" (click)="saveGame()">Save</button>
+        <button nbButton shape="semi-round" status="basic" size="small" (click)="closeDialog()">Cancel</button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

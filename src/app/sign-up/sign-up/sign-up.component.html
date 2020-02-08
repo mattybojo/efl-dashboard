@@ -1,0 +1,28 @@
+<div class="signup-container">
+  <div class="admin-btn-container" *ngIf="user && user.isAdmin">
+    <button nbButton status="primary" shape="semi-round" size="small" (click)="createGameSignUp()">
+      <fa-icon [fixedWidth]="true" [icon]="faPlus"></fa-icon>
+      <span class="btn-text">Create New Game</span>
+    </button>
+  </div>
+
+  <div class="player-container" *ngFor="let gameSignUps of signUpsByDate; let i = index">
+    <h6 class="day-of-week">{{ daysOfTheWeek[signUpGames[i].date.getDay()] }}</h6>
+    <h6>{{ signUpGames[i].value }}</h6>
+    <ng2-completer [(ngModel)]="player[i]" [datasource]="filteredPlayerLists[i]" [minSearchLength]="1" [placeholder]="'Player name'" [openOnClick]="true"
+    [selectOnClick]="true" [openOnFocus]="false" [autoHighlight]="true" [fillHighlighted]="false"></ng2-completer>
+    <button nbButton class="signup-btn" status="primary" shape="semi-round" size="small" (click)="onClickRsvp(i)" [disabled]="!(player[i] || (user && user.displayName))">
+      <fa-icon [fixedWidth]="true" [icon]="faCalendarCheck"></fa-icon>
+      <span class="btn-text">Sign up</span>
+    </button>
+    <ol>
+      <li *ngFor="let gameSignUp of gameSignUps; let i2 = index">
+        <nb-card class="player-card">
+          <nb-card-body class="player-card-content">
+            <span class="player-name">{{ i2+1 }}. {{ gameSignUp.user }}</span>
+          </nb-card-body>
+        </nb-card>
+      </li>
+    </ol>
+  </div>
+</div>

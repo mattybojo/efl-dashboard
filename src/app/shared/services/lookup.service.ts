@@ -1,7 +1,7 @@
+import { Lookup } from './../models/lookup.model';
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Lookup } from '../models/lookup.model';
-import { Observable } from 'rxjs';
+import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
+import { Observable, from } from 'rxjs';
 import { convertSnap, convertSnaps } from './db-utils';
 import { map } from 'rxjs/operators';
 
@@ -29,4 +29,11 @@ export class LookupService {
         map(snap => convertSnaps<Lookup>(snap)),
       );
   }
+
+  saveLookupValue(key: string, value: string): Observable<DocumentReference> {
+    const lookup: Lookup = { key, value };
+    return from(this.db.collection('lookup').add({ ...lookup }));
+  }
+
+
 }

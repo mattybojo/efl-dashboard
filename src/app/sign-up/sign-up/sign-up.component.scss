@@ -1,0 +1,111 @@
+@import '~include-media/dist/_include-media';
+
+.admin-btn-container {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.admin-btn-container > button {
+  margin-right: 5px;
+}
+
+ol {
+  padding-left: 0;
+  float: right;
+  margin-top: 5px;
+}
+
+li {
+  list-style-type: none;
+}
+
+.signup-btn {
+  width: 100%;
+  float: right;
+  margin-top: 5px;
+}
+
+.day-of-week {
+  margin-bottom: 0;
+}
+
+fa-icon {
+  margin-right: 5px;
+}
+
+.signup-container {
+  text-align: center;
+}
+
+.player-container:not(:first-of-type) {
+  margin-left: 5px;
+}
+
+.player-container {
+  @include media(">=phone", "<tablet") {
+    width: 115px;
+  }
+  width: 200px;
+  max-width: 100%;
+  margin: 0 0 25px 0;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.player-card {
+  @include media(">=phone", "<tablet") {
+    margin: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 120px;
+  }
+  max-width: 400px;
+  border: 1px solid #cccccc;
+  padding: 10px;
+  width: 200px;
+  overflow: hidden;
+  font-size: 14px;
+  margin: 0 auto;
+}
+
+.player-card-content {
+  padding: 0;
+}
+
+.player-name {
+  float: left;
+  vertical-align: middle;
+  line-height: 18px;
+}
+
+ng2-completer ::ng-deep {
+  .completer-input {
+    width: 100%;
+    border-radius: 0.25rem;
+    background-color: #f7f9fc;
+    border-color: #e4e9f2;
+    color: #222b45;
+    border-style: solid;
+    border-width: 1px;
+    font-family: Open Sans, sans-serif;
+    -webkit-appearance: none;
+    transition-duration: 0.15s;
+    transition-property: border, background-color, color, box-shadow;
+    transition-timing-function: ease-in;
+    height: 31px;
+  }
+
+  .completer-dropdown {
+    padding: 0;
+    max-height: 155px;
+    overflow-y: scroll;
+  }
+
+  .completer-row {
+    margin-bottom: 0;
+  }
+
+  .completer-title {
+    font-size: 14px;
+  }
+}

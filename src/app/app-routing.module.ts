@@ -31,6 +31,9 @@ const routes: Routes = [
   }, {
     path: 'motm-voting',
     loadChildren: './motm-voting/motm-voting.module#MotmVotingModule',
+  }, {
+    path: 'sign-up',
+    loadChildren: './sign-up/sign-up.module#SignUpModule',
   },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: 'dashboard' },

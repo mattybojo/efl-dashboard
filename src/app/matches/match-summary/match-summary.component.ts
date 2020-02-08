@@ -56,7 +56,7 @@ export class MatchSummaryComponent implements OnInit, OnDestroy {
       matches = orderBy(matches, (match: Match) => {
         // Convert date to YYYY-MM-DD for Safari to sort correctly
         const dateParts: string[] = match.date.split('-');
-        return new Date(`${dateParts[2]}-${dateParts[0]}-${dateParts[1]}`);
+        return new Date(`${dateParts[2]}/${dateParts[0]}/${dateParts[1]}`);
       }, 'desc');
 
       matches.forEach((match: Match) => {
