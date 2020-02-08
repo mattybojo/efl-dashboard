@@ -53,7 +53,6 @@ import { BlockUIModule } from 'ng-block-ui';
   entryComponents: [
     SaveMatchDialogComponent,
     SetScoresDialogComponent,
-    SaveMatchDialogComponent,
     SavePlayerNameDialogComponent,
     ViewMotmVotesDialogComponent,
     ResetTeamPickerDialogComponent,
