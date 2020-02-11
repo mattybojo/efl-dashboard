@@ -82,8 +82,18 @@ nb-select {
   max-width: 100%;
 }
 
+nb-select ::ng-deep .select-button {
+  font-size: 12px !important;
+  padding-left: 5px !important;
+}
+
 .two-column {
-  width: calc(50% - 3px);
+  width: calc(50% - 5px);
+}
+
+.move-tp-btn {
+  width: calc(100% - 5px);
+  margin-top: 5px;
 }
 
 nb-tabset ::ng-deep .tab {
@@ -103,4 +113,9 @@ nb-tabset ::ng-deep .tab {
 nb-tab {
   padding-left: 0 !important;
   padding-right: 0 !important;
+}
+
+nb-option {
+  font-size: 12px !important;
+  padding-left: 5px !important;
 }

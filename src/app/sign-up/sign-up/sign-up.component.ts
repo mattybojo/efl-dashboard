@@ -1,3 +1,5 @@
+import { TeamPicker } from './../../shared/models/team-picker.model';
+import { TeamPickerService } from './../../shared/services/team-picker.service';
 import { ConfirmDialogComponent } from './../../shared/components/confirm-dialog/confirm-dialog.component';
 import { CreateGameSignUpDialogComponent } from './../create-game-sign-up-dialog/create-game-sign-up-dialog.component';
 import { PlayerService } from './../../shared/services/player.service';
@@ -11,7 +13,7 @@ import { Observable, Subscription, combineLatest } from 'rxjs';
 import { orderBy } from 'lodash';
 import { isSameDate, createDateFromString } from '../../shared/services/db-utils';
 import { AuthService } from '../../shared/services/auth.service';
-import { faCalendarCheck, faCalendarTimes, faPlus, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarCheck, faCalendarTimes, faPlus, faEdit, faTrashAlt, faFileExport } from '@fortawesome/free-solid-svg-icons';
 import { Player } from '../../shared/models/player.model';
 import { NbToastrService, NbGlobalPhysicalPosition, NbDialogService } from '@nebular/theme';
 import { take } from 'rxjs/operators';
@@ -29,6 +31,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   faCalendarTimes = faCalendarTimes;
   faCalendarCheck = faCalendarCheck;
   faPlus = faPlus;
+  faFileExport = faFileExport;
   signUps: SignUpRecord[];
   signUpGames: Lookup[] = [];
   subscription$: Subscription;
@@ -42,7 +45,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   constructor(private lookupService: LookupService, private signUpService: SignUpService,
     private authService: AuthService, private playerService: PlayerService,
-    private toastrService: NbToastrService, private dialogService: NbDialogService) { }
+    private toastrService: NbToastrService, private dialogService: NbDialogService,
+    private teamPickerService: TeamPickerService) { }
 
   ngOnInit() {
     const self = this;
@@ -144,6 +148,37 @@ export class SignUpComponent implements OnInit, OnDestroy {
           self.toastrService.success('Successfully deleted the game and sign-ups!', 'Success', {
             duration: 3000,
             position: NbGlobalPhysicalPosition.TOP_RIGHT,
+          });
+        });
+      }
+    });
+  }
+
+  onClickMoveToTeamPicker(index: number) {
+    const self = this;
+    this.dialogService.open(ConfirmDialogComponent, {
+      context: {
+        dialogTitle: `Copy to Team Picker?`,
+        confirmMessage: `Moving this data will overwrite any existing data in the Team Picker.`,
+      }
+    }).onClose.pipe(take(1)).subscribe((resp: boolean) => {
+      if (resp) {
+        self.teamPickerService.getTeamData().pipe(take(1)).subscribe((resp: TeamPicker[]) => {
+          const tpData: TeamPicker = resp[0];
+          tpData.darkTeam = tpData.whiteTeam = '';
+
+          let isPlayingList: string[] = self.signUpsByDate[index].filter(x => x.isPlaying).map(x => x.user);
+          if (isPlayingList.length > 22) {
+            isPlayingList = isPlayingList.slice(0, 22);
+          }
+
+          tpData.availablePlayers = isPlayingList.join(',');
+
+          self.teamPickerService.saveTeamData(tpData).pipe(take(1)).subscribe(() => {
+            self.toastrService.success('Successfully moved the sign-ups to the Team Picker!', 'Success', {
+              duration: 3000,
+              position: NbGlobalPhysicalPosition.TOP_RIGHT,
+            });
           });
         });
       }

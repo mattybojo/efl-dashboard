@@ -14,6 +14,10 @@
       <button nbButton class="two-column" status="danger" shape="semi-round" size="small"  (click)="onClickDelete(i)">
         <fa-icon [fixedWidth]="true" [icon]="faTrashAlt"></fa-icon>
       </button>
+      <button nbButton class="move-tp-btn" status="primary" shape="semi-round" size="small"  (click)="onClickMoveToTeamPicker(i)">
+        <fa-icon [fixedWidth]="true" [icon]="faFileExport"></fa-icon>
+        <span class="btn-text">Set Picker</span>
+      </button>
     </div>
     <h6 class="day-of-week">{{ daysOfTheWeek[signUpGames[i].date.getDay()] }}</h6>
     <h6>{{ signUpGames[i].value }}</h6>
