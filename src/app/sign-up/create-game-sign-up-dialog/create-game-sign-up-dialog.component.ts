@@ -45,8 +45,13 @@ export class CreateGameSignUpDialogComponent implements OnInit, OnDestroy {
           duration: 3000,
           position: NbGlobalPhysicalPosition.TOP_RIGHT,
         });
-      } else {
+      } else if (this.id) {
         self.toastrService.success('Moved game and individual sign-ups.', 'Success', {
+          duration: 3000,
+          position: NbGlobalPhysicalPosition.TOP_RIGHT,
+        });
+      } else {
+        self.toastrService.success('Created new sign-up.', 'Success', {
           duration: 3000,
           position: NbGlobalPhysicalPosition.TOP_RIGHT,
         });
