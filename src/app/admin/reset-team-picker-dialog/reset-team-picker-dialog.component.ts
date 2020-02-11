@@ -71,7 +71,6 @@ export class ResetTeamPickerDialogComponent implements OnInit {
     });
   }
 
-  // TODO: Test this function
   onClickReset() {
     this.blockUI.start('Clearing data...');
 

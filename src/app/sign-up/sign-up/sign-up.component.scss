@@ -5,7 +5,8 @@
   margin-bottom: 5px;
 }
 
-.admin-btn-container > button {
+.admin-btn-container > button:not(:last-of-type),
+.signup-btn-container > button:not(:last-of-type) {
   margin-right: 5px;
 }
 
@@ -20,8 +21,6 @@ li {
 }
 
 .signup-btn {
-  width: 100%;
-  float: right;
   margin-top: 5px;
 }
 
@@ -29,8 +28,8 @@ li {
   margin-bottom: 0;
 }
 
-fa-icon {
-  margin-right: 5px;
+.btn-text {
+  margin-left: 5px;
 }
 
 .signup-container {
@@ -78,34 +77,30 @@ fa-icon {
   line-height: 18px;
 }
 
-ng2-completer ::ng-deep {
-  .completer-input {
-    width: 100%;
-    border-radius: 0.25rem;
-    background-color: #f7f9fc;
-    border-color: #e4e9f2;
-    color: #222b45;
-    border-style: solid;
-    border-width: 1px;
-    font-family: Open Sans, sans-serif;
-    -webkit-appearance: none;
-    transition-duration: 0.15s;
-    transition-property: border, background-color, color, box-shadow;
-    transition-timing-function: ease-in;
-    height: 31px;
-  }
+nb-select {
+  width: 100%;
+  max-width: 100%;
+}
 
-  .completer-dropdown {
-    padding: 0;
-    max-height: 155px;
-    overflow-y: scroll;
-  }
+.two-column {
+  width: calc(50% - 3px);
+}
 
-  .completer-row {
-    margin-bottom: 0;
-  }
+nb-tabset ::ng-deep .tab {
+  width: 50%;
 
-  .completer-title {
-    font-size: 14px;
+  .tab-link {
+    padding-left: 0;
+    padding-right: 0;
+    justify-content: center;
   }
+}
+
+.in-out-tabset {
+  margin-top: 5px;
+}
+
+nb-tab {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }

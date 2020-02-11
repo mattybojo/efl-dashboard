@@ -1,0 +1,14 @@
+<nb-card>
+  <nb-card-body>
+    <h6 class="dialog-title">{{ dialogTitle }}</h6>
+
+    <div class="dialog-body">
+      <span>{{ confirmMessage }}</span>
+    </div>
+
+    <div class="btn-container">
+      <button nbButton status="primary" shape="semi-round" size="small" (click)="closeDialog(true)">Confirm</button>
+      <button nbButton shape="semi-round" status="basic" size="small" (click)="closeDialog(false)">Cancel</button>
+    </div>
+  </nb-card-body>
+</nb-card>

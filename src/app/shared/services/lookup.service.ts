@@ -30,10 +30,16 @@ export class LookupService {
       );
   }
 
-  saveLookupValue(key: string, value: string): Observable<DocumentReference> {
+  saveLookupValue(key: string, value: string, id: string): Observable<any> {
     const lookup: Lookup = { key, value };
-    return from(this.db.collection('lookup').add({ ...lookup }));
+    if (!id) {
+      return from(this.db.collection('lookup').add({ ...lookup }));
+    } else {
+      return from(this.db.doc(`lookup/${id}`).update({ ...lookup }));
+    }
   }
 
-
+  deleteLookupValue(id: string): Observable<void> {
+    return from(this.db.doc(`lookup/${id}`).delete());
+  }
 }

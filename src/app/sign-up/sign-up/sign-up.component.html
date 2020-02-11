@@ -1,28 +1,57 @@
 <div class="signup-container">
   <div class="admin-btn-container" *ngIf="user && user.isAdmin">
-    <button nbButton status="primary" shape="semi-round" size="small" (click)="createGameSignUp()">
+    <button nbButton status="success" shape="semi-round" size="small" (click)="createGameSignUp()">
       <fa-icon [fixedWidth]="true" [icon]="faPlus"></fa-icon>
       <span class="btn-text">Create New Game</span>
     </button>
   </div>
 
   <div class="player-container" *ngFor="let gameSignUps of signUpsByDate; let i = index">
+    <div class="admin-btn-container" *ngIf="user && user.isAdmin">
+      <button nbButton class="two-column" status="primary" shape="semi-round" size="small" (click)="onClickEdit(i)">
+        <fa-icon [fixedWidth]="true" [icon]="faEdit"></fa-icon>
+      </button>
+      <button nbButton class="two-column" status="danger" shape="semi-round" size="small"  (click)="onClickDelete(i)">
+        <fa-icon [fixedWidth]="true" [icon]="faTrashAlt"></fa-icon>
+      </button>
+    </div>
     <h6 class="day-of-week">{{ daysOfTheWeek[signUpGames[i].date.getDay()] }}</h6>
     <h6>{{ signUpGames[i].value }}</h6>
-    <ng2-completer [(ngModel)]="player[i]" [datasource]="filteredPlayerLists[i]" [minSearchLength]="1" [placeholder]="'Player name'" [openOnClick]="true"
-    [selectOnClick]="true" [openOnFocus]="false" [autoHighlight]="true" [fillHighlighted]="false"></ng2-completer>
-    <button nbButton class="signup-btn" status="primary" shape="semi-round" size="small" (click)="onClickRsvp(i)" [disabled]="!(player[i] || (user && user.displayName))">
-      <fa-icon [fixedWidth]="true" [icon]="faCalendarCheck"></fa-icon>
-      <span class="btn-text">Sign up</span>
-    </button>
-    <ol>
-      <li *ngFor="let gameSignUp of gameSignUps; let i2 = index">
-        <nb-card class="player-card">
-          <nb-card-body class="player-card-content">
-            <span class="player-name">{{ i2+1 }}. {{ gameSignUp.user }}</span>
-          </nb-card-body>
-        </nb-card>
-      </li>
-    </ol>
+    <nb-select [(selected)]="player[i]" size="small" status="primary">
+      <nb-option [value]="fpl" *ngFor="let fpl of playerList">{{ fpl }}</nb-option>
+    </nb-select>
+    <div class="signup-btn-container">
+      <button nbButton class="signup-btn two-column" status="success" shape="semi-round" size="small" (click)="onClickRsvp(i, true)" [disabled]="!(player[i] || (user && user.displayName))">
+        <fa-icon [fixedWidth]="true" [icon]="faCalendarCheck"></fa-icon>
+      </button>
+      <button nbButton class="signup-btn two-column" status="danger" shape="semi-round" size="small" (click)="onClickRsvp(i, false)" [disabled]="!(player[i] || (user && user.displayName))">
+        <fa-icon [fixedWidth]="true" [icon]="faCalendarTimes"></fa-icon>
+      </button>
+    </div>
+    <nb-tabset fullWidth class="in-out-tabset">
+      <nb-tab tabTitle="IN" [badgeText]="(gameSignUps | isPlaying).length || '0'" badgeStatus="success">
+        <ol>
+          <li *ngFor="let gameSignUp of gameSignUps | isPlaying; let i2 = index">
+            <nb-card class="player-card">
+              <nb-card-body class="player-card-content">
+                <span class="player-name">{{ i2+1 }}. {{ gameSignUp.user }}</span>
+              </nb-card-body>
+            </nb-card>
+          </li>
+        </ol>
+      </nb-tab>
+      <nb-tab tabTitle="OUT" [badgeText]="(gameSignUps | isNotPlaying).length || '0'" badgeStatus="danger">
+        <ol>
+          <li *ngFor="let gameSignUp of gameSignUps | isNotPlaying; let i2 = index, let c = count">
+            <nb-card class="player-card">
+              <nb-card-body class="player-card-content">
+                <span class="player-name">{{ i2+1 }}. {{ gameSignUp.user }}</span>
+              </nb-card-body>
+            </nb-card>
+          </li>
+        </ol>
+      </nb-tab>
+     </nb-tabset>
+
   </div>
 </div>

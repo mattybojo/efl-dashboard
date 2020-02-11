@@ -1,3 +1,4 @@
+import { ConfirmDialogComponent } from './../../shared/components/confirm-dialog/confirm-dialog.component';
 import { CreateGameSignUpDialogComponent } from './../create-game-sign-up-dialog/create-game-sign-up-dialog.component';
 import { PlayerService } from './../../shared/services/player.service';
 import { UserData } from './../../shared/models/user-data.model';
@@ -8,9 +9,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SignUpService } from '../../shared/services/sign-up.service';
 import { Observable, Subscription, combineLatest } from 'rxjs';
 import { orderBy } from 'lodash';
-import { isSameDate } from '../../shared/services/db-utils';
+import { isSameDate, createDateFromString } from '../../shared/services/db-utils';
 import { AuthService } from '../../shared/services/auth.service';
-import { faCalendarCheck, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarCheck, faCalendarTimes, faPlus, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Player } from '../../shared/models/player.model';
 import { NbToastrService, NbGlobalPhysicalPosition, NbDialogService } from '@nebular/theme';
 import { take } from 'rxjs/operators';
@@ -23,16 +24,19 @@ import { take } from 'rxjs/operators';
 })
 export class SignUpComponent implements OnInit, OnDestroy {
 
+  faEdit = faEdit;
+  faTrashAlt = faTrashAlt;
+  faCalendarTimes = faCalendarTimes;
   faCalendarCheck = faCalendarCheck;
   faPlus = faPlus;
   signUps: SignUpRecord[];
   signUpGames: Lookup[] = [];
   subscription$: Subscription;
+  deleteSubscription$: Subscription;
   signUpsByDate: SignUpRecord[][] = new Array<SignUpRecord[]>();
   user: UserData;
   player: string[] = [];
   playerList: string[] = [];
-  filteredPlayerLists: string[][] = new Array<string[]>();
 
   daysOfTheWeek: string[] = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
@@ -55,59 +59,47 @@ export class SignUpComponent implements OnInit, OnDestroy {
       self.signUpsByDate = new Array<SignUpRecord[]>();
 
       // Order the sign ups
-      self.signUpGames = resp[0].sort((a,b) => a.value.localeCompare(b.value));
+      self.signUpGames = resp[0].sort((a, b) => a.value.localeCompare(b.value));
       self.signUps = orderBy(resp[1], (signUp: SignUpRecord) => signUp.date.seconds, 'asc');
 
       // Construct an array of signups by game
       self.signUpGames.forEach((gameLookup: Lookup) => {
-        // Convert date to YYYY-MM-DD for Safari to sort correctly
-        const dateParts: string[] = gameLookup.value.split('-');
-        gameLookup.dateString = `${dateParts[2]}/${dateParts[0]}/${dateParts[1]}`;
-        gameLookup.date = new Date(gameLookup.dateString);
-        self.signUpsByDate.push(self.signUps.filter(x => isSameDate(x.gameDate.toDate(), new Date(gameLookup.dateString))));
+        const newDate: Date = createDateFromString(gameLookup.value);
+        gameLookup.date = newDate;
+        self.signUpsByDate.push(self.signUps.filter(x => isSameDate(x.gameDate.toDate(), gameLookup.date)));
       });
 
       // Only populate the autocomplete list the first time and not on subsequent updates to the observables
       if (!self.playerList || (self.playerList && self.playerList.length === 0)) {
-        let signedUpPlayerSet: Set<string>;
-        const availablePlayerSet: Set<string> = new Set(resp[2].map(x => x.name));
-        self.playerList = Array.from(availablePlayerSet).sort();
-        self.signUpsByDate.forEach((signUpRecords: SignUpRecord[], index: number) => {
-          signedUpPlayerSet = new Set(signUpRecords.map(x => x.user));
-          self.filteredPlayerLists[index] = Array.from(new Set([...availablePlayerSet].filter(x => !signedUpPlayerSet.has(x))).values()).sort();
-          if (self.user && self.user.displayName) {
-            self.player[index] = self.user.displayName;
-          }
-        });
+        self.playerList = resp[2].map(x => x.name).sort();
+        self.updateSignUpDropdowns();
       }
     });
   }
 
-  onClickRsvp(index: number) {
-    const self = this;
-    let isSignedUp: boolean;
-    let playerName: string;
+  updateSignUpDropdowns() {
+    this.signUpsByDate.forEach((signUpRecords: SignUpRecord[], index: number) => {
+      if (this.user && this.user.displayName) {
+        this.player[index] = this.user.displayName;
+      }
+    });
+  }
 
-    if (this.user && this.user.displayName) {
-      playerName = this.user.displayName;
-    } else {
-      playerName = this.player[index];
-    }
+  onClickRsvp(index: number, isPlaying: boolean) {
+    const self = this;
+    let isSignedUp: boolean = false;
+    let signUpRecord: SignUpRecord;
+    let recordId: string;
 
     // Do not allow user to sign up if they already are signed up for the specific date
-    isSignedUp = this.signUpsByDate[index].find(x => x.user === playerName) !== undefined;
-
-    // Make sure the name matches players already in the system
-    if (this.playerList.findIndex(x => x === playerName) === -1) {
-      this.toastrService.danger('Make sure your name is spelled correctly before submitting again', 'Name not recognized', {
-        duration: 3000,
-        position: NbGlobalPhysicalPosition.TOP_RIGHT,
-      });
-      return;
+    signUpRecord = this.signUpsByDate[index].find(x => x.user === this.player[index]);
+    if (signUpRecord) {
+      recordId = signUpRecord.id;
+      isSignedUp = (signUpRecord.isPlaying === isPlaying);
     }
 
     if (!isSignedUp) {
-      this.signUpService.saveUserSignUp(playerName, this.signUpGames[index].date).pipe(take(1)).subscribe(resp => {
+      this.signUpService.saveUserSignUp(this.player[index], this.signUpGames[index].date, isPlaying, recordId).pipe(take(1)).subscribe(resp => {
         self.toastrService.success('Successfully signed up!', 'Success', {
           duration: 3000,
           position: NbGlobalPhysicalPosition.TOP_RIGHT,
@@ -126,9 +118,44 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.dialogService.open(CreateGameSignUpDialogComponent);
   }
 
+  onClickEdit(index: number) {
+    this.dialogService.open(CreateGameSignUpDialogComponent, {
+      context: {
+        dateString: this.signUpGames[index].value,
+        id: this.signUpGames[index].id,
+      }
+    });
+  }
+
+  onClickDelete(index: number) {
+    const self = this;
+    this.dialogService.open(ConfirmDialogComponent, {
+      context: {
+        dialogTitle: `Delete this sign-up?`,
+        confirmMessage: `Are you sure you want to delete this match?`,
+      }
+    }).onClose.pipe(take(1)).subscribe((resp: boolean) => {
+      if (resp) {
+        const obsArray: Observable<any>[] = [];
+        obsArray.push(self.signUpService.deleteSignUpsByDate(createDateFromString(this.signUpGames[index].value)));
+        obsArray.push(self.lookupService.deleteLookupValue(self.signUpGames[index].id));
+
+        self.deleteSubscription$ = combineLatest(obsArray).pipe(take(1)).subscribe(resp => {
+          self.toastrService.success('Successfully deleted the game and sign-ups!', 'Success', {
+            duration: 3000,
+            position: NbGlobalPhysicalPosition.TOP_RIGHT,
+          });
+        });
+      }
+    });
+  }
+
   ngOnDestroy() {
     if (this.subscription$) {
       this.subscription$.unsubscribe();
+    }
+    if (this.deleteSubscription$) {
+      this.deleteSubscription$.unsubscribe();
     }
   }
 }

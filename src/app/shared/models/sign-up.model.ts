@@ -5,4 +5,5 @@ export class SignUpRecord {
   date: firestore.Timestamp;
   gameDate: firestore.Timestamp;
   user: string;
+  isPlaying: boolean;
 }
