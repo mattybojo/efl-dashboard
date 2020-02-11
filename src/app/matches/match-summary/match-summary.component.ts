@@ -4,6 +4,7 @@ import { MatchService } from '../../shared/services/match.service';
 import { MatchSummary, Match } from '../../shared/models/match.model';
 import { Subscription } from 'rxjs';
 import { orderBy } from 'lodash';
+import { createDateFromString } from '../../shared/services/db-utils';
 
 @Component({
   selector: 'ngx-match-summary',
@@ -54,9 +55,7 @@ export class MatchSummaryComponent implements OnInit, OnDestroy {
       const tempData: MatchSummary[] = [];
 
       matches = orderBy(matches, (match: Match) => {
-        // Convert date to YYYY-MM-DD for Safari to sort correctly
-        const dateParts: string[] = match.date.split('-');
-        return new Date(`${dateParts[2]}/${dateParts[0]}/${dateParts[1]}`);
+        return createDateFromString(match.date);
       }, 'desc');
 
       matches.forEach((match: Match) => {

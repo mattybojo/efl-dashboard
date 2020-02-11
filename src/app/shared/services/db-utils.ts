@@ -25,3 +25,8 @@ export function isSameDate(date1: Date, date2: Date): boolean {
           date1.getDate() === date2.getDate());
 }
 
+// Convert date to YYYY/MM/DD for Safari to sort correctly
+export function createDateFromString(dateString: string): Date {
+  const dateParts: string[] = dateString.split('-');
+  return new Date(`${dateParts[2]}/${dateParts[0]}/${dateParts[1]}`);
+}
