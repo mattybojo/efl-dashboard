@@ -52,7 +52,7 @@ export class SignUpService {
     }));
   }
 
-  deleteSignUpsByDate(date: Date) {
+  deleteSignUpsByDate(date: Date): Observable<boolean> {
     return from(this.db.collection('signUps', ref => ref.where('gameDate', '==', date)).ref.get().then(resp => {
       const batch: firestore.WriteBatch = this.db.firestore.batch();
       resp.docs.forEach(userDocRef => {

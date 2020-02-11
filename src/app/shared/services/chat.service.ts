@@ -27,14 +27,16 @@ export class ChatService {
     return from(this.db.collection('chat').add({ ...chatMsg }));
   }
 
-  deleteAllChatMessages(): Observable<void[]> {
-    const obsArray: Observable<void>[] = [];
-
-    return this.getMessages().pipe(switchMap((msg: ChatMessage[]) => {
-      msg.map(x => x.id).forEach((id: string) => {
-        obsArray.push(from(this.db.doc(`chat/${id}`).delete()));
+  deleteAllChatMessages(): Observable<boolean> {
+    return from(this.db.collection('chat').ref.get().then(resp => {
+      const batch: firestore.WriteBatch = this.db.firestore.batch();
+      resp.docs.forEach(userDocRef => {
+        batch.delete(userDocRef.ref);
       });
-      return forkJoin(obsArray);
-    }), take(1));
+      batch.commit().catch(err => false);
+      return true;
+    }));
   }
+
+
 }
