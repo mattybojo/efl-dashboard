@@ -89,7 +89,7 @@ export class DashboardStatsTableComponent implements OnInit, OnDestroy {
           delete this.settings['columns']['assists'];
         }
 
-        this.data = this.calculateWinPct(resp);
+        this.data = this.calculateWinPct(resp.filter(x => x.name !== 'Mike'));
       }),
     );
   }
