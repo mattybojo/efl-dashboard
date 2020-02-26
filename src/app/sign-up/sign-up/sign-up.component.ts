@@ -79,7 +79,11 @@ export class SignUpComponent implements OnInit, OnDestroy {
         const newDate: Date = new Date(+a[0], +a[1] - 1, +a[2], +a[3], +a[4], +a[5]);
         gameLookup.date = newDate;
         gameLookup.field = { name: valueParts[1], address: self.fieldList.find(x => x.name === valueParts[1]).address };
-        self.signUpsByDate.push(self.signUps.filter(x => isSameDate(new Date(x.gameDate), gameLookup.date)));
+        self.signUpsByDate.push(self.signUps.filter(x => {
+          const a: string[] = x.gameDate.split(/[^0-9]/);
+          const newGameDate: Date = new Date(+a[0], +a[1] - 1, +a[2], +a[3], +a[4], +a[5]);
+          return isSameDate(newGameDate, gameLookup.date);
+        }));
       });
 
       // Only populate the autocomplete list the first time and not on subsequent updates to the observables
