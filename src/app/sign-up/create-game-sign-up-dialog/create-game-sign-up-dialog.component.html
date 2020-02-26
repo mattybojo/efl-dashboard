@@ -4,8 +4,26 @@
       <h6 class="dialog-title">New Game</h6>
 
       <div class="dialog-body">
-        <span>Enter the match date (MM-DD-YYYY):&nbsp;</span>
-        <input nbInput [(ngModel)]="dateString" name="dateString" required pattern="\d{2}-\d{2}-\d{4}">
+        <div class="dialog-row">
+          <span class="dialog-label">Enter the game date (MM-DD-YYYY):&nbsp;</span>
+          <input nbInput class="dialog-data" [(ngModel)]="dateString" name="dateString" fieldSize="small" required pattern="\d{2}-\d{2}-\d{4}">
+        </div>
+
+        <div class="dialog-row">
+          <span class="dialog-label">Enter the game time (HH:MM):&nbsp;</span>
+          <input nbInput class="dialog-data game-time" [(ngModel)]="timeString" name="timeString" fieldSize="small" required pattern="\d{2}:\d{2}">
+          <nb-select class="ampm-select" [(ngModel)]="ampmString" name="ampmString" size="small">
+            <nb-option value="AM">AM</nb-option>
+            <nb-option value="PM">PM</nb-option>
+          </nb-select>
+        </div>
+
+        <div class="dialog-row">
+          <span class="dialog-label">Select game location:&nbsp;</span>
+          <nb-select class="dialog-data" [selected]="location" name="field" size="small" (selectedChange)="onSelectField($event)">
+            <nb-option *ngFor="let field of fieldList" [value]="field.name">{{ field.name }}</nb-option>
+          </nb-select>
+        </div>
       </div>
 
       <div class="btn-container">

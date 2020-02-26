@@ -2,8 +2,8 @@ import { firestore } from 'firebase';
 
 export class SignUpRecord {
   id?: string;
-  date: firestore.Timestamp;
-  gameDate: firestore.Timestamp;
+  date: string; // ISO string
+  gameDate: string; // ISO string
   user: string;
   isPlaying: boolean;
 }

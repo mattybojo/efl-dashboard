@@ -1,9 +1,9 @@
 import { SignUpRecord } from './../models/sign-up.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { convertSnaps } from './db-utils';
+import { convertSnaps, getIsoString } from './db-utils';
 import { Observable, from } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import firebase, { firestore } from 'firebase';
 
 @Injectable({
@@ -31,17 +31,15 @@ export class SignUpService {
       );
   }
 
-  saveUserSignUp(user: string, gameDate: Date, isPlaying: boolean, recordId: string): Observable<any> {
-    // Update the record with this id
+  saveUserSignUp(user: string, gameDate: string, isPlaying: boolean, recordId: string): Observable<any> {
     if (recordId) {
-      return from(this.db.doc(`signUps/${recordId}`).update({ date: firebase.firestore.Timestamp.fromDate(new Date()), isPlaying: isPlaying }));
+      return from(this.db.doc(`signUps/${recordId}`).update({ date: getIsoString(new Date()), isPlaying: isPlaying }));
     } else {
-      const timestamp: firestore.Timestamp = firestore.Timestamp.fromDate(gameDate);
-      return from(this.db.collection('signUps').add({ date: firebase.firestore.Timestamp.fromDate(new Date()), gameDate: timestamp, user: user, isPlaying: isPlaying }));
+      return from(this.db.collection('signUps').add({ date: getIsoString(new Date()), gameDate: gameDate, user: user, isPlaying: isPlaying }));
     }
   }
 
-  updateDateOfSignUps(oldDate: Date, newDate: Date): Observable<boolean> {
+  updateDateOfSignUps(oldDate: string, newDate: string): Observable<boolean> {
     return from(this.db.collection('signUps', ref => ref.where('gameDate', '==', oldDate)).ref.get().then(resp => {
       const batch: firestore.WriteBatch = this.db.firestore.batch();
       resp.docs.forEach(userDocRef => {

@@ -19,8 +19,9 @@
         <span class="btn-text">Set Picker</span>
       </button>
     </div>
-    <h6 class="day-of-week">{{ daysOfTheWeek[signUpGames[i].date.getDay()] }}</h6>
-    <h6>{{ signUpGames[i].value }}</h6>
+    <p class="game-info">{{ signUpGames[i].date | date: 'E LLL dd' }}</p>
+    <p class="game-info">{{ signUpGames[i].date | date: 'hh:mm a' }}</p>
+    <p class="game-info"><a href="javascript:void(0)" (click)="openUrl(signUpGames[i].field.address)">{{ signUpGames[i].field.name }}</a></p>
     <nb-select [(selected)]="player[i]" size="small" status="primary">
       <nb-option [value]="fpl" *ngFor="let fpl of playerList">{{ fpl }}</nb-option>
     </nb-select>

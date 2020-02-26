@@ -5,7 +5,7 @@ import { CreateGameSignUpDialogComponent } from './../create-game-sign-up-dialog
 import { PlayerService } from './../../shared/services/player.service';
 import { UserData } from './../../shared/models/user-data.model';
 import { SignUpRecord } from './../../shared/models/sign-up.model';
-import { Lookup } from './../../shared/models/lookup.model';
+import { Lookup, FieldLocation } from './../../shared/models/lookup.model';
 import { LookupService } from './../../shared/services/lookup.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SignUpService } from '../../shared/services/sign-up.service';
@@ -40,8 +40,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   user: UserData;
   player: string[] = [];
   playerList: string[] = [];
-
-  daysOfTheWeek: string[] = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  fieldList: FieldLocation[];
 
   constructor(private lookupService: LookupService, private signUpService: SignUpService,
     private authService: AuthService, private playerService: PlayerService,
@@ -57,20 +56,29 @@ export class SignUpComponent implements OnInit, OnDestroy {
     obsArray.push(this.lookupService.getLookupValues('signUpGame'));
     obsArray.push(this.signUpService.getAllSignUps());
     obsArray.push(this.playerService.getPlayers());
+    obsArray.push(this.lookupService.getLookupValues('fieldLocation'));
 
-    this.subscription$ = combineLatest(obsArray).subscribe((resp: [Lookup[], SignUpRecord[], Player[]]) => {
+    this.subscription$ = combineLatest(obsArray).subscribe((resp: [Lookup[], SignUpRecord[], Player[], Lookup[]]) => {
 
       self.signUpsByDate = new Array<SignUpRecord[]>();
+      self.fieldList = [];
+
+      resp[3].sort((a, b) => a.value.localeCompare(b.value)).forEach((fieldLocation: Lookup) => {
+        const fieldParts: string[] = fieldLocation.value.split(';');
+        self.fieldList.push({ name: fieldParts[0], address: fieldParts[1] });
+      });
 
       // Order the sign ups
       self.signUpGames = resp[0].sort((a, b) => a.value.localeCompare(b.value));
-      self.signUps = orderBy(resp[1], (signUp: SignUpRecord) => signUp.date.seconds, 'asc');
+      self.signUps = orderBy(resp[1], (signUp: SignUpRecord) => signUp.date, 'asc');
 
       // Construct an array of signups by game
       self.signUpGames.forEach((gameLookup: Lookup) => {
-        const newDate: Date = createDateFromString(gameLookup.value);
+        const valueParts: string[] = gameLookup.value.split(';');
+        const newDate: Date = new Date(valueParts[0]);
         gameLookup.date = newDate;
-        self.signUpsByDate.push(self.signUps.filter(x => isSameDate(x.gameDate.toDate(), gameLookup.date)));
+        gameLookup.field = { name: valueParts[1], address: self.fieldList.find(x => x.name === valueParts[1]).address };
+        self.signUpsByDate.push(self.signUps.filter(x => isSameDate(new Date(x.gameDate), gameLookup.date)));
       });
 
       // Only populate the autocomplete list the first time and not on subsequent updates to the observables
@@ -79,6 +87,10 @@ export class SignUpComponent implements OnInit, OnDestroy {
         self.updateSignUpDropdowns();
       }
     });
+  }
+
+  openUrl(address: string) {
+    window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`, '_blank');
   }
 
   updateSignUpDropdowns() {
@@ -103,7 +115,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     }
 
     if (!isSignedUp) {
-      this.signUpService.saveUserSignUp(this.player[index], this.signUpGames[index].date, isPlaying, recordId).pipe(take(1)).subscribe(resp => {
+      this.signUpService.saveUserSignUp(this.player[index], this.signUpGames[index].value.split(';')[0], isPlaying, recordId).pipe(take(1)).subscribe(resp => {
         self.toastrService.success('Successfully signed up!', 'Success', {
           duration: 3000,
           position: NbGlobalPhysicalPosition.TOP_RIGHT,
@@ -119,14 +131,20 @@ export class SignUpComponent implements OnInit, OnDestroy {
   }
 
   createGameSignUp() {
-    this.dialogService.open(CreateGameSignUpDialogComponent);
+    this.dialogService.open(CreateGameSignUpDialogComponent, {
+      context : {
+        fieldList: this.fieldList,
+      }
+    });
   }
 
   onClickEdit(index: number) {
     this.dialogService.open(CreateGameSignUpDialogComponent, {
       context: {
-        dateString: this.signUpGames[index].value,
+        isoDateString: this.signUpGames[index].value,
         id: this.signUpGames[index].id,
+        selectedField: this.signUpGames[index].field,
+        fieldList: this.fieldList,
       }
     });
   }

@@ -24,8 +24,21 @@ li {
   margin-top: 5px;
 }
 
-.day-of-week {
+a {
+  text-decoration: underline !important;
+}
+
+.game-info {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.game-info:not(:last-of-type) {
   margin-bottom: 0;
+}
+
+.game-info:last-of-type {
+  margin-bottom: 5px;
 }
 
 .btn-text {

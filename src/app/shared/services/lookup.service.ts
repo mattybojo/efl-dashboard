@@ -1,6 +1,6 @@
 import { Lookup } from './../models/lookup.model';
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
 import { convertSnap, convertSnaps } from './db-utils';
 import { map } from 'rxjs/operators';

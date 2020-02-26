@@ -30,3 +30,16 @@ export function createDateFromString(dateString: string): Date {
   const dateParts: string[] = dateString.split('-');
   return new Date(`${dateParts[2]}/${dateParts[0]}/${dateParts[1]}`);
 }
+
+export function getIsoString(theDate: Date): string {
+    const pad = function(num) {
+        const norm = Math.floor(Math.abs(num));
+        return (norm < 10 ? '0' : '') + norm;
+    };
+    return theDate.getFullYear() +
+        '-' + pad(theDate.getMonth() + 1) +
+        '-' + pad(theDate.getDate()) +
+        'T' + pad(theDate.getHours()) +
+        ':' + pad(theDate.getMinutes()) +
+        ':' + pad(theDate.getSeconds());
+}
