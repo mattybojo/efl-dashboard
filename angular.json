@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-admin-demo": {
+    "efl-dashboard": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -60,18 +60,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-admin-demo:build"
+            "browserTarget": "efl-dashboard:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ngx-admin-demo:build:production"
+              "browserTarget": "efl-dashboard:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-admin-demo:build"
+            "browserTarget": "efl-dashboard:build"
           }
         },
         "test": {
@@ -114,7 +114,7 @@
         }
       }
     },
-    "ngx-admin-demo-e2e": {
+    "efl-dashboard-e2e": {
       "root": "",
       "sourceRoot": "",
       "projectType": "application",
@@ -123,7 +123,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "ngx-admin-demo:serve"
+            "devServerTarget": "efl-dashboard:serve"
           }
         },
         "lint": {
@@ -138,14 +138,14 @@
       }
     }
   },
-  "defaultProject": "ngx-admin-demo",
+  "defaultProject": "efl-dashboard",
   "schematics": {
     "@schematics/angular:component": {
-      "prefix": "ngx",
+      "prefix": "efl",
       "styleext": "scss"
     },
     "@schematics/angular:directive": {
-      "prefix": "ngx"
+      "prefix": "efl"
     }
   }
 }
