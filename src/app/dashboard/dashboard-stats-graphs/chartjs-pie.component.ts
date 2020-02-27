@@ -1,10 +1,12 @@
-import { GraphData } from './../../shared/models/player.model';
-import { Component, OnDestroy, Input } from '@angular/core';
-import { NbThemeService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 
+import { Component, Input, OnDestroy } from '@angular/core';
+import { NbThemeService } from '@nebular/theme';
+
+import { GraphData } from '../../shared/models/player.model';
+
 @Component({
-  selector: 'ngx-chartjs-pie',
+  selector: 'efl-chartjs-pie',
   template: `
     <chart type="pie" [data]="_data" [options]="options"></chart>
   `,
@@ -20,7 +22,7 @@ export class ChartjsPieComponent implements OnDestroy {
   @Input() set data(data: GraphData) {
     const colorArray: string[] = [];
     const count = data.labels.length;
-    for(let i = 0; i < data.labels.length; i++) {
+    for (let i = 0; i < data.labels.length; i++) {
       colorArray.push(this.rainbowStop(i / count));
     }
 
@@ -54,8 +56,8 @@ export class ChartjsPieComponent implements OnDestroy {
   }
 
   rainbowStop(h) {
-    let f= (n,k=(n+h*12)%12) => .5-.5*Math.max(Math.min(k-3,9-k,1),-1);
-    let rgb2hex = (r,g,b) => "#"+[r,g,b].map(x=>Math.round(x*255).toString(16).padStart(2,'0')).join('');
+    const f = (n, k= (n + h * 12) % 12) => .5 - .5 * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    const rgb2hex = (r, g, b) => '#' + [r, g, b].map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join('');
     return ( rgb2hex(f(0), f(8), f(4)) );
   }
 

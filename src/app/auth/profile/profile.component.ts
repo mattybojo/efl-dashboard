@@ -1,17 +1,19 @@
-import { Lookup } from './../../shared/models/lookup.model';
-import { LookupService } from './../../shared/services/lookup.service';
-import { PlayerService } from './../../shared/services/player.service';
-import { AuthService } from './../../shared/services/auth.service';
-import { Component, OnInit } from '@angular/core';
-import { UserData } from '../../shared/models/user-data.model';
-import { GraphData, PlayerStats } from '../../shared/models/player.model';
+import { forkJoin, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { Observable, forkJoin } from 'rxjs';
+
+import { Component, OnInit } from '@angular/core';
+
+import { Lookup } from '../../shared/models/lookup.model';
+import { GraphData, PlayerStats } from '../../shared/models/player.model';
+import { UserData } from '../../shared/models/user-data.model';
+import { AuthService } from '../../shared/services/auth.service';
+import { LookupService } from '../../shared/services/lookup.service';
+import { PlayerService } from '../../shared/services/player.service';
 
 @Component({
-  selector: 'ngx-profile',
+  selector: 'efl-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
 
@@ -26,10 +28,10 @@ export class ProfileComponent implements OnInit {
     const self = this;
     this.user = this.authService.getUser();
     this.lookupService.getLookupValue('seasonList').subscribe((lookupResp: Lookup) => {
-      let seasonArray: string[] = [];
-      let seasonStatsObs: Observable<PlayerStats>[] = [];
+      const seasonArray: string[] = [];
+      const seasonStatsObs: Observable<PlayerStats>[] = [];
       const graphLabels: string[] = ['Wins', 'Goals', 'Assists', 'Own Goals', 'Clean Sheets', 'Games Played'];
-      let datasets: any[] = [];
+      const datasets: any[] = [];
       self.seasons = lookupResp.value.split(',');
       self.seasons.forEach((season: string) => {
         seasonStatsObs.push(self.playerService.getPlayerStats(season, this.user.displayName).pipe(take(1)));

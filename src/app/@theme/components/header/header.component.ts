@@ -1,16 +1,19 @@
-import { UserData } from './../../../shared/models/user-data.model';
-import { AuthService } from './../../../shared/services/auth.service';
+import { Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
+
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
+import { Router } from '@angular/router';
+import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService,
+} from '@nebular/theme';
 
 import { LayoutService } from '../../../@core/utils';
-import { map, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
-import { Router } from '@angular/router';
+import { UserData } from '../../../shared/models/user-data.model';
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
-  selector: 'ngx-header',
+  selector: 'efl-header',
   styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
 })
@@ -46,12 +49,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   faSignInAlt = faSignInAlt;
 
   constructor(private sidebarService: NbSidebarService,
-              private menuService: NbMenuService,
-              private themeService: NbThemeService,
-              private layoutService: LayoutService,
-              private breakpointService: NbMediaBreakpointsService,
-              protected authService: AuthService,
-              private router: Router) {
+    private menuService: NbMenuService,
+    private themeService: NbThemeService,
+    private layoutService: LayoutService,
+    private breakpointService: NbMediaBreakpointsService,
+    protected authService: AuthService,
+    private router: Router) {
   }
 
   ngOnInit() {

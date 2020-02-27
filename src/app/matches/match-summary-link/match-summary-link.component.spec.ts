@@ -8,9 +8,9 @@ describe('MatchSummaryLinkComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MatchSummaryLinkComponent ]
+      declarations: [ MatchSummaryLinkComponent ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

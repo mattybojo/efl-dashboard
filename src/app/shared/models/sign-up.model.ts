@@ -1,4 +1,3 @@
-import { firestore } from 'firebase';
 
 export class SignUpRecord {
   id?: string;

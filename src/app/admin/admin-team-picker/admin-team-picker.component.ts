@@ -1,21 +1,29 @@
-import { ResetTeamPickerDialogComponent } from './../reset-team-picker-dialog/reset-team-picker-dialog.component';
-import { SavePlayerNameDialogComponent } from './../save-player-name-dialog/save-player-name-dialog.component';
-import { PlayerService } from './../../shared/services/player.service';
-import { TeamPicker, TeamType, TeamData } from './../../shared/models/team-picker.model';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { Observable, combineLatest, Subscription } from 'rxjs';
-import { ChatComponent } from './../../team-picker/shared/chat/chat.component';
-import { Player } from './../../shared/models/player.model';
-import { TeamPickerService } from './../../shared/services/team-picker.service';
-import { faUserCheck, faUserMinus, faUser, faExclamationTriangle, faSave, faUserFriends, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { cloneDeep } from 'lodash';
-import { SaveMatchDialogComponent } from '../save-match-dialog/save-match-dialog.component';
+import { combineLatest, Observable, Subscription } from 'rxjs';
+
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  faExclamationTriangle, faPlus, faSave, faUser, faUserCheck, faUserFriends, faUserMinus,
+} from '@fortawesome/free-solid-svg-icons';
 import { NbDialogService } from '@nebular/theme';
 
+import { Player } from '../../shared/models/player.model';
+import { TeamData, TeamPicker, TeamType } from '../../shared/models/team-picker.model';
+import { PlayerService } from '../../shared/services/player.service';
+import { TeamPickerService } from '../../shared/services/team-picker.service';
+import { ChatComponent } from '../../team-picker/shared/chat/chat.component';
+import {
+  ResetTeamPickerDialogComponent,
+} from '../reset-team-picker-dialog/reset-team-picker-dialog.component';
+import { SaveMatchDialogComponent } from '../save-match-dialog/save-match-dialog.component';
+import {
+  SavePlayerNameDialogComponent,
+} from '../save-player-name-dialog/save-player-name-dialog.component';
+
 @Component({
-  selector: 'app-admin-team-picker',
+  selector: 'efl-admin-team-picker',
   templateUrl: './admin-team-picker.component.html',
-  styleUrls: ['./admin-team-picker.component.scss']
+  styleUrls: ['./admin-team-picker.component.scss'],
 })
 export class AdminTeamPickerComponent implements OnInit, OnDestroy {
 
@@ -138,8 +146,8 @@ export class AdminTeamPickerComponent implements OnInit, OnDestroy {
       this.dialogService.open(SavePlayerNameDialogComponent, {
         context: {
           dialogTitle: 'Create New Player',
-          dialogInputLabel: 'Enter the new player\'s name'
-        }
+          dialogInputLabel: 'Enter the new player\'s name',
+        },
       }).onClose.subscribe(name => name ? self.playerService.createPlayer(name) : null),
     );
   }
@@ -166,7 +174,7 @@ export class AdminTeamPickerComponent implements OnInit, OnDestroy {
     this.dialogService.open(ResetTeamPickerDialogComponent, {
       context: {
         pickerData: this.pickerData,
-      }
+      },
     });
   }
 
@@ -175,7 +183,7 @@ export class AdminTeamPickerComponent implements OnInit, OnDestroy {
       context: {
         whiteTeam: this.pickerData.whiteTeam,
         darkTeam: this.pickerData.darkTeam,
-      }
+      },
     });
   }
 

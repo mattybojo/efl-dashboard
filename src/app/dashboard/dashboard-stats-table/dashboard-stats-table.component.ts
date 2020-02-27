@@ -1,14 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PlayerStats } from '../../shared/models/player.model';
-import { KeyValue } from '@angular/common';
-import { PlayerService } from '../../shared/services/player.service';
 import { cloneDeep } from 'lodash';
 import { Subscription } from 'rxjs';
 
+import { KeyValue } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+
+import { PlayerStats } from '../../shared/models/player.model';
+import { PlayerService } from '../../shared/services/player.service';
+
 @Component({
-  selector: 'ngx-dashboard-stats-table',
+  selector: 'efl-dashboard-stats-table',
   templateUrl: './dashboard-stats-table.component.html',
-  styleUrls: ['./dashboard-stats-table.component.scss']
+  styleUrls: ['./dashboard-stats-table.component.scss'],
 })
 export class DashboardStatsTableComponent implements OnInit, OnDestroy {
 
@@ -47,7 +49,7 @@ export class DashboardStatsTableComponent implements OnInit, OnDestroy {
       },
       winPct: {
         title: 'Win %',
-        valuePrepareFunction: (value) => { return Intl.NumberFormat('en-US', { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2}).format(value) },
+        valuePrepareFunction: (value) => Intl.NumberFormat('en-US', { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2}).format(value),
       },
       goals: {
         title: 'Goals',
@@ -80,7 +82,7 @@ export class DashboardStatsTableComponent implements OnInit, OnDestroy {
   getPlayerStatsBySeason() {
     this.subscription$.push(
       this.playerService.getAllPlayerStats(this.selectedSeason).subscribe((resp: PlayerStats[]) => {
-        let tempObj: Object = {};
+        const tempObj: Object = {};
         Object.assign(tempObj, this.defaultSettings, this.allCols);
 
         this.settings = cloneDeep(tempObj);

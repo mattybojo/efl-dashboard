@@ -1,23 +1,23 @@
-import { NbMenuService, NbSidebarService } from '@nebular/theme';
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { EFL_MENU_ITEMS, EFL_ADMIN_MENU_ITEMS } from './app-menu';
-import { AuthService } from './shared/services/auth.service';
-import { NbMenuItem, NbIconLibraries } from '@nebular/theme';
+import { Component, ElementRef, OnInit } from '@angular/core';
+import { NbIconLibraries, NbMenuItem, NbMenuService, NbSidebarService } from '@nebular/theme';
+
 import { LayoutService } from './@core/utils';
+import { EFL_ADMIN_MENU_ITEMS, EFL_MENU_ITEMS } from './app-menu';
+import { AuthService } from './shared/services/auth.service';
 
 @Component({
-  selector: 'ngx-app',
+  selector: 'efl-app',
   styleUrls: ['./app.component.scss'],
   template: `
-    <ngx-one-column-layout>
+    <efl-one-column-layout>
       <nb-menu [items]="menu"></nb-menu>
       <router-outlet></router-outlet>
-    </ngx-one-column-layout>
+    </efl-one-column-layout>
   `,
 })
 export class AppComponent implements OnInit {
@@ -25,8 +25,8 @@ export class AppComponent implements OnInit {
   menu: NbMenuItem[];
 
   constructor(private authService: AuthService, private iconLibraries: NbIconLibraries,
-      private nbMenuService: NbMenuService, private sidebarService: NbSidebarService,
-      private layoutService: LayoutService, private elem: ElementRef) {
+    private nbMenuService: NbMenuService, private sidebarService: NbSidebarService,
+    private layoutService: LayoutService, private elem: ElementRef) {
     this.iconLibraries.registerFontPack('solid', {packClass: 'fas', iconClassPrefix: 'fa'});
     this.iconLibraries.registerFontPack('regular', {packClass: 'far', iconClassPrefix: 'fa'});
     this.iconLibraries.registerFontPack('light', {packClass: 'fal', iconClassPrefix: 'fa'});

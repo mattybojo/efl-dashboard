@@ -1,16 +1,16 @@
-import { MotmVotingComponent } from './motm-voting/motm-voting.component';
-import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
+import { MotmVotingComponent } from './motm-voting/motm-voting.component';
 
 const routes: Routes = [{
   path: '',
-  component: MotmVotingComponent
+  component: MotmVotingComponent,
 }];
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes)
-  ]
+    RouterModule.forChild(routes),
+  ],
 })
 export class MotmVotingRoutingModule {}

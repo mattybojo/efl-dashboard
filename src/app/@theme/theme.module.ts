@@ -1,40 +1,20 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  NbActionsModule,
-  NbLayoutModule,
-  NbMenuModule,
-  NbSearchModule,
-  NbSidebarModule,
-  NbUserModule,
-  NbContextMenuModule,
-  NbButtonModule,
-  NbSelectModule,
-  NbIconModule,
-  NbThemeModule,
-} from '@nebular/theme';
-import { NbSecurityModule } from '@nebular/security';
-
-import {
-  FooterComponent,
-  HeaderComponent,
-} from './components';
-import {
-  CapitalizePipe,
-  PluralPipe,
-  RoundPipe,
-  TimingPipe,
-  NumberWithCommasPipe,
-} from './pipes';
-import {
-  OneColumnLayoutComponent,
-} from './layouts';
-import { DEFAULT_THEME } from './styles/theme.default';
-import { COSMIC_THEME } from './styles/theme.cosmic';
-import { CORPORATE_THEME } from './styles/theme.corporate';
-import { DARK_THEME } from './styles/theme.dark';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NbSecurityModule } from '@nebular/security';
+import {
+  NbActionsModule, NbButtonModule, NbContextMenuModule, NbIconModule, NbLayoutModule,
+  NbMenuModule, NbSearchModule, NbSelectModule, NbSidebarModule, NbThemeModule, NbUserModule,
+} from '@nebular/theme';
+
+import { FooterComponent, HeaderComponent } from './components';
+import { OneColumnLayoutComponent } from './layouts';
+import { CapitalizePipe, NumberWithCommasPipe, PluralPipe, RoundPipe, TimingPipe } from './pipes';
+import { CORPORATE_THEME } from './styles/theme.corporate';
+import { COSMIC_THEME } from './styles/theme.cosmic';
+import { DARK_THEME } from './styles/theme.dark';
+import { DEFAULT_THEME } from './styles/theme.default';
 
 const NB_MODULES = [
   NbLayoutModule,

@@ -1,18 +1,16 @@
 export function convertSnaps<T>(snaps) {
-  return <T[]> snaps.map(snap => {
-    return {
-      id: snap.payload.doc.id,
-      ...snap.payload.doc.data()
-    };
-  });
+  return <T[]> snaps.map(snap => ({
+    id: snap.payload.doc.id,
+    ...snap.payload.doc.data(),
+  }));
 }
 
 export function convertSnap<T>(snap) {
   return {
     id: snap[0].payload.doc.id,
-    ...snap[0].payload.doc.data()
+    ...snap[0].payload.doc.data(),
   };
-};
+}
 
 export function deleteId(object: any): any {
   delete object.id;
@@ -32,11 +30,11 @@ export function createDateFromString(dateString: string): Date {
 }
 
 export function getIsoString(theDate: Date): string {
-    const pad = function(num) {
-        const norm = Math.floor(Math.abs(num));
-        return (norm < 10 ? '0' : '') + norm;
-    };
-    return theDate.getFullYear() +
+  const pad = function(num) {
+    const norm = Math.floor(Math.abs(num));
+    return (norm < 10 ? '0' : '') + norm;
+  };
+  return theDate.getFullYear() +
         '-' + pad(theDate.getMonth() + 1) +
         '-' + pad(theDate.getDate()) +
         'T' + pad(theDate.getHours()) +

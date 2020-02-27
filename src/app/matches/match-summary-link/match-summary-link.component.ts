@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'ngx-match-summary-link',
+  selector: 'efl-match-summary-link',
   templateUrl: './match-summary-link.component.html',
-  styleUrls: ['./match-summary-link.component.scss']
+  styleUrls: ['./match-summary-link.component.scss'],
 })
 export class MatchSummaryLinkComponent implements OnInit {
 

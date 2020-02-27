@@ -8,9 +8,9 @@ describe('AdminTeamPickerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminTeamPickerComponent ]
+      declarations: [ AdminTeamPickerComponent ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

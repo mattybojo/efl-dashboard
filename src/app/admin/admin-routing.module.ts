@@ -1,10 +1,11 @@
-import { MatchSummaryComponent } from './../matches/match-summary/match-summary.component';
-import { AdminMotmVotingComponent } from './admin-motm-voting/admin-motm-voting.component';
-import { AdminGuard } from './../shared/guards/admin.guard';
-import { AdminTeamPickerComponent } from './admin-team-picker/admin-team-picker.component';
-import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { MatchSummaryComponent } from '../matches/match-summary/match-summary.component';
+import { AdminGuard } from '../shared/guards/admin.guard';
 import { AdminMatchDetailComponent } from './admin-match-detail/admin-match-detail.component';
+import { AdminMotmVotingComponent } from './admin-motm-voting/admin-motm-voting.component';
+import { AdminTeamPickerComponent } from './admin-team-picker/admin-team-picker.component';
 
 const routes: Routes = [{
   path: 'team-picker',
@@ -26,7 +27,7 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes)
-  ]
+    RouterModule.forChild(routes),
+  ],
 })
 export class AdminRoutingModule {}

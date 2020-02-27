@@ -8,9 +8,9 @@ describe('ChangelogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChangelogComponent ]
+      declarations: [ ChangelogComponent ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

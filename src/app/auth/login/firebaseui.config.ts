@@ -1,4 +1,4 @@
-import {firebase, firebaseui} from 'firebaseui-angular';
+import { firebase, firebaseui } from 'firebaseui-angular';
 
 export const firebaseUiConfig = {
   signInFlow: 'popup',
@@ -7,5 +7,5 @@ export const firebaseUiConfig = {
   ],
   tosUrl: '',
   privacyPolicyUrl: '',
-  credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM
+  credentialHelper: firebaseui.auth.CredentialHelper.ACCOUNT_CHOOSER_COM,
 };

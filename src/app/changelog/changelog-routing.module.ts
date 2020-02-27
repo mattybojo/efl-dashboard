@@ -1,15 +1,16 @@
-import { ChangelogComponent } from './changelog/changelog.component';
-import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { ChangelogComponent } from './changelog/changelog.component';
 
 const routes: Routes = [{
   path: '',
-  component: ChangelogComponent
+  component: ChangelogComponent,
 }];
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes)
-  ]
+    RouterModule.forChild(routes),
+  ],
 })
 export class ChangelogRoutingModule {}

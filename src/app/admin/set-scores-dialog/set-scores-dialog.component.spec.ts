@@ -8,9 +8,9 @@ describe('SetScoresDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SetScoresDialogComponent ]
+      declarations: [ SetScoresDialogComponent ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

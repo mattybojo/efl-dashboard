@@ -1,12 +1,14 @@
-import { Player, PlayerStats } from './../models/player.model';
+import { from, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, from, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { convertSnaps, convertSnap } from './db-utils';
+
+import { Player, PlayerStats } from '../models/player.model';
+import { convertSnap, convertSnaps } from './db-utils';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PlayerService {
   constructor(private db: AngularFirestore) {}
@@ -20,7 +22,7 @@ export class PlayerService {
       collection('players')
       .snapshotChanges()
       .pipe(
-        map(snaps => convertSnaps<Player>(snaps))
+        map(snaps => convertSnaps<Player>(snaps)),
       );
   }
 
@@ -41,7 +43,7 @@ export class PlayerService {
       collection(season)
       .snapshotChanges()
       .pipe(
-        map(snaps => convertSnaps<PlayerStats>(snaps))
+        map(snaps => convertSnaps<PlayerStats>(snaps)),
       );
   }
 }

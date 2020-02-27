@@ -1,12 +1,14 @@
-import { Lookup } from './../models/lookup.model';
-import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, from } from 'rxjs';
-import { convertSnap, convertSnaps } from './db-utils';
+import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+
+import { Lookup } from '../models/lookup.model';
+import { convertSnap, convertSnaps } from './db-utils';
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LookupService {
 

@@ -1,13 +1,14 @@
-import { MotmVotesList } from './../models/team-picker.model';
+import { from, Observable } from 'rxjs';
+import { map, switchMap, take } from 'rxjs/operators';
+
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { TeamPicker } from '../models/team-picker.model';
-import { Observable, from, of } from 'rxjs';
-import { convertSnaps, convertSnap } from './db-utils';
-import { map, take, switchMap } from 'rxjs/operators';
+
+import { MotmVotesList, TeamPicker } from '../models/team-picker.model';
+import { convertSnap, convertSnaps } from './db-utils';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TeamPickerService {
 
@@ -18,7 +19,7 @@ export class TeamPickerService {
       .collection('teamPicker')
       .snapshotChanges()
       .pipe(
-        map(snaps => convertSnaps<TeamPicker>(snaps))
+        map(snaps => convertSnaps<TeamPicker>(snaps)),
       );
   }
 
@@ -35,7 +36,7 @@ export class TeamPickerService {
       .collection('motmVotes')
       .snapshotChanges()
       .pipe(
-        map(snap => convertSnap<MotmVotesList>(snap))
+        map(snap => convertSnap<MotmVotesList>(snap)),
       );
   }
 
@@ -44,8 +45,6 @@ export class TeamPickerService {
   }
 
   deleteAllMotmVotes(): Observable<void> {
-    return this.getMotmVotes().pipe(take(1), switchMap((vote: MotmVotesList) => {
-      return from(this.db.doc(`motmVotes/${vote.id}`).update({ id: vote.id, votes: '' }));
-    }));
+    return this.getMotmVotes().pipe(take(1), switchMap((vote: MotmVotesList) => from(this.db.doc(`motmVotes/${vote.id}`).update({ id: vote.id, votes: '' }))));
   }
 }

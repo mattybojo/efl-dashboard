@@ -1,13 +1,15 @@
-import { Router } from '@angular/router';
-import { config } from './../../config/config';
-import { UserData } from './../models/user-data.model';
+import { BehaviorSubject, from, Observable, of } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
+import * as SecureLS from 'secure-ls';
+
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
-import { from, Observable, of, BehaviorSubject } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
+import { config } from '../../config/config';
+import { UserData } from '../models/user-data.model';
 import { convertSnap } from './db-utils';
-import * as SecureLS from 'secure-ls';
 
 @Injectable({
   providedIn: 'root',
@@ -95,7 +97,7 @@ export class AuthService {
           if (user) {
             self.db.doc(`userData/${newData.id}`).update(newData);
           }
-        })
+        }),
       );
   }
 

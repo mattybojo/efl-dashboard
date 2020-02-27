@@ -22,7 +22,7 @@ module.exports = {
                 "accessibility": "explicit"
             }
         ],
-        "@typescript-eslint/indent": "error",
+        "@typescript-eslint/indent": ["error", 2],
         "@typescript-eslint/member-delimiter-style": [
             "error",
             {

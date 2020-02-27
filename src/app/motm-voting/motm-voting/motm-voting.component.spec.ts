@@ -8,9 +8,9 @@ describe('MotmVotingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MotmVotingComponent ]
+      declarations: [ MotmVotingComponent ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

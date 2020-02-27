@@ -1,17 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { MatchService } from '../../shared/services/match.service';
-import { NbDialogService } from '@nebular/theme';
-import { switchMap } from 'rxjs/operators';
-import { Match } from '../../shared/models/match.model';
-import { SetScoresDialogComponent } from '../set-scores-dialog/set-scores-dialog.component';
-import { faSave, faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 import { Observable, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { faLongArrowAltLeft, faSave } from '@fortawesome/free-solid-svg-icons';
+import { NbDialogService } from '@nebular/theme';
+
+import { Match } from '../../shared/models/match.model';
+import { MatchService } from '../../shared/services/match.service';
+import { SetScoresDialogComponent } from '../set-scores-dialog/set-scores-dialog.component';
 
 @Component({
-  selector: 'ngx-admin-match-detail',
+  selector: 'efl-admin-match-detail',
   templateUrl: './admin-match-detail.component.html',
-  styleUrls: ['./admin-match-detail.component.scss']
+  styleUrls: ['./admin-match-detail.component.scss'],
 })
 export class AdminMatchDetailComponent implements OnInit, OnDestroy {
 
@@ -53,7 +55,7 @@ export class AdminMatchDetailComponent implements OnInit, OnDestroy {
     this.dialogService.open(SetScoresDialogComponent, {
       context: {
         matchData: this.match,
-      }
+      },
     });
   }
 

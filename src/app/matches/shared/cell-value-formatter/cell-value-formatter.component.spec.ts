@@ -8,9 +8,9 @@ describe('CellValueFormatterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CellValueFormatterComponent ]
+      declarations: [ CellValueFormatterComponent ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

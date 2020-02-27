@@ -1,10 +1,12 @@
-import { GraphData } from '../../shared/models/player.model';
-import { Component, OnDestroy, Input } from '@angular/core';
-import { NbThemeService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 
+import { Component, Input, OnDestroy } from '@angular/core';
+import { NbThemeService } from '@nebular/theme';
+
+import { GraphData } from '../../shared/models/player.model';
+
 @Component({
-  selector: 'ngx-chartjs-radar',
+  selector: 'efl-chartjs-radar',
   template: `
     <chart type="radar" [data]="_data" [options]="options"></chart>
   `,
@@ -21,11 +23,11 @@ export class ChartjsRadarComponent implements OnDestroy {
     const colorArray: string[] = [];
     const count = data.datasets.length;
 
-    for(let i = 0; i < data.datasets.length; i++) {
+    for (let i = 0; i < data.datasets.length; i++) {
       colorArray.push(this.rainbowStop(i / count));
     }
 
-    for(let i = 0; i < data.datasets.length; i++) {
+    for (let i = 0; i < data.datasets.length; i++) {
       data.datasets[i].borderColor = colorArray[i];
       data.datasets[i].backgroundColor = this.hexToRGB(colorArray[i], 0.2);
     }
@@ -60,22 +62,22 @@ export class ChartjsRadarComponent implements OnDestroy {
   }
 
   rainbowStop(h) {
-    let f= (n,k=(n+h*12)%12) => .5-.5*Math.max(Math.min(k-3,9-k,1),-1);
-    let rgb2hex = (r,g,b) => "#"+[r,g,b].map(x=>Math.round(x*255).toString(16).padStart(2,'0')).join('');
+    const f = (n, k= (n + h * 12) % 12) => .5 - .5 * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    const rgb2hex = (r, g, b) => '#' + [r, g, b].map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join('');
     return ( rgb2hex(f(0), f(8), f(4)) );
   }
 
   hexToRGB(hex, alpha) {
-    var r = parseInt(hex.slice(1, 3), 16),
-        g = parseInt(hex.slice(3, 5), 16),
-        b = parseInt(hex.slice(5, 7), 16);
+    const r = parseInt(hex.slice(1, 3), 16),
+      g = parseInt(hex.slice(3, 5), 16),
+      b = parseInt(hex.slice(5, 7), 16);
 
     if (alpha) {
-        return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
+      return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
     } else {
-        return "rgb(" + r + ", " + g + ", " + b + ")";
+      return 'rgb(' + r + ', ' + g + ', ' + b + ')';
     }
-}
+  }
 
   constructor(private theme: NbThemeService) {
     this.subscription$ = this.theme.getJsTheme().subscribe(config => {

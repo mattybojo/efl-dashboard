@@ -8,9 +8,9 @@ describe('TeamsheetsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TeamsheetsComponent ]
+      declarations: [ TeamsheetsComponent ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

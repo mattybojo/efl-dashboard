@@ -1,15 +1,17 @@
-import { MatchService } from './../../shared/services/match.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { switchMap } from 'rxjs/operators';
-import { ParamMap, ActivatedRoute } from '@angular/router';
-import { Match } from '../../shared/models/match.model';
-import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons';
+
+import { Match } from '../../shared/models/match.model';
+import { MatchService } from '../../shared/services/match.service';
 
 @Component({
-  selector: 'ngx-match-detail',
+  selector: 'efl-match-detail',
   templateUrl: './match-detail.component.html',
-  styleUrls: ['./match-detail.component.scss']
+  styleUrls: ['./match-detail.component.scss'],
 })
 export class MatchDetailComponent implements OnInit, OnDestroy {
 

@@ -1,11 +1,11 @@
-import { TestBed, async, inject } from '@angular/core/testing';
+import { inject, TestBed } from '@angular/core/testing';
 
 import { AlreadyLoggedInGuard } from './already-logged-in.guard';
 
 describe('AlreadyLoggedInGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AlreadyLoggedInGuard]
+      providers: [AlreadyLoggedInGuard],
     });
   });
 

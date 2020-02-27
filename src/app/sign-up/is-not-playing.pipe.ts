@@ -1,8 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
+
 import { SignUpRecord } from '../shared/models/sign-up.model';
 
 @Pipe({
-  name: 'isNotPlaying'
+  name: 'isNotPlaying',
 })
 export class IsNotPlayingPipe implements PipeTransform {
 

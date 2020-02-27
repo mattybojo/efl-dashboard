@@ -13,10 +13,10 @@ export const EFL_MENU_ITEMS: NbMenuItem[] = [
 ];
 
 export const EFL_ADMIN_MENU_ITEMS: NbMenuItem[] = [
-    { title: 'Admin', icon: { icon: 'user-lock', pack: 'solid' }, children: [
-      { title: 'Match Reports', link: '/admin/matches/summary', icon: { icon: 'futbol', pack: 'solid' } },
-      { title: 'Sign Up', link: '/sign-up', icon: { icon: 'user-plus', pack: 'solid' } },
-      { title: 'Team Picker', link: '/admin/team-picker', icon: { icon: 'users', pack: 'solid' } },
-      { title: 'MOTM Vote', link: '/admin/motm-voting', icon: { icon: 'star', pack: 'solid' } },
+  { title: 'Admin', icon: { icon: 'user-lock', pack: 'solid' }, children: [
+    { title: 'Match Reports', link: '/admin/matches/summary', icon: { icon: 'futbol', pack: 'solid' } },
+    { title: 'Sign Up', link: '/sign-up', icon: { icon: 'user-plus', pack: 'solid' } },
+    { title: 'Team Picker', link: '/admin/team-picker', icon: { icon: 'users', pack: 'solid' } },
+    { title: 'MOTM Vote', link: '/admin/motm-voting', icon: { icon: 'star', pack: 'solid' } },
   ]},
 ];

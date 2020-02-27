@@ -1,13 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
-import { AuthRoutingModule } from './auth-routing.module';
-import { FirebaseUIModule } from 'firebaseui-angular';
-import { firebaseUiConfig } from './login/firebaseui.config';
-import { ProfileComponent } from './profile/profile.component';
-import { NbUserModule, NbActionsModule, NbCardModule } from '@nebular/theme';
 import { ChartModule } from 'angular2-chartjs';
+import { FirebaseUIModule } from 'firebaseui-angular';
+
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { NbActionsModule, NbCardModule, NbUserModule } from '@nebular/theme';
+
+import { AuthRoutingModule } from './auth-routing.module';
+import { firebaseUiConfig } from './login/firebaseui.config';
+import { LoginComponent } from './login/login.component';
 import { ChartjsRadarComponent } from './profile/chartjs-radar-comnponent';
+import { ProfileComponent } from './profile/profile.component';
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = firebaseUiConfig;
 

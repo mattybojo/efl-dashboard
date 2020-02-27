@@ -1,12 +1,14 @@
-import { AuthService } from './../../shared/services/auth.service';
+import { FirebaseUISignInFailure, FirebaseUISignInSuccessWithAuthResult } from 'firebaseui-angular';
+
 import { Component, OnInit } from '@angular/core';
-import { FirebaseUISignInSuccessWithAuthResult, FirebaseUISignInFailure } from 'firebaseui-angular';
 import { Router } from '@angular/router';
 
+import { AuthService } from '../../shared/services/auth.service';
+
 @Component({
-  selector: 'app-login',
+  selector: 'efl-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
 

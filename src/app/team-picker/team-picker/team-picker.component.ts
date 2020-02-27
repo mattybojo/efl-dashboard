@@ -1,15 +1,17 @@
-import { ChatComponent } from './../shared/chat/chat.component';
-import { TeamPickerService } from '../../shared/services/team-picker.service';
-import { TeamPicker, TeamData, TeamType } from './../../shared/models/team-picker.model';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+import { HttpParams } from '@angular/common/http';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+
+import { TeamData, TeamPicker, TeamType } from '../../shared/models/team-picker.model';
+import { TeamPickerService } from '../../shared/services/team-picker.service';
+import { ChatComponent } from '../shared/chat/chat.component';
+
 @Component({
-  selector: 'app-team-picker',
+  selector: 'efl-team-picker',
   templateUrl: './team-picker.component.html',
-  styleUrls: ['./team-picker.component.scss']
+  styleUrls: ['./team-picker.component.scss'],
 })
 export class TeamPickerComponent implements OnInit, OnDestroy {
 
@@ -78,7 +80,7 @@ export class TeamPickerComponent implements OnInit, OnDestroy {
             this.showConfirmBtn = true;
             this.isConfirmDisabled = this.isPickDisabled();
           }
-        })
+        }),
       );
   }
 

@@ -1,9 +1,10 @@
-import { AuthGuard } from './../shared/guards/auth.guard';
-import { ProfileComponent } from './profile/profile.component';
-import { AlreadyLoggedInGuard } from './../shared/guards/already-logged-in.guard';
-import { LoginComponent } from './login/login.component';
-import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { AlreadyLoggedInGuard } from '../shared/guards/already-logged-in.guard';
+import { AuthGuard } from '../shared/guards/auth.guard';
+import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [{
   path: 'login',
@@ -17,7 +18,7 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes)
-  ]
+    RouterModule.forChild(routes),
+  ],
 })
 export class AuthRoutingModule {}

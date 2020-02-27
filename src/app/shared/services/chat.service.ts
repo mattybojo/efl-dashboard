@@ -1,13 +1,15 @@
-import { ChatMessage } from './../models/chat.model';
+import { firestore } from 'firebase';
+import { from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
-import { Observable, from, forkJoin } from 'rxjs';
-import { map, take, switchMap } from 'rxjs/operators';
+
+import { ChatMessage } from '../models/chat.model';
 import { convertSnaps } from './db-utils';
-import { firestore } from 'firebase';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChatService {
 
@@ -18,7 +20,7 @@ export class ChatService {
       .collection('chat', ref => ref.orderBy('timestamp', 'desc'))
       .snapshotChanges()
       .pipe(
-        map(snaps => convertSnaps<ChatMessage>(snaps))
+        map(snaps => convertSnaps<ChatMessage>(snaps)),
       );
   }
 

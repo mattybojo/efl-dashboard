@@ -8,9 +8,9 @@ describe('CreateGameSignUpDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateGameSignUpDialogComponent ]
+      declarations: [ CreateGameSignUpDialogComponent ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

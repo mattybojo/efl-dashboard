@@ -1,11 +1,16 @@
-import { AuthService } from './../services/auth.service';
-import { Injectable } from '@angular/core';
-import { CanActivate, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+
+import { Injectable } from '@angular/core';
+import {
+  ActivatedRouteSnapshot, CanActivate, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment,
+  UrlTree,
+} from '@angular/router';
+
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AdminGuard implements CanActivate, CanLoad {
   constructor(private authService: AuthService, private router: Router) {}
@@ -35,7 +40,7 @@ export class AdminGuard implements CanActivate, CanLoad {
       catchError((err) => {
         this.router.navigate(['/dashboard']);
         return of(false);
-      })
+      }),
     );
   }
 }

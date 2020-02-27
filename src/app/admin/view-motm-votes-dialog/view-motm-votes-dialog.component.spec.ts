@@ -8,9 +8,9 @@ describe('ViewMotmVotesDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewMotmVotesDialogComponent ]
+      declarations: [ ViewMotmVotesDialogComponent ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

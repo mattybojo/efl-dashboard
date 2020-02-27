@@ -1,28 +1,35 @@
-import { TeamPicker } from './../../shared/models/team-picker.model';
-import { TeamPickerService } from './../../shared/services/team-picker.service';
-import { ConfirmDialogComponent } from './../../shared/components/confirm-dialog/confirm-dialog.component';
-import { CreateGameSignUpDialogComponent } from './../create-game-sign-up-dialog/create-game-sign-up-dialog.component';
-import { PlayerService } from './../../shared/services/player.service';
-import { UserData } from './../../shared/models/user-data.model';
-import { SignUpRecord } from './../../shared/models/sign-up.model';
-import { Lookup, FieldLocation } from './../../shared/models/lookup.model';
-import { LookupService } from './../../shared/services/lookup.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SignUpService } from '../../shared/services/sign-up.service';
-import { Observable, Subscription, combineLatest } from 'rxjs';
 import { orderBy } from 'lodash';
-import { isSameDate, createDateFromString } from '../../shared/services/db-utils';
-import { AuthService } from '../../shared/services/auth.service';
-import { faCalendarCheck, faCalendarTimes, faPlus, faEdit, faTrashAlt, faFileExport } from '@fortawesome/free-solid-svg-icons';
-import { Player } from '../../shared/models/player.model';
-import { NbToastrService, NbGlobalPhysicalPosition, NbDialogService } from '@nebular/theme';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  faCalendarCheck, faCalendarTimes, faEdit, faFileExport, faPlus, faTrashAlt,
+} from '@fortawesome/free-solid-svg-icons';
+import { NbDialogService, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
+
+import {
+  ConfirmDialogComponent,
+} from '../../shared/components/confirm-dialog/confirm-dialog.component';
+import { FieldLocation, Lookup } from '../../shared/models/lookup.model';
+import { Player } from '../../shared/models/player.model';
+import { SignUpRecord } from '../../shared/models/sign-up.model';
+import { TeamPicker } from '../../shared/models/team-picker.model';
+import { UserData } from '../../shared/models/user-data.model';
+import { AuthService } from '../../shared/services/auth.service';
+import { createDateFromString, isSameDate } from '../../shared/services/db-utils';
+import { LookupService } from '../../shared/services/lookup.service';
+import { PlayerService } from '../../shared/services/player.service';
+import { SignUpService } from '../../shared/services/sign-up.service';
+import { TeamPickerService } from '../../shared/services/team-picker.service';
+import {
+  CreateGameSignUpDialogComponent,
+} from '../create-game-sign-up-dialog/create-game-sign-up-dialog.component';
 
 @Component({
-  selector: 'ngx-sign-up',
+  selector: 'efl-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent implements OnInit, OnDestroy {
 
@@ -75,13 +82,13 @@ export class SignUpComponent implements OnInit, OnDestroy {
       // Construct an array of signups by game
       self.signUpGames.forEach((gameLookup: Lookup) => {
         const valueParts: string[] = gameLookup.value.split(';');
-        const a: string[] = valueParts[0].split(/[^0-9]/);
-        const newDate: Date = new Date(+a[0], +a[1] - 1, +a[2], +a[3], +a[4], +a[5]);
+        let parts: string[] = valueParts[0].split(/[^0-9]/);
+        const newDate: Date = new Date(+parts[0], +parts[1] - 1, +parts[2], +parts[3], +parts[4], +parts[5]);
         gameLookup.date = newDate;
         gameLookup.field = { name: valueParts[1], address: self.fieldList.find(x => x.name === valueParts[1]).address };
         self.signUpsByDate.push(self.signUps.filter(x => {
-          const a: string[] = x.gameDate.split(/[^0-9]/);
-          const newGameDate: Date = new Date(+a[0], +a[1] - 1, +a[2], +a[3], +a[4], +a[5]);
+          parts = x.gameDate.split(/[^0-9]/);
+          const newGameDate: Date = new Date(+parts[0], +parts[1] - 1, +parts[2], +parts[3], +parts[4], +parts[5]);
           return isSameDate(newGameDate, gameLookup.date);
         }));
       });
@@ -109,11 +116,10 @@ export class SignUpComponent implements OnInit, OnDestroy {
   onClickRsvp(index: number, isPlaying: boolean) {
     const self = this;
     let isSignedUp: boolean = false;
-    let signUpRecord: SignUpRecord;
     let recordId: string;
 
     // Do not allow user to sign up if they already are signed up for the specific date
-    signUpRecord = this.signUpsByDate[index].find(x => x.user === this.player[index]);
+    const signUpRecord: SignUpRecord = this.signUpsByDate[index].find(x => x.user === this.player[index]);
     if (signUpRecord) {
       recordId = signUpRecord.id;
       isSignedUp = (signUpRecord.isPlaying === isPlaying);
@@ -139,7 +145,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.dialogService.open(CreateGameSignUpDialogComponent, {
       context : {
         fieldList: this.fieldList,
-      }
+      },
     });
   }
 
@@ -150,7 +156,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
         id: this.signUpGames[index].id,
         selectedField: this.signUpGames[index].field,
         fieldList: this.fieldList,
-      }
+      },
     });
   }
 
@@ -158,9 +164,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
     const self = this;
     this.dialogService.open(ConfirmDialogComponent, {
       context: {
-        dialogTitle: `Delete this sign-up?`,
-        confirmMessage: `Are you sure you want to delete this match?`,
-      }
+        dialogTitle: 'Delete this sign-up?',
+        confirmMessage: 'Are you sure you want to delete this match?',
+      },
     }).onClose.pipe(take(1)).subscribe((resp: boolean) => {
       if (resp) {
         const obsArray: Observable<any>[] = [];
@@ -181,13 +187,13 @@ export class SignUpComponent implements OnInit, OnDestroy {
     const self = this;
     this.dialogService.open(ConfirmDialogComponent, {
       context: {
-        dialogTitle: `Copy to Team Picker?`,
-        confirmMessage: `Moving this data will overwrite any existing data in the Team Picker.`,
-      }
-    }).onClose.pipe(take(1)).subscribe((resp: boolean) => {
-      if (resp) {
-        self.teamPickerService.getTeamData().pipe(take(1)).subscribe((resp: TeamPicker[]) => {
-          const tpData: TeamPicker = resp[0];
+        dialogTitle: 'Copy to Team Picker?',
+        confirmMessage: 'Moving this data will overwrite any existing data in the Team Picker.',
+      },
+    }).onClose.pipe(take(1)).subscribe((onCloseResp: boolean) => {
+      if (onCloseResp) {
+        self.teamPickerService.getTeamData().pipe(take(1)).subscribe((teamDataResp: TeamPicker[]) => {
+          const tpData: TeamPicker = teamDataResp[0];
           tpData.darkTeam = tpData.whiteTeam = '';
 
           let isPlayingList: string[] = self.signUpsByDate[index].filter(x => x.isPlaying).map(x => x.user);

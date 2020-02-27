@@ -1,17 +1,16 @@
-import { ChatComponent } from './shared/chat/chat.component';
-import { TeamPickerComponent } from './team-picker/team-picker.component';
-import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
+import { TeamPickerComponent } from './team-picker/team-picker.component';
 
 const routes: Routes = [{
   path: '',
-  component: TeamPickerComponent
+  component: TeamPickerComponent,
 }];
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes)
-  ]
+    RouterModule.forChild(routes),
+  ],
 })
 export class TeamPickerRoutingModule {}

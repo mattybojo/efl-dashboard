@@ -1,8 +1,8 @@
-import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { MatchSummaryComponent } from './match-summary/match-summary.component';
-import { MatchDetailComponent } from './match-detail/match-detail.component';
+import { RouterModule, Routes } from '@angular/router';
 
+import { MatchDetailComponent } from './match-detail/match-detail.component';
+import { MatchSummaryComponent } from './match-summary/match-summary.component';
 
 const routes: Routes = [{
   path: 'summary',
@@ -14,7 +14,7 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes)
-  ]
+    RouterModule.forChild(routes),
+  ],
 })
 export class MatchesRoutingModule {}

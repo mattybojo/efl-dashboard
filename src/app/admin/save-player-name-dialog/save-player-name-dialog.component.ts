@@ -1,10 +1,10 @@
+import { Component } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
-import { Component, OnInit, Inject } from '@angular/core';
 
 @Component({
-  selector: 'app-save-player-name-dialog',
+  selector: 'efl-save-player-name-dialog',
   templateUrl: './save-player-name-dialog.component.html',
-  styleUrls: ['./save-player-name-dialog.component.scss']
+  styleUrls: ['./save-player-name-dialog.component.scss'],
 })
 export class SavePlayerNameDialogComponent {
 
@@ -16,6 +16,7 @@ export class SavePlayerNameDialogComponent {
 
   setPlayerName() {
     this.dialogRef.close(this.playerName);
+
   }
 
   closeDialog() {

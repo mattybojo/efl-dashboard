@@ -1,10 +1,11 @@
-import { TeamPickerComponent } from './team-picker/team-picker.component';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TeamPickerRoutingModule } from './team-picker-routing.module';
-import { ChatComponent } from './shared/chat/chat.component';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NbCardModule, NbButtonModule, NbInputModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbInputModule } from '@nebular/theme';
+
+import { ChatComponent } from './shared/chat/chat.component';
+import { TeamPickerRoutingModule } from './team-picker-routing.module';
+import { TeamPickerComponent } from './team-picker/team-picker.component';
 
 @NgModule({
   declarations: [TeamPickerComponent, ChatComponent],
@@ -17,7 +18,7 @@ import { NbCardModule, NbButtonModule, NbInputModule } from '@nebular/theme';
     NbInputModule,
   ],
   exports: [
-    ChatComponent
-  ]
+    ChatComponent,
+  ],
 })
 export class TeamPickerModule { }

@@ -1,16 +1,18 @@
-import { FieldLocation } from './../../shared/models/lookup.model';
-import { SignUpService } from './../../shared/services/sign-up.service';
-import { LookupService } from './../../shared/services/lookup.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NbDialogRef, NbToastrService, NbGlobalPhysicalPosition } from '@nebular/theme';
-import { take } from 'rxjs/operators';
-import { Observable, combineLatest, Subscription } from 'rxjs';
 import { cloneDeep } from 'lodash';
+import { combineLatest, Observable, Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
+
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NbDialogRef, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
+
+import { FieldLocation } from '../../shared/models/lookup.model';
+import { LookupService } from '../../shared/services/lookup.service';
+import { SignUpService } from '../../shared/services/sign-up.service';
 
 @Component({
-  selector: 'ngx-create-game-sign-up-dialog',
+  selector: 'efl-create-game-sign-up-dialog',
   templateUrl: './create-game-sign-up-dialog.component.html',
-  styleUrls: ['./create-game-sign-up-dialog.component.scss']
+  styleUrls: ['./create-game-sign-up-dialog.component.scss'],
 })
 export class CreateGameSignUpDialogComponent implements OnInit, OnDestroy {
 
@@ -35,7 +37,7 @@ export class CreateGameSignUpDialogComponent implements OnInit, OnDestroy {
       this.location = this.selectedField.name;
       this.oldIsoDateString = cloneDeep(this.isoDateString);
 
-      let isoDateParts: string[] = this.isoDateString.split(new RegExp(/[-T:.]/, 'gi'));
+      const isoDateParts: string[] = this.isoDateString.split(new RegExp(/[-T:.]/, 'gi'));
       let hours: string = isoDateParts[3];
 
       // Hours are greater than 12, must be PM
@@ -48,7 +50,7 @@ export class CreateGameSignUpDialogComponent implements OnInit, OnDestroy {
       this.timeString = `${hours}:${isoDateParts[4]}`;
     } else {
       const newDate: Date = new Date();
-      this.dateString = ('0'+ (newDate.getMonth()+1)).slice(-2) + '-' + ('0'+ newDate.getDate()).slice(-2) + '-' + newDate.getFullYear();
+      this.dateString = ('0' + (newDate.getMonth() + 1)).slice(-2) + '-' + ('0' + newDate.getDate()).slice(-2) + '-' + newDate.getFullYear();
       this.location = 'Fallon';
       this.onSelectField(this.location);
     }
@@ -63,7 +65,7 @@ export class CreateGameSignUpDialogComponent implements OnInit, OnDestroy {
     this.isSaving = true;
     const obsArray: Observable<any>[] = [];
 
-    let dateParts: string[] = this.dateString.split('-');
+    const dateParts: string[] = this.dateString.split('-');
 
     const timeParts: string[] = this.timeString.split(':');
     if (this.ampmString === 'PM') {

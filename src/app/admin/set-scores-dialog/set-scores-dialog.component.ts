@@ -1,13 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Match, AdminPlayerData, Team } from '../../shared/models/match.model';
-import { MatchService } from '../../shared/services/match.service';
-import { NbDialogRef } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NbDialogRef } from '@nebular/theme';
+
+import { AdminPlayerData, Match, Team } from '../../shared/models/match.model';
+import { MatchService } from '../../shared/services/match.service';
+
 @Component({
-  selector: 'app-set-scores-dialog',
+  selector: 'efl-set-scores-dialog',
   templateUrl: './set-scores-dialog.component.html',
-  styleUrls: ['./set-scores-dialog.component.scss']
+  styleUrls: ['./set-scores-dialog.component.scss'],
 })
 export class SetScoresDialogComponent implements OnInit, OnDestroy {
 
@@ -95,10 +97,10 @@ export class SetScoresDialogComponent implements OnInit, OnDestroy {
     let i: number;
     teamPlayerData.forEach((player: AdminPlayerData) => {
       playerString = playerString.concat(`,${player.name}`);
-      for(i = 0; i < player.goals; i++) {
+      for (i = 0; i < player.goals; i++) {
         goalString = goalString.concat(`,${player.name}`);
       }
-      for(i = 0; i < player.assists; i++) {
+      for (i = 0; i < player.assists; i++) {
         assistString = assistString.concat(`,${player.name}`);
       }
     });
@@ -114,7 +116,7 @@ export class SetScoresDialogComponent implements OnInit, OnDestroy {
     this.matchData.darkTeam = this.formatTeamData(this.darkTeamData);
     this.matchData.whiteTeam = this.formatTeamData(this.whiteTeamData);
     this.subscription$.push(
-        this.matchService.getMatchByDate(this.matchData.date).subscribe((match: Match) => {
+      this.matchService.getMatchByDate(this.matchData.date).subscribe((match: Match) => {
         self.matchData.id = match.id;
         this.subscription$.push(
           self.matchService.updateMatch(self.matchData).subscribe(() => {

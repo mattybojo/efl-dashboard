@@ -8,9 +8,9 @@ describe('AdminMotmVotingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminMotmVotingComponent ]
+      declarations: [ AdminMotmVotingComponent ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

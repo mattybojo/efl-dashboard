@@ -1,12 +1,14 @@
-import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
-import { Match } from '../models/match.model';
-import { Observable, from } from 'rxjs';
-import { convertSnaps, convertSnap } from './db-utils';
+import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { Injectable } from '@angular/core';
+import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
+
+import { Match } from '../models/match.model';
+import { convertSnap, convertSnaps } from './db-utils';
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MatchService {
 
@@ -17,7 +19,7 @@ export class MatchService {
       .collection('matches', ref => ref.where('date', '==', date))
       .snapshotChanges()
       .pipe(
-        map(snaps => convertSnap<Match>(snaps))
+        map(snaps => convertSnap<Match>(snaps)),
       );
   }
 
@@ -26,7 +28,7 @@ export class MatchService {
       .collection('matches', ref => ref.orderBy('date', 'desc'))
       .snapshotChanges()
       .pipe(
-        map(snaps => convertSnaps<Match>(snaps))
+        map(snaps => convertSnaps<Match>(snaps)),
       );
   }
 

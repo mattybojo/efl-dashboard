@@ -1,15 +1,20 @@
-import { ChatMessage } from './../../../shared/models/chat.model';
-import { Component, OnInit, Input, ViewChild, NgZone, ElementRef, ViewChildren, QueryList, AfterViewInit, OnDestroy } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
-import { Observable, Subscription } from 'rxjs';
 import { orderBy } from 'lodash';
+import { Observable, Subscription } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+
+import {
+  AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { DocumentReference } from '@angular/fire/firestore';
+
+import { ChatMessage } from '../../../shared/models/chat.model';
 import { ChatService } from '../../../shared/services/chat.service';
 
 @Component({
   selector: 'efl-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss']
+  styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -23,13 +28,13 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   subscription$: Subscription[] = [];
 
-  constructor(private chatService: ChatService, private ngZone: NgZone) {}
+  constructor(private chatService: ChatService) {}
 
   ngOnInit() {
     this.chat$ = this.chatService.getMessages()
       .pipe(
         map(data => orderBy(data, ['timestamp'], ['asc'])),
-        tap(() => this.scrollToBottom())
+        tap(() => this.scrollToBottom()),
       );
   }
 
@@ -57,7 +62,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     try {
       this.chatBox.nativeElement.scrollTop = this.chatBox.nativeElement.scrollHeight;
     } catch (err) {}
-  }
+  };
 
   ngOnDestroy() {
     this.subscription$.forEach(sub => sub.unsubscribe());

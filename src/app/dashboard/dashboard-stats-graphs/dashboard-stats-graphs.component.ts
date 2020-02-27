@@ -1,14 +1,15 @@
-import { GraphData } from './../../shared/models/player.model';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PlayerService } from '../../shared/services/player.service';
-import { PlayerStats } from '../../shared/models/player.model';
-import { KeyValue } from '@angular/common';
 import { Subscription } from 'rxjs';
 
+import { KeyValue } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+
+import { GraphData, PlayerStats } from '../../shared/models/player.model';
+import { PlayerService } from '../../shared/services/player.service';
+
 @Component({
-  selector: 'ngx-dashboard-stats-graphs',
+  selector: 'efl-dashboard-stats-graphs',
   templateUrl: './dashboard-stats-graphs.component.html',
-  styleUrls: ['./dashboard-stats-graphs.component.scss']
+  styleUrls: ['./dashboard-stats-graphs.component.scss'],
 })
 export class DashboardStatsGraphsComponent implements OnInit, OnDestroy {
 

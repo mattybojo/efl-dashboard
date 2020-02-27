@@ -8,9 +8,9 @@ describe('ResetTeamPickerDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResetTeamPickerDialogComponent ]
+      declarations: [ ResetTeamPickerDialogComponent ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

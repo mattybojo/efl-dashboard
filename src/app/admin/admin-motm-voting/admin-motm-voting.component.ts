@@ -1,17 +1,21 @@
-import { ViewMotmVotesDialogComponent } from './../view-motm-votes-dialog/view-motm-votes-dialog.component';
-import { AuthService } from './../../shared/services/auth.service';
-import { MotmVotesList, MotmVote } from './../../shared/models/team-picker.model';
-import { TeamPickerService } from './../../shared/services/team-picker.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, combineLatest } from 'rxjs';
-import { faSearchPlus } from '@fortawesome/free-solid-svg-icons';
-import { NbToastrService, NbDialogService, NbGlobalPhysicalPosition } from '@nebular/theme';
+import { combineLatest, Observable } from 'rxjs';
 import { Subscription } from 'rxjs/Subscription';
 
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { faSearchPlus } from '@fortawesome/free-solid-svg-icons';
+import { NbDialogService, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
+
+import { MotmVote, MotmVotesList } from '../../shared/models/team-picker.model';
+import { AuthService } from '../../shared/services/auth.service';
+import { TeamPickerService } from '../../shared/services/team-picker.service';
+import {
+  ViewMotmVotesDialogComponent,
+} from '../view-motm-votes-dialog/view-motm-votes-dialog.component';
+
 @Component({
-  selector: 'app-admin-motm-voting',
+  selector: 'efl-admin-motm-voting',
   templateUrl: './admin-motm-voting.component.html',
-  styleUrls: ['./admin-motm-voting.component.scss']
+  styleUrls: ['./admin-motm-voting.component.scss'],
 })
 export class AdminMotmVotingComponent implements OnInit, OnDestroy {
 
@@ -25,7 +29,7 @@ export class AdminMotmVotingComponent implements OnInit, OnDestroy {
   subscription$: Subscription;
 
   constructor(private teamPickerService: TeamPickerService, private toastrService: NbToastrService,
-              private authService: AuthService, private dialogService: NbDialogService) { }
+    private authService: AuthService, private dialogService: NbDialogService) { }
 
   ngOnInit() {
     const obsArray: Observable<any>[] = [];
@@ -67,7 +71,7 @@ export class AdminMotmVotingComponent implements OnInit, OnDestroy {
     this.dialogService.open(ViewMotmVotesDialogComponent, {
       context: {
         data: motmVotes,
-      }
+      },
     });
   }
 

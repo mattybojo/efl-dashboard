@@ -1,11 +1,14 @@
-import { CellValueFormatterComponent } from './../cell-value-formatter/cell-value-formatter.component';
-import { MatchPlayer, PenaltyTaker, Match } from './../../../shared/models/match.model';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
+import { Match, MatchPlayer, PenaltyTaker } from '../../../shared/models/match.model';
+import {
+  CellValueFormatterComponent,
+} from '../cell-value-formatter/cell-value-formatter.component';
 
 @Component({
   selector: 'efl-teamsheets',
   templateUrl: './teamsheets.component.html',
-  styleUrls: ['./teamsheets.component.scss']
+  styleUrls: ['./teamsheets.component.scss'],
 })
 export class TeamsheetsComponent implements OnInit {
 

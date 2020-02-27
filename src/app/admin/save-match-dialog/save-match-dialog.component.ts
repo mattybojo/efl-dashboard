@@ -1,14 +1,16 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import { DocumentReference } from '@angular/fire/firestore';
-import { Match } from '../../shared/models/match.model';
-import { MatchService } from '../../shared/services/match.service';
-import { NbDialogRef } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DocumentReference } from '@angular/fire/firestore';
+import { NbDialogRef } from '@nebular/theme';
+
+import { Match } from '../../shared/models/match.model';
+import { MatchService } from '../../shared/services/match.service';
+
 @Component({
-  selector: 'app-save-match-dialog',
+  selector: 'efl-save-match-dialog',
   templateUrl: './save-match-dialog.component.html',
-  styleUrls: ['./save-match-dialog.component.scss']
+  styleUrls: ['./save-match-dialog.component.scss'],
 })
 export class SaveMatchDialogComponent implements OnInit, OnDestroy {
 
@@ -26,13 +28,13 @@ export class SaveMatchDialogComponent implements OnInit, OnDestroy {
       date: '',
       whiteTeam: {
         players: this.whiteTeam,
-        goals: ''
+        goals: '',
       },
       darkTeam: {
         players: this.darkTeam,
-        goals: ''
+        goals: '',
       },
-      motm: ''
+      motm: '',
     };
   }
 

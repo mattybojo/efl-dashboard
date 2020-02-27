@@ -1,18 +1,21 @@
-import { MotmVotesList, MotmVoteTally, TeamPicker } from './../../shared/models/team-picker.model';
-import { TeamPickerService } from './../../shared/services/team-picker.service';
-import { ChatService } from './../../shared/services/chat.service';
+import { orderBy } from 'lodash';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { forkJoin, Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
+
 import { Component, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
-import { ResetTeamPickerOptions } from '../../shared/models/team-picker.model';
-import { take } from 'rxjs/operators';
-import { orderBy } from 'lodash';
-import { Observable, forkJoin } from 'rxjs';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
+
+import {
+  MotmVotesList, MotmVoteTally, ResetTeamPickerOptions, TeamPicker,
+} from '../../shared/models/team-picker.model';
+import { ChatService } from '../../shared/services/chat.service';
+import { TeamPickerService } from '../../shared/services/team-picker.service';
 
 @Component({
-  selector: 'ngx-reset-team-picker-dialog',
+  selector: 'efl-reset-team-picker-dialog',
   templateUrl: './reset-team-picker-dialog.component.html',
-  styleUrls: ['./reset-team-picker-dialog.component.scss']
+  styleUrls: ['./reset-team-picker-dialog.component.scss'],
 })
 export class ResetTeamPickerDialogComponent implements OnInit {
 
@@ -58,7 +61,7 @@ export class ResetTeamPickerDialogComponent implements OnInit {
           this.voteCount = vote.count;
 
           // Find all first place players
-          for(index = 1; index < voteCountArray.length; index++) {
+          for (index = 1; index < voteCountArray.length; index++) {
             temp = voteCountArray[index];
             if (vote.count === temp.count) {
               this.motmWinners = this.motmWinners.concat(`, ${temp.user}`);

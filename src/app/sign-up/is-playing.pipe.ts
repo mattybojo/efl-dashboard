@@ -1,5 +1,6 @@
-import { SignUpRecord } from './../shared/models/sign-up.model';
 import { Pipe, PipeTransform } from '@angular/core';
+
+import { SignUpRecord } from '../shared/models/sign-up.model';
 
 @Pipe({
   name: 'isPlaying',

@@ -1,13 +1,15 @@
-import { SignUpRecord } from './../models/sign-up.model';
+import { firestore } from 'firebase';
+import { from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+
+import { SignUpRecord } from '../models/sign-up.model';
 import { convertSnaps, getIsoString } from './db-utils';
-import { Observable, from } from 'rxjs';
-import { map } from 'rxjs/operators';
-import firebase, { firestore } from 'firebase';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SignUpService {
 

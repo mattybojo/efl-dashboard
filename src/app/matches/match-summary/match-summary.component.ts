@@ -1,15 +1,17 @@
-import { MatchSummaryLinkComponent } from './../match-summary-link/match-summary-link.component';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatchService } from '../../shared/services/match.service';
-import { MatchSummary, Match } from '../../shared/models/match.model';
-import { Subscription } from 'rxjs';
 import { orderBy } from 'lodash';
+import { Subscription } from 'rxjs';
+
+import { Component, OnDestroy, OnInit } from '@angular/core';
+
+import { Match, MatchSummary } from '../../shared/models/match.model';
 import { createDateFromString } from '../../shared/services/db-utils';
+import { MatchService } from '../../shared/services/match.service';
+import { MatchSummaryLinkComponent } from '../match-summary-link/match-summary-link.component';
 
 @Component({
-  selector: 'ngx-match-summary',
+  selector: 'efl-match-summary',
   templateUrl: './match-summary.component.html',
-  styleUrls: ['./match-summary.component.scss']
+  styleUrls: ['./match-summary.component.scss'],
 })
 export class MatchSummaryComponent implements OnInit, OnDestroy {
 
@@ -32,7 +34,7 @@ export class MatchSummaryComponent implements OnInit, OnDestroy {
       date: {
         title: 'Date',
         type: 'custom',
-        renderComponent: MatchSummaryLinkComponent
+        renderComponent: MatchSummaryLinkComponent,
       },
       darkTeam: {
         title: 'Dark Team',
@@ -54,9 +56,7 @@ export class MatchSummaryComponent implements OnInit, OnDestroy {
     this.subscription$ = this.matchService.getMatches().subscribe((matches: Match[]) => {
       const tempData: MatchSummary[] = [];
 
-      matches = orderBy(matches, (match: Match) => {
-        return createDateFromString(match.date);
-      }, 'desc');
+      matches = orderBy(matches, (match: Match) => createDateFromString(match.date), 'desc');
 
       matches.forEach((match: Match) => {
         const darkCaptain: string = (match.darkTeam && match.darkTeam.players) ? match.darkTeam.players.split(',')[0] : 'Dark';

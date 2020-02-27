@@ -1,11 +1,12 @@
-import { NbDialogRef } from '@nebular/theme';
-import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 
+import { Component, OnInit } from '@angular/core';
+import { NbDialogRef } from '@nebular/theme';
+
 @Component({
-  selector: 'app-view-motm-votes-dialog',
+  selector: 'efl-view-motm-votes-dialog',
   templateUrl: './view-motm-votes-dialog.component.html',
-  styleUrls: ['./view-motm-votes-dialog.component.scss']
+  styleUrls: ['./view-motm-votes-dialog.component.scss'],
 })
 export class ViewMotmVotesDialogComponent implements OnInit {
 

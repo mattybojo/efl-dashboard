@@ -1,16 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, combineLatest, Subscription } from 'rxjs';
-import { TeamPicker, MotmVotesList } from '../../shared/models/team-picker.model';
-import { SavePlayerNameDialogComponent } from '../../admin/save-player-name-dialog/save-player-name-dialog.component';
-import { TeamPickerService } from '../../shared/services/team-picker.service';
-import { AuthService } from '../../shared/services/auth.service';
+import { combineLatest, Observable, Subscription } from 'rxjs';
+
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NbDialogService, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
+
+import {
+  SavePlayerNameDialogComponent,
+} from '../../admin/save-player-name-dialog/save-player-name-dialog.component';
+import { MotmVotesList, TeamPicker } from '../../shared/models/team-picker.model';
 import { UserData } from '../../shared/models/user-data.model';
-import { NbToastrService, NbGlobalPhysicalPosition, NbDialogService } from '@nebular/theme';
+import { AuthService } from '../../shared/services/auth.service';
+import { TeamPickerService } from '../../shared/services/team-picker.service';
 
 @Component({
-  selector: 'app-motm-voting',
+  selector: 'efl-motm-voting',
   templateUrl: './motm-voting.component.html',
-  styleUrls: ['./motm-voting.component.scss']
+  styleUrls: ['./motm-voting.component.scss'],
 })
 export class MotmVotingComponent implements OnInit, OnDestroy {
 
@@ -24,7 +28,7 @@ export class MotmVotingComponent implements OnInit, OnDestroy {
   subscription$: Subscription[] = [];
 
   constructor(private teamPickerService: TeamPickerService, private toastrService: NbToastrService,
-              private authService: AuthService, private dialogService: NbDialogService) { }
+    private authService: AuthService, private dialogService: NbDialogService) { }
 
   ngOnInit() {
     const obsArray: Observable<any>[] = [];
