@@ -31,6 +31,7 @@ export class AdminPlayerData {
   name: string;
   goals: number;
   assists: number;
+  ownGoals?: number;
 }
 
 export class MatchSummary {

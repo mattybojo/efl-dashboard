@@ -43,6 +43,7 @@ export class SetScoresDialogComponent implements OnInit, OnDestroy {
           this.darkTeamScore++;
         }
       });
+
       if (this.matchData.darkTeam.assists) {
         this.matchData.darkTeam.assists.split(',').forEach((assistName: string) => {
           if (assistName === playerName) {
@@ -50,7 +51,7 @@ export class SetScoresDialogComponent implements OnInit, OnDestroy {
           }
         });
       }
-      return { name: playerName, goals: goals, assists: assists };
+      return { name: playerName, goals: goals, assists: assists, ownGoals: 0 };
     });
 
     this.whiteTeamData = this.matchData.whiteTeam.players.split(',').map((playerName: string) => {
@@ -62,6 +63,7 @@ export class SetScoresDialogComponent implements OnInit, OnDestroy {
           this.whiteTeamScore++;
         }
       });
+
       if (this.matchData.whiteTeam.assists) {
         this.matchData.whiteTeam.assists.split(',').forEach((assistName: string) => {
           if (assistName === playerName) {
@@ -69,27 +71,43 @@ export class SetScoresDialogComponent implements OnInit, OnDestroy {
           }
         });
       }
-      return { name: playerName, goals: goals, assists: assists };
+      return { name: playerName, goals: goals, assists: assists, ownGoals: 0 };
+    });
+
+    // Populate the form with ownGoals
+    this.matchData.darkTeam.goals.split(',').filter(x => x.includes('(OG)')).forEach((scorerName: string) => {
+      scorerName = scorerName.substring(0, scorerName.length - 5);
+      this.whiteTeamData.find(x => x.name === scorerName).ownGoals++;
+      this.darkTeamScore++;
+    });
+
+    this.matchData.whiteTeam.goals.split(',').filter(x => x.includes('(OG)')).forEach((scorerName: string) => {
+      scorerName = scorerName.substring(0, scorerName.length - 5);
+      this.darkTeamData.find(x => x.name === scorerName).ownGoals++;
+      this.whiteTeamScore++;
     });
   }
 
   calculateDarkTeamScore() {
-    this.darkTeamScore = this.calculateTeamScore(this.darkTeamData);
+    this.darkTeamScore = this.calculateTeamScore(this.darkTeamData, this.whiteTeamData);
   }
 
   calculateWhiteTeamScore() {
-    this.whiteTeamScore = this.calculateTeamScore(this.whiteTeamData);
+    this.whiteTeamScore = this.calculateTeamScore(this.whiteTeamData, this.darkTeamData);
   }
 
-  calculateTeamScore(data: AdminPlayerData[]): number {
+  calculateTeamScore(teamData: AdminPlayerData[], oppTeamData: AdminPlayerData[]): number {
     let score: number = 0;
-    data.forEach((entry: AdminPlayerData) => {
+    teamData.forEach((entry: AdminPlayerData) => {
       score += entry.goals;
+    });
+    oppTeamData.forEach((entry: AdminPlayerData) => {
+      score += entry.ownGoals;
     });
     return score;
   }
 
-  formatTeamData(teamPlayerData: AdminPlayerData[]): Team {
+  formatTeamData(teamPlayerData: AdminPlayerData[], oppTeamPlayerData: AdminPlayerData[]): Team {
     const teamData: Team = new Team();
     let playerString: string = '';
     let goalString: string = '';
@@ -104,6 +122,11 @@ export class SetScoresDialogComponent implements OnInit, OnDestroy {
         assistString = assistString.concat(`,${player.name}`);
       }
     });
+    oppTeamPlayerData.forEach((player: AdminPlayerData) => {
+      for (i = 0; i < player.ownGoals; i++) {
+        goalString = goalString.concat(`,${player.name} (OG)`);
+      }
+    });
     teamData.players = playerString.substr(1);
     teamData.goals = goalString.substr(1);
     teamData.assists = assistString.substr(1);
@@ -113,8 +136,8 @@ export class SetScoresDialogComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.isSaving = true;
     const self = this;
-    this.matchData.darkTeam = this.formatTeamData(this.darkTeamData);
-    this.matchData.whiteTeam = this.formatTeamData(this.whiteTeamData);
+    this.matchData.darkTeam = this.formatTeamData(this.darkTeamData, this.whiteTeamData);
+    this.matchData.whiteTeam = this.formatTeamData(this.whiteTeamData, this.darkTeamData);
     this.subscription$.push(
       this.matchService.getMatchByDate(this.matchData.date).subscribe((match: Match) => {
         self.matchData.id = match.id;

@@ -17,22 +17,26 @@
             <th>Name</th>
             <th>Goals</th>
             <th>Assists</th>
+            <th>OG</th>
           </tr>
           <tr *ngFor="let player of darkTeamData; let i = index">
             <td class="player-name">{{player.name}}</td>
-            <td><input nbInput [(ngModel)]="player.goals" #darkGoal="ngModel" [name]="'darkgoal'+i" type="number" class="input-goals" (change)="calculateDarkTeamScore()" required></td>
-            <td><input nbInput [(ngModel)]="player.assists" #darkAssist="ngModel" [name]="'darkassist'+i" type="number" class="input-assists" required></td>
+            <td><input nbInput [(ngModel)]="player.goals" #darkGoal="ngModel" [name]="'darkgoal'+i" type="number" class="input-goals" (change)="calculateDarkTeamScore()" min="0" required></td>
+            <td><input nbInput [(ngModel)]="player.assists" #darkAssist="ngModel" [name]="'darkassist'+i" type="number" class="input-assists" min="0" required></td>
+            <td><input nbInput [(ngModel)]="player.ownGoals" #darkOwnGoal="ngModel" [name]="'darkowngoal'+i" type="number" class="input-owngoals" (change)="calculateWhiteTeamScore()" min="0" required></td>
           </tr>
         </table>
         <table class="player-data-table">
           <tr>
+            <th>OG</th>
             <th>Assists</th>
             <th>Goals</th>
             <th>Name</th>
           </tr>
           <tr *ngFor="let player of whiteTeamData; let i = index">
-            <td><input nbInput [(ngModel)]="player.assists" #whiteAssist="ngModel" [name]="'whiteassist'+i" type="number" class="input-assists" required></td>
-            <td><input nbInput [(ngModel)]="player.goals" #whiteGoal="ngModel" [name]="'whitegoal'+i" type="number" class="input-goals" (change)="calculateWhiteTeamScore()" required></td>
+            <td><input nbInput [(ngModel)]="player.ownGoals" #whiteOwnGoal="ngModel" [name]="'whiteowngoal'+i" type="number" class="input-owngoals" (change)="calculateDarkTeamScore()" min="0" required></td>
+            <td><input nbInput [(ngModel)]="player.assists" #whiteAssist="ngModel" [name]="'whiteassist'+i" type="number" class="input-assists" min="0" required></td>
+            <td><input nbInput [(ngModel)]="player.goals" #whiteGoal="ngModel" [name]="'whitegoal'+i" type="number" class="input-goals" (change)="calculateWhiteTeamScore()" min="0" required></td>
             <td class="player-name">{{player.name}}</td>
           </tr>
         </table>
