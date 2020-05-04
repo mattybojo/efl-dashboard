@@ -17,15 +17,15 @@ export class ChatService {
 
   getMessages(): Observable<ChatMessage[]> {
     return this.db
-      .collection('chat', ref => ref.orderBy('timestamp', 'desc'))
+      .collection('chat', ref => ref.orderBy('timestamp', 'asc'))
       .snapshotChanges()
       .pipe(
         map(snaps => convertSnaps<ChatMessage>(snaps)),
       );
   }
 
-  saveMessage(team: string, msg: string): Observable<DocumentReference> {
-    const chatMsg: ChatMessage = { user: team, message: msg, timestamp: firestore.Timestamp.fromMillis(Date.now()) };
+  saveMessage(chatMsg: ChatMessage): Observable<DocumentReference> {
+    chatMsg.timestamp = firestore.Timestamp.fromMillis(Date.now());
     return from(this.db.collection('chat').add({ ...chatMsg }));
   }
 

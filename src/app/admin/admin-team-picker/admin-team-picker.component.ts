@@ -1,3 +1,4 @@
+import { AuthService } from './../../shared/services/auth.service';
 import { cloneDeep } from 'lodash';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 
@@ -42,12 +43,14 @@ export class AdminTeamPickerComponent implements OnInit, OnDestroy {
   faUserFriends = faUserFriends;
   faPlus = faPlus;
 
+  currentUserName: string;
+
   subscription$: Subscription[] = [];
 
   disableCaptainPicker: boolean = true;
 
   constructor(private teamPickerService: TeamPickerService, private playerService: PlayerService,
-    private dialogService: NbDialogService) {}
+    private dialogService: NbDialogService, private authService: AuthService) {}
 
   ngOnInit() {
     const self = this;
@@ -60,6 +63,8 @@ export class AdminTeamPickerComponent implements OnInit, OnDestroy {
     let remainingPlayers: Player[];
 
     const obsArray: Observable<any>[] = [];
+
+    this.currentUserName = this.authService.getUser().displayName;
 
     const teamData$ = this.teamPickerService.getTeamData();
     const players$ = this.playerService.getPlayers();

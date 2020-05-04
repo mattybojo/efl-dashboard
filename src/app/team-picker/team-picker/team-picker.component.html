@@ -36,4 +36,4 @@
   </div>
 </div>
 
-<efl-chat #chat [team]="team" *ngIf="this.team === 'white' || this.team === 'dark'"></efl-chat>
+<efl-chat #chat [team]="team" [playerName]="teamsData[1].captain" *ngIf="this.team === 'white' || this.team === 'dark'"></efl-chat>

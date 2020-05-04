@@ -1,16 +1,11 @@
-<div class="chat-container">
-  <div #chatBox class="chat-box">
-    <ng-container *ngIf="chat$ | async as chatItems">
-      <div #messages *ngFor="let chatItem of chatItems; let last = last" class="chat-bubble" [ngClass]="(team==chatItem.user)?'my-chat-bubble':'opp-chat-bubble'"
-      [class.my-chat-bubble]="chatItem.user===team&&team!='admin'" [class.opp-chat-bubble]="chatItem.user!=team&&chatItem.user!=='system'"
-      [class.system-chat-bubble]="chatItem.user==='system'" [class.white-chat-bubble]="chatItem.user==='white'"
-      [class.dark-chat-bubble]="chatItem.user==='dark'" [class.admin-chat-bubble]="chatItem.user==='admin'">
-        <p class="chat-message"><span *ngIf="chatItem.user==='admin'">Admin:&nbsp;</span>{{chatItem.message}}</p>
-        <p class="chat-timestamp" *ngIf="chatItem.user!=='system'">{{chatItem.timestamp.toDate() | date:'medium'}}</p>
-      </div>
-    </ng-container>
-  </div>
-  <textarea class="chat-input" nbInput [disabled]="isMessageSending" rows="2"
-    [(ngModel)]="chatInput" (keydown.enter)="onSubmit()"></textarea>
-  <button nbButton status="primary" class="chat-submit" (click)="onSubmit()" [disabled]="isMessageSending">Send</button>
-</div>
+<nb-chat title="Team Captain Chat" size="medium" *ngIf="chat$ | async as messages">
+  <nb-chat-message class="{{msg.user.team}}" *ngFor="let msg of messages"
+                   [type]="'text'"
+                   [message]="msg.text"
+                   [reply]="msg.user.team === this.team"
+                   [sender]="msg.user.name ? msg.user.name : msg.user.team"
+                   [date]="msg.date"
+                   [avatar]="msg.user.avatar">
+  </nb-chat-message>
+  <nb-chat-form (send)="sendMessage($event)" [dropFiles]="false"></nb-chat-form>
+</nb-chat>

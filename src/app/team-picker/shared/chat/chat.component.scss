@@ -1,93 +1,27 @@
-.chat-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  width: 500px;
-  margin: auto;
-  flex-wrap: wrap;
-}
-
-.chat-box {
-  width: 500px;
-  height: 400px;
-  border: 1px solid #000000;
-  overflow-y: scroll;
-}
-
-.chat-input {
-  width: 436px;
-  font-size: 14px !important;
-  border: 1px solid #000;
-  max-width: none !important;
-  font-weight: 100 !important;
-}
-
-.chat-submit {
-  width: 64px;
-  height: 64px;
-}
-
-.chat-bubble {
-  width: 75%;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  position: relative;
-  font-size: 14px;
-}
-
-.chat-bubble:first-of-type {
-  margin-top: 10px;
-}
-
-.my-chat-bubble {
-  float: right;
-}
-
-.opp-chat-bubble {
-  float: left;
-}
-
-.system-chat-bubble {
-  float: left;
-  width: calc(100% - 20px);
-  text-align: center;
-  font-weight: bold;
-}
-
-.dark-chat-bubble {
-  border: 1px solid #000000;
-  background-color: #c0c0c0;
-  color: #ffffff;
-}
-
-.white-chat-bubble {
-  border: 1px solid #000000;
-  background-color: #ffffff;
-  color: #000000;
-}
-
-.admin-chat-bubble {
-  border: 1px solid #ffffff;
-  background-color: #000000;
-  float: left;
-  width: calc(100% - 20px);
-  p {
-    color: #ffffff;
-  }
-}
-
-.chat-message {
-  margin: 5px;
-  font-size: 14px;
-}
-
-.chat-timestamp {
-  margin-left: 5px;
-  margin-top: 0px;
+nb-chat-message {
   margin-bottom: 5px;
-  margin-right: 5px;
-  font-size: 10px;
+}
+
+nb-chat-message ::ng-deep .text {
+  padding: 10px !important;
+}
+
+nb-chat {
+  width: 70%;
+  margin: auto;
+}
+
+.admin ::ng-deep .text {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+.white ::ng-deep .text {
+  background-color: #f7f8fb !important;
+  color: #000000 !important;
+}
+
+.dark ::ng-deep .text {
+  background-color: #b8c3d9 !important;
+  color: #000000 !important;
 }

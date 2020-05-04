@@ -127,7 +127,7 @@ export class TeamPickerComponent implements OnInit, OnDestroy {
     if (!this.isPickDisabled()) {
       this.subscription$.push(
         this.teamPickerService.saveTeamData(this.pickerData).subscribe(() => {
-          self.chat.sendMessage('system', `${self.teamsData[TeamType.MY_TEAM].captain} selected ${player}`);
+          self.chat.sendMessage({ message: `I selected ${player}`});
         }),
       );
     }

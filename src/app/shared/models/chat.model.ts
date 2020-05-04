@@ -2,7 +2,14 @@ import { firestore } from 'firebase';
 
 export class ChatMessage {
   id?: string;
-  user: string;
-  message: string;
-  timestamp: firestore.Timestamp;
+  text: string;
+  user: ChatPlayer;
+  date?: Date;
+  timestamp?: firestore.Timestamp;
+}
+
+export class ChatPlayer {
+  name: string;
+  team: string;
+  avatar?: string;
 }
